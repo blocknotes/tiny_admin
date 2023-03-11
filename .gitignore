@@ -1,0 +1,16 @@
+/.rspec_failures
+/.rubocop-*
+/*.gem
+
+/Gemfile.lock
+
+/_misc/
+/coverage/
+/log/
+/tmp/
+
+/extra/*/log
+/extra/*/tmp
+/spec/dummy/log
+/spec/dummy/tmp
+/spec/dummy/db/*.sqlite3

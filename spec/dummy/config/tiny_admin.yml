@@ -1,0 +1,64 @@
+---
+authentication:
+  plugin: TinyAdmin::Plugins::SimpleAuth
+root:
+  title: Test Admin
+  page: RootPage
+sections:
+  - slug: google
+    name: Google.it
+    type: url
+    url: https://www.google.it
+    options:
+      target: _blank
+  - slug: sample
+    name: Sample page
+    type: page
+    page: SamplePage
+  - slug: authors
+    name: Authors
+    type: resource
+    model: Author
+    collection_actions:
+      - sample_col: SampleCollectionAction
+    member_actions:
+      - sample_mem: SampleMemberAction
+  - slug: posts
+    name: Posts
+    type: resource
+    model: Post
+    index:
+      attributes:
+        - id
+        - title
+        - field: author_id
+          link_to: authors
+        - category
+        - published
+        - dt
+        - field: created_at
+          converter: AdminUtils
+          method: datetime_formatter
+      filters:
+        - title
+        - author_id
+        - field: category
+          type: select
+          values:
+            - news
+            - sport
+            - tech
+        - published
+        - dt
+        - created_at
+    show:
+      attributes:
+        - id
+        - title
+        - description
+        - field: author_id
+          link_to: authors
+        - category
+        - published
+        - dt
+        - created_at

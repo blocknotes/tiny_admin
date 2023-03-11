@@ -1,0 +1,37 @@
+---
+inherit_from:
+  - https://relaxed.ruby.style/rubocop.yml
+
+require:
+  - rubocop-packaging
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - bin/*
+    - spec/dummy/**/*
+    - vendor/**/*
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+Lint/MissingSuper:
+  Exclude:
+    - lib/tiny_admin/views/**/*
+
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
+RSpec/ExampleLength:
+  Max: 20
+
+RSpec/Rails/InferredSpecType:
+  Enabled: false
+
+Style/ExplicitBlockArgument:
+  Enabled: false
+
+Style/GuardClause:
+  Exclude:
+    - lib/tiny_admin/router.rb
