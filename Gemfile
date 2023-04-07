@@ -20,9 +20,7 @@ group :development, :test do
   gem 'simplecov', require: false
 
   # Linters
-  # gem 'brakeman'
   # gem 'fasterer'
-  # gem 'reek'
   gem 'rubocop'
   gem 'rubocop-packaging'
   gem 'rubocop-performance'
