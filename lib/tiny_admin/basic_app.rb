@@ -17,7 +17,7 @@ module TinyAdmin
     plugin :render, engine: 'html'
     plugin :sessions, secret: SecureRandom.hex(64)
 
-    plugin authentication_plugin
+    plugin authentication_plugin, TinyAdmin::Settings.instance.authentication
 
     not_found { prepare_page(settings.page_not_found).call }
 
