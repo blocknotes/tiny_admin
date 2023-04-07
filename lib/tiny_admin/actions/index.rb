@@ -33,7 +33,7 @@ module TinyAdmin
         @sort = options[:sort] || ['id']
 
         @current_page = (params['p'] || 1).to_i
-        @query_string = params_to_s(params.reject { |k, _v| k == 'p' })
+        @query_string = params_to_s(params.except('p'))
       end
 
       def prepare_filters(fields, filters_list)
