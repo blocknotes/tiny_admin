@@ -8,14 +8,16 @@ The main features are:
 - routing is provided by Roda (which is small and performant);
 - views are Phlex components.
 
-See (extra)[extra] folder for usage examples.
+See [extra](extra) folder for usage examples.
 
 Please ⭐ if you like it.
+
+![screenshot](extra/screenshot.png)
 
 ## Install
 
 - Add to your Gemfile: `gem 'tiny_admin'`
-- For a Rails project: add an initializer and the YAML config - see (configuration)[#configuration] below.
+- For a Rails project: add an initializer and the YAML config - see [configuration](#configuration) below.
 
 ## Plugins and components
 
