@@ -10,28 +10,28 @@ end
 gemfile(true) do
   source 'https://rubygems.org'
 
-  gem 'rails', '~> 7.0'
+  gem 'rack'
+  gem 'rackup'
   gem 'webrick'
 
-  gem 'phlex'
   gem 'roda'
-  gem 'tilt'
+
+  gem 'tiny_admin', path: '../../'
 end
 
-require 'action_controller/railtie'
+# --- Roda application ---------------------------------------------------------
 require_relative '../tiny_admin_settings'
 
-# --- Rails application setup --------------------------------------------------
-class App < Rails::Application
-  routes.append do
-    root to: proc { [200, {}, ['Root page!']] }
+class App < Roda
+  route do |r|
+    r.root do
+      'Root page'
+    end
 
-    mount TinyAdmin::Router => '/admin'
+    r.on 'admin' do
+      r.run TinyAdmin::Router
+    end
   end
-
-  config.eager_load = false
 end
 
-App.initialize!
-
-Rack::Server.new(app: App, Port: 3000).start
+Rackup::Server.new(app: App, Port: 3000).start
