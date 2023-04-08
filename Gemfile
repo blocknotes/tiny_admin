@@ -7,11 +7,8 @@ gemspec
 
 group :development, :test do
   gem 'rails', '~> 7.0'
-
   gem 'sqlite3'
-  gem 'tilt'
   gem 'warden'
-  gem 'webrick'
 
   # Testing
   gem 'capybara'
@@ -27,6 +24,5 @@ group :development, :test do
   gem 'rubocop-rspec'
 
   # Tools
-  # gem 'overcommit', '~> 0.59'
   gem 'pry-rails'
 end
