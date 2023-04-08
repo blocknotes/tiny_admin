@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     'homepage_uri' => spec.homepage,
     'source_code_uri' => spec.homepage,
-    'changelog_uri' => 'https://github.com/blocknotes/tiny_admin/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/blocknotes/tiny_admin/blob/main/CHANGELOG.md',
     'rubygems_mfa_required' => 'true'
   }
 
