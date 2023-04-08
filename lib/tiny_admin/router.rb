@@ -16,6 +16,12 @@ module TinyAdmin
         root_route(r)
       end
 
+      r.is do
+        # :nocov:
+        root_route(r)
+        # :nocov:
+      end
+
       r.post '' do
         context.slug = nil
         r.redirect settings.root_path
