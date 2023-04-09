@@ -48,7 +48,7 @@ module TinyAdmin
     def root_route(router)
       context.slug = nil
       if settings.root[:redirect]
-        router.redirect "#{settings.root_path}/#{settings.root[:redirect]}"
+        router.redirect route_for(settings.root[:redirect])
       else
         page = settings.root[:page]
         page_class = page.is_a?(String) ? Object.const_get(page) : page
