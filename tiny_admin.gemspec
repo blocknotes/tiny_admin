@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.name        = 'tiny_admin'
   spec.version     = TinyAdmin::VERSION
   spec.summary     = 'Tiny Admin'
-  spec.description = 'A compact and composible dashboard component for Ruby'
+  spec.description = 'A compact and composable dashboard component for Ruby'
   spec.license     = 'MIT'
 
   spec.required_ruby_version = '>= 3.0.0'
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     'homepage_uri' => spec.homepage,
     'source_code_uri' => spec.homepage,
-    'changelog_uri' => 'https://github.com/blocknotes/tiny_admin/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/blocknotes/tiny_admin/blob/main/CHANGELOG.md',
     'rubygems_mfa_required' => 'true'
   }
 

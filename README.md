@@ -1,14 +1,12 @@
 # Tiny Admin
 
-A compact and composible dashboard component for Ruby.
+A compact and composable dashboard component for Ruby.
 
 The main features are:
-- a Rack app that can be mounted in any Rack-enabled framework;
-- some features are handled as plugins, so they can be replaced with little effort;
-- routing is provided by Roda (which is small and performant);
-- views are Phlex components.
-
-See [extra](extra) folder for usage examples.
+- a Rack app that can be mounted in any Rack-enabled framework, it can even work standalone;
+- structured with plugins also for main components that can be replaced with little effort;
+- routing is provided by Roda, which is small and performant;
+- views are Phlex components, so plain Ruby objects for views and no assets are needed.
 
 Please ⭐ if you like it.
 
@@ -17,26 +15,25 @@ Please ⭐ if you like it.
 ## Install
 
 - Add to your Gemfile: `gem 'tiny_admin'`
-- For a Rails project: add an initializer and the YAML config - see [configuration](#configuration) below.
+- Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
+- Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` (see [configuration](#configuration) below)
 
 ## Plugins and components
 
-Every plugin or component can be replaced.
-
 ### Authentication
 
-There are 2 plugins included:
-- _SimpleAuth_: provides a simple session authentication based on Warden (`warden` gem must be included in the host project);
+Plugins available:
+- _SimpleAuth_: session authentication based on Warden (`warden` gem must be included in the Gemfile) using a password hash provided via config or via environment variable (`ADMIN_PASSWORD_HASH`);
 - _NoAuth_: no authentication.
 
 ### Repository
 
-There is 1 plugin included:
+Plugin available:
 - _ActiveRecordRepository_: isolates the query layer to expose the resources in the admin interface.
 
 ### View pages
 
-There are 5 view pages included:
+Pages available:
 - _Root_: define how to present the content in the main page of the interface;
 - _PageNotFound_: define how to present pages not found;
 - _RecordNotFound_: define how to present record not found page;
@@ -46,7 +43,7 @@ There are 5 view pages included:
 
 ### View components
 
-There are 5 view components included:
+Components available:
 - _FiltersForm_: define how to present the filters form in the resource collection pages;
 - _Flash_: define how to present the flash messages;
 - _Head_: define how to present the Head tag;
@@ -55,9 +52,11 @@ There are 5 view components included:
 
 ## Configuration
 
-TinyAdmin can be configured programmatically or using a YAML config.
+TinyAdmin can be configured using a YAML file and/or programmatically.
 
-Example:
+See [extra](extra) folder for some usage examples.
+
+Sample:
 
 ```rb
 # config/initializers/tiny_admin.rb
@@ -69,6 +68,7 @@ TinyAdmin.configure_from_file(config)
 ```
 
 ```yml
+# config/tiny_admin.yml
 ---
 authentication:
   plugin: TinyAdmin::Plugins::SimpleAuth
