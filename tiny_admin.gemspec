@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.name        = 'tiny_admin'
   spec.version     = TinyAdmin::VERSION
   spec.summary     = 'Tiny Admin'
-  spec.description = 'A compact and composible dashboard component for Ruby'
+  spec.description = 'A compact and composable dashboard component for Ruby'
   spec.license     = 'MIT'
 
   spec.required_ruby_version = '>= 3.0.0'
