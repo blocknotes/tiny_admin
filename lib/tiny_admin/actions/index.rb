@@ -37,7 +37,8 @@ module TinyAdmin
       end
 
       def prepare_filters(fields, filters_list)
-        filters = (filters_list || []).map { _1.is_a?(Hash) ? _1 : { field: _1 } }.index_by { _1[:field] }
+        filters = (filters_list || []).map { _1.is_a?(Hash) ? _1 : { field: _1 } }
+        filters = filters.each_with_object({}) { |filter, result| result[filter[:field]] = filter }
         values = (params['q'] || {})
         fields.each_with_object({}) do |field, result|
           result[field] = { value: values[field.name], filter: filters[field.name] } if filters.key?(field.name)

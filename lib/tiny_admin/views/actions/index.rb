@@ -14,7 +14,7 @@ module TinyAdmin
 
         def setup_records(records:, fields:, prepare_record:)
           @records = records
-          @fields = fields.index_by(&:name)
+          @fields = fields.each_with_object({}) { |field, result| result[field.name] = field }
           @prepare_record = prepare_record
         end
 
