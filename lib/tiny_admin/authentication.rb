@@ -25,11 +25,11 @@ module TinyAdmin
 
     def render_login(notices: nil, warnings: nil, errors: nil)
       page = prepare_page(settings.authentication[:login], options: %i[no_menu compact_layout])
-      page.setup_flash_messages(
+      page.messages = {
         notices: notices || flash['notices'],
         warnings: warnings || flash['warnings'],
         errors: errors || flash['errors']
-      )
+      }
       render(inline: page.call)
     end
   end
