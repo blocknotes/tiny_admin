@@ -61,10 +61,13 @@ Sample:
 ```rb
 # config/initializers/tiny_admin.rb
 
-# hash generated using: Digest::SHA512.hexdigest("changeme")
-ENV['ADMIN_PASSWORD_HASH'] = 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 config = Rails.root.join('config/tiny_admin.yml').to_s
 TinyAdmin.configure_from_file(config)
+
+# Change some settings programmatically
+TinyAdmin.configure do |settings|
+  settings.authentication[:password] = Digest::SHA512.hexdigest('changeme')
+end
 ```
 
 ```yml
@@ -72,6 +75,7 @@ TinyAdmin.configure_from_file(config)
 ---
 authentication:
   plugin: TinyAdmin::Plugins::SimpleAuth
+  # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395df...' <= SHA512
 page_not_found: Admin::PageNotFound
 record_not_found: Admin::RecordNotFound
 root:

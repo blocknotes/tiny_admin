@@ -7,18 +7,19 @@ module TinyAdmin
     module SimpleAuth
       class << self
         def configure(app, opts = {})
+          @@opts = opts || {} # rubocop:disable Style/ClassVars
+          @@opts[:password] ||= ENV.fetch('ADMIN_PASSWORD_HASH') # NOTE: fallback value
+
           Warden::Strategies.add(:secret) do
             def authenticate!
-              hash = ENV.fetch('ADMIN_PASSWORD_HASH')
-              secret = params['secret']
-              return fail(:invalid_credentials) if !secret || Digest::SHA512.hexdigest(secret) != hash
+              secret = params['secret'] || ''
+              return fail(:invalid_credentials) if Digest::SHA512.hexdigest(secret) != @@opts[:password]
 
               success!(app: 'TinyAdmin')
             end
           end
 
           app.opts[:login_form] = opts[:login_form] || TinyAdmin::Views::Pages::SimpleAuthLogin
-
           app.use Warden::Manager do |manager|
             manager.default_strategies :secret
             manager.failure_app = TinyAdmin::Authentication

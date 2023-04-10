@@ -1,6 +1,7 @@
 ---
 authentication:
   plugin: TinyAdmin::Plugins::SimpleAuth
+  # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 root:
   title: Test Admin
   page: RootPage

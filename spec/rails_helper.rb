@@ -4,8 +4,6 @@
 require 'spec_helper'
 require 'capybara/rspec'
 
-# Digest::SHA512.hexdigest('changeme')
-ENV['ADMIN_PASSWORD_HASH'] = 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('dummy/config/environment', __dir__)
 
