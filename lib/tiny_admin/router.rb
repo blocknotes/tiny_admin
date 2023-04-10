@@ -41,7 +41,9 @@ module TinyAdmin
     private
 
     def render_page(page)
-      attach_flash_messages(page)
+      if page.respond_to?(:messages=)
+        page.messages = { notices: flash['notices'], warnings: flash['warnings'], errors: flash['errors'] }
+      end
       render(inline: page.call)
     end
 

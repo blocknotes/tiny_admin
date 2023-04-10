@@ -2,49 +2,25 @@
 
 module TinyAdmin
   module Views
-    class DefaultLayout < Phlex::HTML
-      include Utils
-
-      attr_reader :compact_layout,
-                  :context,
-                  :errors,
-                  :no_menu,
-                  :notices,
-                  :query_string,
-                  :settings,
-                  :title,
-                  :warnings
-
-      def setup_page(title:, query_string:, settings:)
-        @title = title
-        @query_string = query_string
-        @settings = settings
-      end
-
-      def setup_options(context:, compact_layout:, no_menu:)
-        @context = context
-        @compact_layout = compact_layout
-        @no_menu = no_menu
-      end
-
-      def setup_flash_messages(notices: [], warnings: [], errors: [])
-        @notices = notices
-        @warnings = warnings
-        @errors = errors
-      end
+    class DefaultLayout < BasicLayout
+      attr_accessor :context, :messages, :options, :title
 
       def template(&block)
-        items = no_menu ? [] : settings.navbar
-
         doctype
         html {
           render components[:head].new(title, style_links: style_links, extra_styles: settings.extra_styles)
 
           body(class: body_class) {
-            render components[:navbar].new(current_slug: context&.slug, root: settings.root, items: items)
+            navbar_attrs = {
+              current_slug: context&.slug,
+              root_path: settings.root_path,
+              root_title: settings.root[:title],
+              items: navbar_items
+            }
+            render components[:navbar].new(**navbar_attrs)
 
             main_content {
-              render components[:flash].new(notices: notices, warnings: warnings, errors: errors)
+              render components[:flash].new(messages: messages || {})
               yield_content(&block)
             }
 
@@ -55,8 +31,26 @@ module TinyAdmin
 
       private
 
-      def components
-        settings.components
+      def body_class
+        "module-#{self.class.to_s.split('::').last.downcase}"
+      end
+
+      def navbar_items
+        options&.include?(:no_menu) ? [] : settings.navbar
+      end
+
+      def main_content
+        div(class: 'container main-content py-4') do
+          if options&.include?(:compact_layout)
+            div(class: 'row justify-content-center') {
+              div(class: 'col-6') {
+                yield
+              }
+            }
+          else
+            yield
+          end
+        end
       end
 
       def style_links
@@ -71,28 +65,8 @@ module TinyAdmin
         ]
       end
 
-      def body_class
-        "module-#{self.class.to_s.split('::').last.downcase}"
-      end
-
-      def main_content
-        div(class: 'container main-content py-4') do
-          if compact_layout
-            div(class: 'row justify-content-center') {
-              div(class: 'col-6') {
-                yield
-              }
-            }
-          else
-            yield
-          end
-        end
-      end
-
       def render_scripts
-        return unless settings.scripts
-
-        settings.scripts.each do |script_attrs|
+        (settings.scripts || []).each do |script_attrs|
           script(**script_attrs)
         end
       end

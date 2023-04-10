@@ -20,11 +20,5 @@ module TinyAdmin
     plugin authentication_plugin, TinyAdmin::Settings.instance.authentication
 
     not_found { prepare_page(settings.page_not_found).call }
-
-    def attach_flash_messages(page)
-      return unless page.respond_to?(:setup_flash_messages)
-
-      page.setup_flash_messages(notices: flash['notices'], warnings: flash['warnings'], errors: flash['errors'])
-    end
   end
 end

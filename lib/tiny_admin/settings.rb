@@ -40,7 +40,6 @@ module TinyAdmin
 
       @root ||= {}
       @root[:title] ||= 'TinyAdmin'
-      @root[:path] ||= root_path
       @root[:page] ||= Views::Pages::Root
 
       if @authentication[:plugin] == Plugins::SimpleAuth

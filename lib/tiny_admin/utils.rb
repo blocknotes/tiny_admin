@@ -13,14 +13,10 @@ module TinyAdmin
       list.join('&')
     end
 
-    def prepare_page(page_class, title: nil, context: nil, query_string: '', options: [])
+    def prepare_page(page_class, context: nil, options: nil)
       page_class.new.tap do |page|
-        page.setup_page(title: title, query_string: query_string, settings: settings)
-        page.setup_options(
-          context: context,
-          compact_layout: options.include?(:compact_layout),
-          no_menu: options.include?(:no_menu)
-        )
+        page.context = context
+        page.options = options
         yield(page) if block_given?
       end
     end

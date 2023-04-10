@@ -6,10 +6,12 @@ module TinyAdmin
       class Flash < Phlex::HTML
         attr_reader :errors, :notices, :warnings
 
-        def initialize(notices: [], warnings: [], errors: [])
-          @notices = notices
-          @warnings = warnings
-          @errors = errors
+        def initialize(messages:)
+          return unless messages
+
+          @notices = messages[:notices]
+          @warnings = messages[:warnings]
+          @errors = messages[:errors]
         end
 
         def template

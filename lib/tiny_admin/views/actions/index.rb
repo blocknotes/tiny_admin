@@ -5,7 +5,7 @@ module TinyAdmin
     module Actions
       class Index < DefaultLayout
         attr_reader :current_page, :fields, :pages, :prepare_record, :records
-        attr_accessor :actions, :filters
+        attr_accessor :actions, :filters, :query_string
 
         def setup_pagination(current_page:, pages:)
           @current_page = current_page
@@ -14,7 +14,7 @@ module TinyAdmin
 
         def setup_records(records:, fields:, prepare_record:)
           @records = records
-          @fields = fields.index_by(&:name)
+          @fields = fields.each_with_object({}) { |field, result| result[field.name] = field }
           @prepare_record = prepare_record
         end
 
