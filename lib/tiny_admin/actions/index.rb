@@ -12,7 +12,7 @@ module TinyAdmin
         records, total_count = repository.list(page: current_page, limit: pagination, filters: filters, sort: sort)
         prepare_record = ->(record) { repository.index_record_attrs(record, fields: fields_options) }
         title = repository.index_title
-        pages = (total_count / pagination) + 1
+        pages = (total_count / pagination.to_f).ceil
 
         prepare_page(Views::Actions::Index, context: context) do |page|
           page.setup_pagination(current_page: current_page, pages: pages > 1 ? pages : false)
