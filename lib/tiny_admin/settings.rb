@@ -35,6 +35,7 @@ module TinyAdmin
       @repository ||= Plugins::ActiveRecordRepository
       @resources ||= {}
       @root_path ||= '/admin'
+      @root_path = '/' if @root_path == ''
       @sections ||= []
 
       @root ||= {}
@@ -52,10 +53,10 @@ module TinyAdmin
       @components[:navbar] ||= Views::Components::Navbar
       @components[:pagination] ||= Views::Components::Pagination
 
-      @navbar = prepare_navbar(sections, root_path: root_path, logout: authentication[:logout])
+      @navbar = prepare_navbar(sections, logout: authentication[:logout])
     end
 
-    def prepare_navbar(sections, root_path:, logout:)
+    def prepare_navbar(sections, logout:)
       items = sections.each_with_object({}) do |section, list|
         slug = section[:slug]
         case section[:type]&.to_sym
@@ -64,7 +65,7 @@ module TinyAdmin
         when :page
           page = section[:page]
           pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
-          list[slug] = [section[:name], "#{root_path}/#{slug}"]
+          list[slug] = [section[:name], route_for(slug)]
         when :resource
           repository = section[:repository] || settings.repository
           resources[slug] = {
@@ -73,7 +74,7 @@ module TinyAdmin
           }
           resources[slug].merge! section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
           hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
-          list[slug] = [section[:name], "#{root_path}/#{slug}"] unless hidden
+          list[slug] = [section[:name], route_for(slug)] unless hidden
         end
       end
       items['auth/logout'] = logout if logout

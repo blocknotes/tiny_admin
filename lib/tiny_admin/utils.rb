@@ -26,7 +26,9 @@ module TinyAdmin
     end
 
     def route_for(section, reference: nil, action: nil)
-      [settings.root_path, section, reference, action].compact.join("/")
+      root_path = settings.root_path == '/' ? nil : settings.root_path
+      route = [root_path, section, reference, action].compact.join("/")
+      route[0] == '/' ? route : route.prepend('/')
     end
 
     def context
