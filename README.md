@@ -1,5 +1,7 @@
 # Tiny Admin
 
+[![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin) [![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml) [![Specs Rails 7.0](https://github.com/blocknotes/tiny_admin/actions/workflows/specs_rails_70.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs_rails_70.yml)
+
 A compact and composable dashboard component for Ruby.
 
 The main features are:
@@ -14,7 +16,7 @@ Please ⭐ if you like it.
 
 ## Install
 
-- Add to your Gemfile: `gem 'tiny_admin'`
+- Add to your Gemfile: `gem 'tiny_admin', '~> 0.1'`
 - Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
 - Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` (see [configuration](#configuration) below)
 
@@ -53,10 +55,98 @@ Components available:
 ## Configuration
 
 TinyAdmin can be configured using a YAML file and/or programmatically.
-
 See [extra](extra) folder for some usage examples.
 
-Sample:
+The following options are supported:
+
+`root` (Hash): define the root section of the admin, properties:
+  - `title` (String): root section's title;
+  - `page` (String): a view object to render;
+  - `redirect` (String): alternative to _page_ option - redirects to a specific slug;
+
+Example:
+
+```yml
+root:
+  title: MyAdmin
+  redirect: posts
+```
+
+`authentication` (Hash): define the authentication method, properties:
+  - `plugin` (String): a plugin class to use (ex. `TinyAdmin::Plugins::SimpleAuth`);
+  - `password` (String): a password hash used by _SimpleAuth_ plugin (generated with `Digest::SHA512.hexdigest("some password")`).
+
+Example:
+
+```yml
+authentication:
+  plugin: TinyAdmin::Plugins::SimpleAuth
+  password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
+```
+
+`sections` (Array of hashes): define the admin sections, properties:
+  - `slug` (String): section reference identifier;
+  - `name` (String): section's title;
+  - `type` (String): the type of section: `url`, `page` or `resource`;
+  - other properties depends on the section's type.
+
+For _url_ sections:
+  - `url` (String): the URL to load when clicking on the section's menu item;
+  - `options` (Hash): properties:
+    + `target` (String): link _target_ attributes (ex. `_blank`).
+
+Example:
+
+```yml
+slug: google
+name: Google.it
+type: url
+url: https://www.google.it
+options:
+  target: '_blank'
+```
+
+For _page_ sections:
+  - `page` (String): a view object to render.
+
+Example:
+
+```yml
+slug: stats
+name: Stats
+type: page
+page: Admin::Stats
+```
+
+For _resource_ sections:
+  - `model` (String): the class to use to fetch the data on an item of a collection;
+  - `repository` (String): the class to get the properties related to the model;
+  - `index` (Hash): collection's action options;
+  - `show` (Hash): detail's action options;
+  - `collection_actions` (Array of hashes): custom collection's actions;
+  - `member_actions` (Array of hashes): custom details's actions;
+  - `only` (Array of strings): list of supported actions (ex. `index`);
+  - `options` (Array of strings): resource options (ex. `hidden`).
+
+Example:
+
+```yml
+slug: posts
+name: Posts
+type: resource
+model: Post
+```
+
+`style_links` (Array of hashes): list of styles files to include, properties:
+  - `href` (String): URL for the style file;
+  - `rel` (String): type of style file.
+
+`scripts` (Array of hashes): list of scripts to include, properties:
+  - `src` (String): source URL for the script.
+
+`extra_styles` (String): inline CSS styles.
+
+### Sample
 
 ```rb
 # config/initializers/tiny_admin.rb

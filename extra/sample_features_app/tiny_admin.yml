@@ -1,0 +1,14 @@
+---
+root_path: '/'
+root:
+  redirect: sample-page
+extra_styles: >
+  .navbar {
+    background-color: var(--bs-teal);
+  }
+  .main-content {
+    background-color: var(--bs-gray-100);
+  }
+  .main-content a {
+    text-decoration: none;
+  }
