@@ -5,14 +5,7 @@ module TinyAdmin
     class DefaultLayout < Phlex::HTML
       include Utils
 
-      attr_reader :errors, :notices, :warnings
-      attr_accessor :context, :options, :query_string, :title
-
-      def setup_flash_messages(notices: [], warnings: [], errors: [])
-        @notices = notices
-        @warnings = warnings
-        @errors = errors
-      end
+      attr_accessor :context, :messages, :options, :query_string, :title
 
       def update_attributes(attributes)
         attributes.each do |key, value|
@@ -21,6 +14,7 @@ module TinyAdmin
       end
 
       def template(&block)
+        @messages ||= {}
         items = options&.include?(:no_menu) ? [] : settings.navbar
 
         doctype
@@ -31,7 +25,7 @@ module TinyAdmin
             render components[:navbar].new(current_slug: context&.slug, root: settings.root, items: items)
 
             main_content {
-              render components[:flash].new(notices: notices, warnings: warnings, errors: errors)
+              render components[:flash].new(messages: messages)
               yield_content(&block)
             }
 
