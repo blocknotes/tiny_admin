@@ -5,25 +5,8 @@ module TinyAdmin
     class DefaultLayout < Phlex::HTML
       include Utils
 
-      attr_reader :compact_layout,
-                  :context,
-                  :errors,
-                  :no_menu,
-                  :notices,
-                  :query_string,
-                  :title,
-                  :warnings
-
-      def setup_page(title:, query_string:)
-        @title = title
-        @query_string = query_string
-      end
-
-      def setup_options(context:, compact_layout:, no_menu:)
-        @context = context
-        @compact_layout = compact_layout
-        @no_menu = no_menu
-      end
+      attr_reader :errors, :notices, :warnings
+      attr_accessor :context, :options, :query_string, :title
 
       def setup_flash_messages(notices: [], warnings: [], errors: [])
         @notices = notices
@@ -31,8 +14,14 @@ module TinyAdmin
         @errors = errors
       end
 
+      def update_attributes(attributes)
+        attributes.each do |key, value|
+          send("#{key}=", value)
+        end
+      end
+
       def template(&block)
-        items = no_menu ? [] : settings.navbar
+        items = options&.include?(:no_menu) ? [] : settings.navbar
 
         doctype
         html {
@@ -75,7 +64,7 @@ module TinyAdmin
 
       def main_content
         div(class: 'container main-content py-4') do
-          if compact_layout
+          if options&.include?(:compact_layout)
             div(class: 'row justify-content-center') {
               div(class: 'col-6') {
                 yield

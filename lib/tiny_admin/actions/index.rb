@@ -14,11 +14,10 @@ module TinyAdmin
         title = repository.index_title
         pages = (total_count / pagination) + 1
 
-        prepare_page(Views::Actions::Index, title: title, context: context, query_string: query_string) do |page|
+        prepare_page(Views::Actions::Index, context: context) do |page|
           page.setup_pagination(current_page: current_page, pages: pages > 1 ? pages : false)
           page.setup_records(records: records, fields: fields, prepare_record: prepare_record)
-          page.actions = actions
-          page.filters = filters
+          page.update_attributes(actions: actions, filters: filters, query_string: query_string, title: title)
         end
       end
 
