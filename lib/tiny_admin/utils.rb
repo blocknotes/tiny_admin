@@ -15,7 +15,7 @@ module TinyAdmin
 
     def prepare_page(page_class, title: nil, context: nil, query_string: '', options: [])
       page_class.new.tap do |page|
-        page.setup_page(title: title, query_string: query_string, settings: settings)
+        page.setup_page(title: title, query_string: query_string)
         page.setup_options(
           context: context,
           compact_layout: options.include?(:compact_layout),

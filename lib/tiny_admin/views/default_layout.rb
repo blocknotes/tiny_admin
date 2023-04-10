@@ -11,14 +11,12 @@ module TinyAdmin
                   :no_menu,
                   :notices,
                   :query_string,
-                  :settings,
                   :title,
                   :warnings
 
-      def setup_page(title:, query_string:, settings:)
+      def setup_page(title:, query_string:)
         @title = title
         @query_string = query_string
-        @settings = settings
       end
 
       def setup_options(context:, compact_layout:, no_menu:)
