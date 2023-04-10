@@ -30,5 +30,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'phlex', '~> 1.6'
   spec.add_runtime_dependency 'roda', '~> 3.66'
+  spec.add_runtime_dependency 'tilt', '~> 2.1'
   spec.add_runtime_dependency 'zeitwerk', '~> 2.6'
 end
