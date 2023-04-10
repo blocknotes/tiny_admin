@@ -11,7 +11,13 @@ module TinyAdmin
           render components[:head].new(title, style_links: style_links, extra_styles: settings.extra_styles)
 
           body(class: body_class) {
-            render components[:navbar].new(current_slug: context&.slug, root: settings.root, items: navbar_items)
+            navbar_attrs = {
+              current_slug: context&.slug,
+              root_path: settings.root_path,
+              root_title: settings.root[:title],
+              items: navbar_items
+            }
+            render components[:navbar].new(**navbar_attrs)
 
             main_content {
               render components[:flash].new(messages: messages || {})
