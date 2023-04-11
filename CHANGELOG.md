@@ -2,6 +2,11 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.2.1
+
+- fix: correct missing password hash;
+- fix: correct pages count for pagination in index action
+
 ## 0.2.0
 
 - feat: improve layout structure;
