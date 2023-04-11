@@ -42,6 +42,7 @@ RSpec.describe 'Resources', type: :feature do
 
   context "when filtering by title in the post's listing page" do
     before do
+      setup_data(posts_count: 15)
       visit '/admin/posts?some_var=1'
       log_in
     end

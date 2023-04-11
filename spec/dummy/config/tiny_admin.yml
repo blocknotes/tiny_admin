@@ -29,6 +29,7 @@ sections:
     type: resource
     model: Post
     index:
+      pagination: 5
       attributes:
         - id
         - title
