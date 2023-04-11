@@ -8,7 +8,7 @@ module TinyAdmin
       class << self
         def configure(app, opts = {})
           @@opts = opts || {} # rubocop:disable Style/ClassVars
-          @@opts[:password] ||= ENV.fetch('ADMIN_PASSWORD_HASH') # NOTE: fallback value
+          @@opts[:password] ||= ENV.fetch('ADMIN_PASSWORD_HASH', nil) # NOTE: fallback value
 
           Warden::Strategies.add(:secret) do
             def authenticate!
