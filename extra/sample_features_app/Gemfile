@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem 'faker'
+gem 'rack'
+gem 'rackup'
+gem 'webrick'
+
+gem 'pry'
+
+gem 'tiny_admin', path: '../../'
+# gem 'tiny_admin'
