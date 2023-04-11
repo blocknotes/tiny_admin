@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
 module Admin
-  COLUMNS = %i[id first_col second_col third_col].freeze
+  COLUMNS = %i[id name full_address phone_number].freeze
 
   Column = Struct.new(:name, :title, :type, :options)
   Item = Struct.new(*COLUMNS)
 
-  RECORDS = [
-    Item.new(1, 'value a1', 'value a2', 'value a3'),
-    Item.new(2, 'value b1', 'value b2', 'value b3'),
-    Item.new(3, 'value c1', 'value c2', 'value c3')
-  ].freeze
+  RECORDS = 1.upto(100).map do |i|
+    Item.new(i, Faker::Name.name, Faker::Address.full_address, Faker::PhoneNumber.phone_number)
+  end
 
-  class ItemsRepo < TinyAdmin::Plugins::BaseRepository
+  class ItemsRepo < ::TinyAdmin::Plugins::BaseRepository
     def fields(options: nil)
       COLUMNS.map do |name|
         Column.new(name, name.to_s.tr('_', ' '), :string, {})
@@ -28,8 +26,9 @@ module Admin
     end
 
     def list(page: 1, limit: 10, filters: nil, sort: ['id'])
+      page_offset = page.positive? ? (page - 1) * limit : 0
       [
-        RECORDS,
+        RECORDS[page_offset...page_offset + limit],
         RECORDS.size
       ]
     end
