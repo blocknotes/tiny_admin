@@ -4,11 +4,11 @@
 
 A compact and composable dashboard component for Ruby.
 
-The main features are:
-- a Rack app that can be mounted in any Rack-enabled framework, it can even work standalone;
+Main features:
+- a Rack app that can be mounted in any Rack-enabled framework or used standalone;
 - structured with plugins also for main components that can be replaced with little effort;
-- routing is provided by Roda, which is small and performant;
-- views are Phlex components, so plain Ruby objects for views and no assets are needed.
+- routing is provided by Roda which is small and performant;
+- views are Phlex components, so plain Ruby objects for views, no assets are needed.
 
 Please ⭐ if you like it.
 
@@ -16,9 +16,19 @@ Please ⭐ if you like it.
 
 ## Install
 
-- Add to your Gemfile: `gem 'tiny_admin', '~> 0.1'`
+- Add to your Gemfile: `gem 'tiny_admin', '~> 0.2'`
 - Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
-- Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` (see [configuration](#configuration) below)
+  + in Rails, update _config/routes.rb_: `mount TinyAdmin::Router => '/admin'`
+- Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` (see [configuration](#configuration) below):
+
+```rb
+TinyAdmin.configure do |settings|
+  settings.root = {
+    title: 'Home',
+    page: Admin::PageRoot
+  }
+end
+```
 
 ## Plugins and components
 
