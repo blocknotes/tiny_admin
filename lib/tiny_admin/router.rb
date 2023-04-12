@@ -54,14 +54,14 @@ module TinyAdmin
       else
         page = settings.root[:page]
         page_class = page.is_a?(String) ? Object.const_get(page) : page
-        render_page prepare_page(page_class, context: context)
+        render_page prepare_page(page_class)
       end
     end
 
     def setup_page_route(router, slug, page_class)
       router.get slug do
         context.slug = slug
-        render_page prepare_page(page_class, context: context)
+        render_page prepare_page(page_class)
       end
     end
 

@@ -13,10 +13,18 @@ module TinyAdmin
       list.join('&')
     end
 
-    def prepare_page(page_class, context: nil, options: nil)
+    def prepare_page(page_class, options: nil)
       page_class.new.tap do |page|
-        page.context = context
         page.options = options
+        page.head_component = settings.components[:head]&.new
+        page.flash_component = settings.components[:flash]&.new
+        page.navbar_component = settings.components[:navbar]&.new(
+          current_slug: context&.slug,
+          root_path: settings.root_path,
+          root_title: settings.root[:title],
+          items: options&.include?(:no_menu) ? [] : settings.navbar
+        )
+
         yield(page) if block_given?
       end
     end

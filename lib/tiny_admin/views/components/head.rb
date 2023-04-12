@@ -6,12 +6,6 @@ module TinyAdmin
       class Head < Phlex::HTML
         attr_reader :extra_styles, :page_title, :style_links
 
-        def initialize(page_title, style_links: [], extra_styles: nil)
-          @page_title = page_title
-          @style_links = style_links
-          @extra_styles = extra_styles
-        end
-
         def template
           head {
             meta charset: 'utf-8'
@@ -24,6 +18,12 @@ module TinyAdmin
             end
             style { extra_styles } if extra_styles
           }
+        end
+
+        def update(page_title, style_links: [], extra_styles: nil)
+          @page_title = page_title
+          @style_links = style_links
+          @extra_styles = extra_styles
         end
       end
     end
