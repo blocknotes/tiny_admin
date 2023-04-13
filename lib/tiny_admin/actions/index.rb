@@ -3,21 +3,24 @@
 module TinyAdmin
   module Actions
     class Index < BasicAction
-      attr_reader :current_page, :fields_options, :filters_list, :pagination, :query_string, :sort
+      attr_reader :current_page, :fields_options, :filters_list, :pagination, :pages, :query_string, :sort
 
       def call(app:, context:, options:, actions:)
         evaluate_options(options)
         fields = repository.fields(options: fields_options)
         filters = prepare_filters(fields, filters_list)
         records, total_count = repository.list(page: current_page, limit: pagination, filters: filters, sort: sort)
-        prepare_record = ->(record) { repository.index_record_attrs(record, fields: fields_options) }
-        title = repository.index_title
-        pages = (total_count / pagination.to_f).ceil
 
         prepare_page(Views::Actions::Index) do |page|
-          page.setup_pagination(current_page: current_page, pages: pages > 1 ? pages : false)
-          page.setup_records(records: records, fields: fields, prepare_record: prepare_record)
-          page.update_attributes(actions: actions, filters: filters, query_string: query_string, title: title)
+          setup_pagination(page, settings.components[:pagination], total_count: total_count)
+          page.update_attributes(
+            actions: actions,
+            fields: fields,
+            filters: filters,
+            prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
+            records: records,
+            title: repository.index_title
+          )
         end
       end
 
@@ -42,6 +45,14 @@ module TinyAdmin
         fields.each_with_object({}) do |field, result|
           result[field] = { value: values[field.name], filter: filters[field.name] } if filters.key?(field.name)
         end
+      end
+
+      def setup_pagination(page, pagination_component_class, total_count:)
+        @pages = (total_count / pagination.to_f).ceil
+        return if pages <= 1 || !pagination_component_class
+
+        page.pagination_component = pagination_component_class.new
+        page.pagination_component.update(current: current_page, pages: pages, query_string: query_string)
       end
     end
   end
