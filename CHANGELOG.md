@@ -2,6 +2,12 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.3.0
+
+- feat: pagination improvements
+- feat: components improvements
+- feat: improve index action
+
 ## 0.2.1
 
 - fix: correct missing password hash;
