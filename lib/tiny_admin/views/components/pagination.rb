@@ -6,12 +6,6 @@ module TinyAdmin
       class Pagination < Phlex::HTML
         attr_reader :current, :pages, :query_string
 
-        def initialize(current:, pages:, query_string:)
-          @current = current
-          @pages = pages
-          @query_string = query_string
-        end
-
         def template
           div(class: 'pagination-div') {
             nav('aria-label' => 'Pagination') {
@@ -29,6 +23,12 @@ module TinyAdmin
               }
             }
           }
+        end
+
+        def update(current:, pages:, query_string:)
+          @current = current
+          @pages = pages
+          @query_string = query_string
         end
 
         private

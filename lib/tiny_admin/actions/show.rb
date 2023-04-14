@@ -11,7 +11,7 @@ module TinyAdmin
         prepare_record = ->(record_data) { repository.show_record_attrs(record_data, fields: fields_options) }
         fields = repository.fields(options: fields_options)
 
-        prepare_page(Views::Actions::Show, context: context) do |page|
+        prepare_page(Views::Actions::Show) do |page|
           page.setup_record(record: record, fields: fields, prepare_record: prepare_record)
           page.update_attributes(actions: actions, title: repository.show_title(record))
         end

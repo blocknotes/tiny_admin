@@ -3,24 +3,22 @@
 module TinyAdmin
   module Views
     class DefaultLayout < BasicLayout
-      attr_accessor :context, :messages, :options, :title
+      attr_accessor :flash_component, :head_component, :messages, :navbar_component, :options, :title
 
       def template(&block)
+        flash_component&.update(messages: messages)
+        head_component&.update(title, style_links: style_links, extra_styles: settings.extra_styles)
+
         doctype
         html {
-          render components[:head].new(title, style_links: style_links, extra_styles: settings.extra_styles)
+          render head_component if head_component
 
           body(class: body_class) {
-            navbar_attrs = {
-              current_slug: context&.slug,
-              root_path: settings.root_path,
-              root_title: settings.root[:title],
-              items: navbar_items
-            }
-            render components[:navbar].new(**navbar_attrs)
+            render navbar_component if navbar_component
 
             main_content {
-              render components[:flash].new(messages: messages || {})
+              render flash_component if flash_component
+
               yield_content(&block)
             }
 
@@ -33,10 +31,6 @@ module TinyAdmin
 
       def body_class
         "module-#{self.class.to_s.split('::').last.downcase}"
-      end
-
-      def navbar_items
-        options&.include?(:no_menu) ? [] : settings.navbar
       end
 
       def main_content

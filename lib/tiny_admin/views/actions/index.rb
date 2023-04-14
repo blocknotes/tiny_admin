@@ -4,21 +4,10 @@ module TinyAdmin
   module Views
     module Actions
       class Index < DefaultLayout
-        attr_reader :current_page, :fields, :pages, :prepare_record, :records
-        attr_accessor :actions, :filters, :query_string
-
-        def setup_pagination(current_page:, pages:)
-          @current_page = current_page
-          @pages = pages
-        end
-
-        def setup_records(records:, fields:, prepare_record:)
-          @records = records
-          @fields = fields.each_with_object({}) { |field, result| result[field.name] = field }
-          @prepare_record = prepare_record
-        end
+        attr_accessor :actions, :fields, :filters, :pagination_component, :prepare_record, :records
 
         def template
+          @fields = fields.each_with_object({}) { |field, result| result[field.name] = field }
           @filters ||= {}
 
           super do
@@ -57,9 +46,7 @@ module TinyAdmin
                 end
               }
 
-              if pages
-                render components[:pagination].new(current: current_page, pages: pages, query_string: query_string)
-              end
+              render pagination_component if pagination_component
             }
           end
         end
