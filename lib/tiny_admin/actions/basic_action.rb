@@ -5,11 +5,10 @@ module TinyAdmin
     class BasicAction
       include Utils
 
-      attr_reader :params, :path, :repository
+      attr_reader :params, :repository
 
-      def initialize(repository, path:, params:)
+      def initialize(repository, params:)
         @repository = repository
-        @path = path
         @params = params
       end
     end

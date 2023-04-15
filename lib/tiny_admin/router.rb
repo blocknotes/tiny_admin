@@ -91,7 +91,7 @@ module TinyAdmin
       actions = options[:only]
       if !actions || actions.include?(:index) || actions.include?('index')
         router.is do
-          index_action = TinyAdmin::Actions::Index.new(repository, path: request.path, params: request.params)
+          index_action = TinyAdmin::Actions::Index.new(repository, params: request.params)
           render_page index_action.call(app: self, context: context, options: action_options, actions: custom_actions)
         end
       end
@@ -116,7 +116,7 @@ module TinyAdmin
         actions = options[:only]
         if !actions || actions.include?(:show) || actions.include?('show')
           router.is do
-            show_action = TinyAdmin::Actions::Show.new(repository, path: request.path, params: request.params)
+            show_action = TinyAdmin::Actions::Show.new(repository, params: request.params)
             render_page show_action.call(app: self, context: context, options: action_options, actions: custom_actions)
           end
         end
@@ -129,7 +129,7 @@ module TinyAdmin
         action_class = action.is_a?(String) ? Object.const_get(action) : action
 
         router.get action_slug.to_s do
-          custom_action = action_class.new(repository, path: request.path, params: request.params)
+          custom_action = action_class.new(repository, params: request.params)
           render_page custom_action.call(app: self, context: context, options: options)
         end
 
