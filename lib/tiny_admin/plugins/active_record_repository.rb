@@ -7,14 +7,7 @@ module TinyAdmin
         return record.attributes.transform_values(&:to_s) if !fields || fields.empty?
 
         record.attributes.slice(*fields.keys).each_with_object({}) do |(key, value), result|
-          field_data = fields[key]
-          result[key] =
-            if field_data[:converter] && field_data[:method]
-              converter = Object.const_get(field_data[:converter])
-              converter.send(field_data[:method], value)
-            else
-              value&.to_s
-            end
+          result[key] = translate_value(fields[key], value)
         end
       end
 
@@ -40,8 +33,11 @@ module TinyAdmin
       end
 
       def show_record_attrs(record, fields: nil)
-        attrs = !fields || fields.empty? ? record.attributes : record.attributes.slice(*fields.keys)
-        attrs.transform_values(&:to_s)
+        return record.attributes.transform_values(&:to_s) if !fields || fields.empty?
+
+        record.attributes.slice(*fields.keys).each_with_object({}) do |(key, value), result|
+          result[key] = translate_value(fields[key], value)
+        end
       end
 
       def show_title(record)
