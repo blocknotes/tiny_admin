@@ -124,7 +124,7 @@ module TinyAdmin
     end
 
     def setup_custom_actions(router, custom_actions, repository:, options:)
-      (custom_actions || []).map do |custom_action|
+      (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
         action_class = action.is_a?(String) ? Object.const_get(action) : action
 
@@ -133,7 +133,7 @@ module TinyAdmin
           render_page custom_action.call(app: self, context: context, options: options)
         end
 
-        action_slug.to_s
+        result[action_slug.to_s] = action_class
       end
     end
   end
