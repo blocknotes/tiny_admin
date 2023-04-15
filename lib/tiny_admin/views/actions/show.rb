@@ -22,10 +22,11 @@ module TinyAdmin
                 }
                 div(class: 'col-8') {
                   ul(class: 'nav justify-content-end') {
-                    (actions || []).each do |action|
-                      li(class: 'nav-item') {
+                    (actions || {}).each do |action, action_class|
+                      li(class: 'nav-item mx-1') {
                         href = route_for(context.slug, reference: context.reference, action: action)
-                        a(href: href, class: 'nav-link btn btn-outline-secondary') { action }
+                        title = action_class.respond_to?(:title) ? action_class.title : action
+                        a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
                       }
                     end
                   }

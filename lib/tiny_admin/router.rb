@@ -5,6 +5,8 @@ module TinyAdmin
     TinyAdmin::Settings.instance.load_settings
 
     route do |r|
+      context.router = r
+
       r.on 'auth' do
         context.slug = nil
         r.run Authentication
@@ -89,7 +91,7 @@ module TinyAdmin
       actions = options[:only]
       if !actions || actions.include?(:index) || actions.include?('index')
         router.is do
-          index_action = TinyAdmin::Actions::Index.new(repository, path: request.path, params: request.params)
+          index_action = TinyAdmin::Actions::Index.new(repository, params: request.params)
           render_page index_action.call(app: self, context: context, options: action_options, actions: custom_actions)
         end
       end
@@ -114,7 +116,7 @@ module TinyAdmin
         actions = options[:only]
         if !actions || actions.include?(:show) || actions.include?('show')
           router.is do
-            show_action = TinyAdmin::Actions::Show.new(repository, path: request.path, params: request.params)
+            show_action = TinyAdmin::Actions::Show.new(repository, params: request.params)
             render_page show_action.call(app: self, context: context, options: action_options, actions: custom_actions)
           end
         end
@@ -122,16 +124,16 @@ module TinyAdmin
     end
 
     def setup_custom_actions(router, custom_actions, repository:, options:)
-      (custom_actions || []).map do |custom_action|
+      (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
         action_class = action.is_a?(String) ? Object.const_get(action) : action
 
         router.get action_slug.to_s do
-          custom_action = action_class.new(repository, path: request.path, params: request.params)
+          custom_action = action_class.new(repository, params: request.params)
           render_page custom_action.call(app: self, context: context, options: options)
         end
 
-        action_slug.to_s
+        result[action_slug.to_s] = action_class
       end
     end
   end

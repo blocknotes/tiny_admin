@@ -29,9 +29,10 @@ module TinyAdmin
       end
     end
 
-    def route_for(section, reference: nil, action: nil)
+    def route_for(section, reference: nil, action: nil, query: nil)
       root_path = settings.root_path == '/' ? nil : settings.root_path
       route = [root_path, section, reference, action].compact.join("/")
+      route << "?#{query}" if query
       route[0] == '/' ? route : route.prepend('/')
     end
 
