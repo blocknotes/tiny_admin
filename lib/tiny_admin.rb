@@ -18,7 +18,7 @@ module TinyAdmin
   def configure_from_file(file)
     config = YAML.load_file(file, symbolize_names: true)
     config.each do |key, value|
-      TinyAdmin::Settings.instance.send("#{key}=", value)
+      TinyAdmin::Settings.instance[key] = value
     end
   end
 

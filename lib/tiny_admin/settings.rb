@@ -5,9 +5,26 @@ module TinyAdmin
     include Singleton
     include Utils
 
+    DEFAULTS = {
+      %i[authentication plugin] => Plugins::NoAuth,
+      %i[authentication login] => Views::Pages::SimpleAuthLogin,
+      %i[components flash] => Views::Components::Flash,
+      %i[components head] => Views::Components::Head,
+      %i[components navbar] => Views::Components::Navbar,
+      %i[components pagination] => Views::Components::Pagination,
+      %i[helper_class] => Support,
+      %i[page_not_found] => Views::Pages::PageNotFound,
+      %i[record_not_found] => Views::Pages::RecordNotFound,
+      %i[repository] => Plugins::ActiveRecordRepository,
+      %i[root_path] => '/admin',
+      %i[root page] => Views::Pages::Root,
+      %i[root title] => 'TinyAdmin'
+    }.freeze
+
     attr_accessor :authentication,
                   :components,
                   :extra_styles,
+                  :helper_class,
                   :navbar,
                   :page_not_found,
                   :record_not_found,
@@ -20,38 +37,33 @@ module TinyAdmin
 
     attr_reader :pages, :resources
 
-    def load_settings
-      @authentication ||= {}
-      @authentication[:plugin] ||= Plugins::NoAuth
-      @authentication[:login] ||= Views::Pages::SimpleAuthLogin
-      @authentication[:plugin] = Object.const_get(authentication[:plugin]) if authentication[:plugin].is_a?(String)
+    def [](key)
+      send(key)
+    end
 
-      @page_not_found ||= Views::Pages::PageNotFound
-      @page_not_found = Object.const_get(@page_not_found) if @page_not_found.is_a?(String)
-      @record_not_found ||= Views::Pages::RecordNotFound
-      @record_not_found = Object.const_get(@record_not_found) if @record_not_found.is_a?(String)
+    def []=(key, value)
+      send("#{key}=", value)
+      convert_value(key, value)
+    end
+
+    def load_settings
+      # default values
+      DEFAULTS.each do |(option, param), default|
+        if param
+          self[option] ||= {}
+          self[option][param] ||= default
+        else
+          self[option] ||= default
+        end
+      end
 
       @pages ||= {}
-      @repository ||= Plugins::ActiveRecordRepository
       @resources ||= {}
-      @root_path ||= '/admin'
-      @root_path = '/' if @root_path == ''
       @sections ||= []
-
-      @root ||= {}
-      @root[:title] ||= 'TinyAdmin'
-      @root[:page] ||= Views::Pages::Root
-
+      @root_path = '/' if @root_path == ''
       if @authentication[:plugin] == Plugins::SimpleAuth
         @authentication[:logout] ||= ['logout', "#{root_path}/auth/logout"]
       end
-
-      @components ||= {}
-      @components[:flash] ||= Views::Components::Flash
-      @components[:head] ||= Views::Components::Head
-      @components[:navbar] ||= Views::Components::Navbar
-      @components[:pagination] ||= Views::Components::Pagination
-
       @navbar = prepare_navbar(sections, logout: authentication[:logout])
     end
 
@@ -78,6 +90,21 @@ module TinyAdmin
       end
       items['auth/logout'] = logout if logout
       items
+    end
+
+    private
+
+    def convert_value(key, value)
+      if value.is_a?(Hash)
+        value.each_key do |key2|
+          path = [key, key2]
+          if DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)
+            self[key][key2] = Object.const_get(self[key][key2])
+          end
+        end
+      elsif value.is_a?(String) && (DEFAULTS[[key]].is_a?(Class) || DEFAULTS[[key]].is_a?(Module))
+        self[key] = Object.const_get(self[key])
+      end
     end
   end
 end
