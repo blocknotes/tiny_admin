@@ -27,9 +27,7 @@ module TinyAdmin
       private
 
       def evaluate_options(options)
-        @fields_options = options[:attributes]&.each_with_object({}) do |field, result|
-          result.merge!(field.is_a?(Hash) ? { field[:field] => field } : { field => { field: field } })
-        end
+        @fields_options = attribute_options(options[:attributes])
         @filters_list = options[:filters]
         @pagination = options[:pagination] || 10
         @sort = options[:sort] || ['id']
