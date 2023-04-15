@@ -2,7 +2,7 @@
 /.rubocop-*
 /*.gem
 
-/Gemfile.lock
+Gemfile.lock
 
 /_misc/
 /coverage/

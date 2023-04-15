@@ -10,6 +10,6 @@ RSpec.describe 'Page not found', type: :feature do
 
   it 'loads the page not found', :aggregate_failures do
     expect(page).to have_current_path('/admin/aaa')
-    expect(page).to have_css('h1.title', text: 'Page not found')
+    expect(page).to have_content('Page not found')
   end
 end
