@@ -2,9 +2,9 @@
 
 module TinyAdmin
   class Router < BasicApp
-    TinyAdmin::Settings.instance.load_settings
-
     route do |r|
+      context.settings = TinyAdmin::Settings.instance
+      context.settings.load_settings
       context.router = r
 
       r.on 'auth' do
@@ -29,11 +29,11 @@ module TinyAdmin
         r.redirect settings.root_path
       end
 
-      TinyAdmin::Settings.instance.pages.each do |slug, data|
+      context.settings.pages.each do |slug, data|
         setup_page_route(r, slug, data)
       end
 
-      TinyAdmin::Settings.instance.resources.each do |slug, options|
+      context.settings.resources.each do |slug, options|
         setup_resource_routes(r, slug, options: options || {})
       end
 
