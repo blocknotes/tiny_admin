@@ -5,6 +5,8 @@ module TinyAdmin
     TinyAdmin::Settings.instance.load_settings
 
     route do |r|
+      context.router = r
+
       r.on 'auth' do
         context.slug = nil
         r.run Authentication
