@@ -4,9 +4,7 @@ module TinyAdmin
   module Actions
     class Show < BasicAction
       def call(app:, context:, options:, actions:)
-        fields_options = (options[:attributes] || []).each_with_object({}) do |field, result|
-          result.merge!(field.is_a?(Hash) ? { field[:field] => field } : { field => { field: field } })
-        end
+        fields_options = attribute_options(options[:attributes])
         record = repository.find(context.reference)
         prepare_record = ->(record_data) { repository.show_record_attrs(record_data, fields: fields_options) }
         fields = repository.fields(options: fields_options)

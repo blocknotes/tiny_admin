@@ -4,17 +4,11 @@ module TinyAdmin
   module Plugins
     class ActiveRecordRepository < BaseRepository
       def index_record_attrs(record, fields: nil)
-        return record.attributes.transform_values(&:to_s) if !fields || fields.empty?
+        return record.attributes.transform_values(&:to_s) unless fields
 
-        record.attributes.slice(*fields.keys).each_with_object({}) do |(key, value), result|
-          field_data = fields[key]
-          result[key] =
-            if field_data[:converter] && field_data[:method]
-              converter = Object.const_get(field_data[:converter])
-              converter.send(field_data[:method], value)
-            else
-              value&.to_s
-            end
+        fields.to_h do |name, field|
+          value = record.send(name)
+          [name, translate_value(value, field)]
         end
       end
 
@@ -24,25 +18,19 @@ module TinyAdmin
       end
 
       def fields(options: nil)
-        opts = options || {}
-        columns = model.columns
-        if !opts.empty?
-          extra_fields = opts.keys - model.column_names
-          raise "Some requested fields are not available: #{extra_fields.join(', ')}" if extra_fields.any?
-
-          columns = opts.keys.map { |field| columns.find { _1.name == field } }
-        end
-        columns.map do |column|
-          name = column.name
-          type = opts.dig(column.name, :type) || column.type
-          TinyAdmin::Field.create_field(name: name, title: name.humanize, type: type, options: opts[name])
+        if options
+          types = model.columns.to_h { [_1.name, _1.type] }
+          options.map do |name, field_options|
+            TinyAdmin::Field.create_field(name: name, type: types[name], options: field_options)
+          end
+        else
+          model.columns.map do |column|
+            TinyAdmin::Field.create_field(name: column.name, type: column.type)
+          end
         end
       end
 
-      def show_record_attrs(record, fields: nil)
-        attrs = !fields || fields.empty? ? record.attributes : record.attributes.slice(*fields.keys)
-        attrs.transform_values(&:to_s)
-      end
+      alias show_record_attrs index_record_attrs
 
       def show_title(record)
         "#{model} ##{record.id}"
@@ -54,10 +42,10 @@ module TinyAdmin
         raise BaseRepository::RecordNotFound, e.message
       end
 
-      def list(page: 1, limit: 10, filters: nil, sort: ['id'])
-        page_offset = page.positive? ? (page - 1) * limit : 0
+      def list(page: 1, limit: 10, sort: ['id'], filters: nil)
         query = model.all.order(sort)
         query = apply_filters(query, filters) if filters
+        page_offset = page.positive? ? (page - 1) * limit : 0
         records = query.offset(page_offset).limit(limit).to_a
         [records, query.count]
       end

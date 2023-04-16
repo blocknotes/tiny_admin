@@ -6,7 +6,7 @@ RSpec.describe 'TinyAdmin' do
 
     let(:file) { file_fixture('basic_config.yml') }
     let(:root) { { title: 'Test' } }
-    let(:settings) { instance_double(TinyAdmin::Settings, root: root, :root= => nil) }
+    let(:settings) { instance_double(TinyAdmin::Settings, :[]= => nil) }
 
     before do
       allow(TinyAdmin::Settings).to receive(:instance).and_return(settings)
@@ -14,7 +14,7 @@ RSpec.describe 'TinyAdmin' do
     end
 
     it 'changes the settings' do
-      expect(settings).to have_received(:root=).with(title: 'Test Admin!')
+      expect(settings).to have_received(:[]=).with(:root, title: 'Test Admin!')
     end
   end
 end

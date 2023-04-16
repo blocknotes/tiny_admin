@@ -11,7 +11,7 @@ RSpec.describe 'Root', type: :feature do
 
     it 'loads the root page', :aggregate_failures do
       expect(page).to have_current_path('/admin')
-      expect(page).to have_content('This is just a root page')
+      expect(page).to have_content('Tiny Admin')
     end
   end
 

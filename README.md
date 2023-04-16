@@ -82,6 +82,12 @@ root:
   redirect: posts
 ```
 
+`helper_class` (String): class or module with helper methods, used for attributes' formatters.
+
+`page_not_found` (String): a view object to render when a missing page is requested.
+
+`record_not_found` (String): a view object to render when a missing record is requested.
+
 `authentication` (Hash): define the authentication method, properties:
   - `plugin` (String): a plugin class to use (ex. `TinyAdmin::Plugins::SimpleAuth`);
   - `password` (String): a password hash used by _SimpleAuth_ plugin (generated with `Digest::SHA512.hexdigest("some password")`).
@@ -175,65 +181,64 @@ end
 ---
 authentication:
   plugin: TinyAdmin::Plugins::SimpleAuth
-  # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395df...' <= SHA512
-page_not_found: Admin::PageNotFound
-record_not_found: Admin::RecordNotFound
+  # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 root:
-  title: 'Tiny Admin'
-  page: Admin::PageRoot
-  # redirect: posts
+  title: Test Admin
+  # page: RootPage
+helper_class: AdminHelper
+page_not_found: PageNotFound
+record_not_found: RecordNotFound
 sections:
   - slug: google
     name: Google.it
     type: url
     url: https://www.google.it
     options:
-      target: '_blank'
-  - slug: stats
-    name: Stats
+      target: _blank
+  - slug: sample
+    name: Sample page
     type: page
-    page: Admin::Stats
+    page: SamplePage
   - slug: authors
     name: Authors
     type: resource
     model: Author
-    repository: Admin::AuthorsRepo
     collection_actions:
-      - latests: Admin::LatestAuthorsAction
+      - sample_col: SampleCollectionAction
     member_actions:
-      - csv_export: Admin::CsvExportAuthorAction
-    # only:
-    #   - index
-    # options:
-    #   - hidden
+      - sample_mem: SampleMemberAction
   - slug: posts
     name: Posts
     type: resource
     model: Post
     index:
-      sort:
-        - author_id DESC
-      pagination: 15
+      pagination: 5
       attributes:
         - id
         - title
         - field: author_id
           link_to: authors
-        - state
+        - category: upcase
+        - state: downcase
         - published
-        - dt
+        - position: round, 1
+        - dt: to_date
         - field: created_at
-          converter: Admin::Utils
+          converter: AdminUtils
           method: datetime_formatter
+        - updated_at: strftime, %Y%m%d %H:%M
       filters:
         - title
-        - field: state
+        - author_id
+        - field: category
           type: select
           values:
-            - available
-            - unavailable
-            - arriving
+            - news
+            - sport
+            - tech
         - published
+        - dt
+        - created_at
     show:
       attributes:
         - id
@@ -243,7 +248,8 @@ sections:
           link_to: authors
         - category
         - published
-        - state
+        - position: format, %f
+        - dt
         - created_at
 style_links:
   - href: /bootstrap.min.css

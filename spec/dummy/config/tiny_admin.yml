@@ -4,7 +4,10 @@ authentication:
   # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 root:
   title: Test Admin
-  page: RootPage
+  # page: RootPage
+helper_class: AdminHelper
+# page_not_found: PageNotFound
+# record_not_found: RecordNotFound
 sections:
   - slug: google
     name: Google.it
@@ -35,12 +38,15 @@ sections:
         - title
         - field: author_id
           link_to: authors
-        - category
+        - category: upcase
+        - state: downcase
         - published
-        - dt
+        - position: round, 1
+        - dt: to_date
         - field: created_at
           converter: AdminUtils
           method: datetime_formatter
+        - updated_at: strftime, %Y%m%d %H:%M
       filters:
         - title
         - author_id
@@ -62,5 +68,21 @@ sections:
           link_to: authors
         - category
         - published
+        - position: format, %f
         - dt
         - created_at
+style_links:
+  - href: /bootstrap.min.css
+    rel: stylesheet
+scripts:
+  - src: /bootstrap.bundle.min.js
+extra_styles: >
+  .navbar {
+    background-color: var(--bs-cyan);
+  }
+  .main-content {
+    background-color: var(--bs-gray-100);
+  }
+  .main-content a {
+    text-decoration: none;
+  }
