@@ -11,7 +11,7 @@ module TinyAdmin
         @model = model
       end
 
-      def translate_value(field, value)
+      def translate_value(value, field)
         if field[:method]
           method, *options = field[:method].split(',').map(&:strip)
           if field[:converter]

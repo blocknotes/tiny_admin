@@ -4,7 +4,7 @@ module TinyAdmin
   class Field
     attr_reader :name, :options, :title, :type
 
-    def initialize(type:, name:, title:, options: {})
+    def initialize(name:, title:, type:, options: {})
       @type = type
       @name = name
       @title = title || name
@@ -12,8 +12,9 @@ module TinyAdmin
     end
 
     class << self
-      def create_field(name:, title:, type: nil, options: {})
-        new(type: type, name: name, title: title, options: options)
+      def create_field(name:, title: nil, type: nil, options: {})
+        field_title = title || name.respond_to?(:humanize) ? name.humanize : name.tr('_', ' ').capitalize
+        new(name: name, title: field_title, type: type || :string, options: options)
       end
     end
   end
