@@ -3,7 +3,15 @@
 module TinyAdmin
   module Actions
     class Index < BasicAction
-      attr_reader :current_page, :fields_options, :filters_list, :pagination, :pages, :query_string, :sort
+      attr_reader :current_page,
+                  :fields_options,
+                  :filters_list,
+                  :pagination,
+                  :pages,
+                  :params,
+                  :query_string,
+                  :repository,
+                  :sort
 
       def call(app:, context:, options:, actions:)
         evaluate_options(options)
@@ -28,6 +36,8 @@ module TinyAdmin
 
       def evaluate_options(options)
         @fields_options = attribute_options(options[:attributes])
+        @params = context.request.params
+        @repository = context.repository
         @filters_list = options[:filters]
         @pagination = options[:pagination] || 10
         @sort = options[:sort] || ['id']
