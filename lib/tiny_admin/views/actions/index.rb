@@ -63,8 +63,9 @@ module TinyAdmin
                   field = fields[key]
                   td(class: "field-value-#{field.name} field-value-type-#{field.type}") {
                     if field.options && field.options[:link_to]
-                      reference = record.send(field.options[:field])
-                      a(href: route_for(field.options[:link_to], reference: reference)) { value }
+                      messages = (field.options[:call] || '').split(',').map(&:strip)
+                      label = messages.any? ? messages.inject(record) { |result, msg| result&.send(msg) } : value
+                      a(href: route_for(field.options[:link_to], reference: value)) { label }
                     else
                       value
                     end
