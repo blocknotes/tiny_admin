@@ -76,14 +76,14 @@ module TinyAdmin
     end
 
     def setup_collection_routes(router, options:)
-      repository = options[:repository].new(options[:model])
+      context.repository = options[:repository].new(options[:model])
       action_options = options[:index] || {}
 
       # Custom actions
       custom_actions = setup_custom_actions(
         router,
         options[:collection_actions],
-        repository: repository,
+        repository: context.repository,
         options: action_options
       )
 
@@ -98,7 +98,7 @@ module TinyAdmin
     end
 
     def setup_member_routes(router, options:)
-      repository = options[:repository].new(options[:model])
+      context.repository = options[:repository].new(options[:model])
       action_options = (options[:show] || {}).merge(record_not_found_page: settings.record_not_found)
 
       router.on String do |reference|
@@ -108,7 +108,7 @@ module TinyAdmin
         custom_actions = setup_custom_actions(
           router,
           options[:member_actions],
-          repository: repository,
+          repository: context.repository,
           options: action_options
         )
 
@@ -124,6 +124,7 @@ module TinyAdmin
     end
 
     def setup_custom_actions(router, custom_actions, repository:, options:)
+      context.repository = repository
       (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
         action_class = action.is_a?(String) ? Object.const_get(action) : action
