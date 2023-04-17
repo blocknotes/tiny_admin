@@ -14,15 +14,7 @@ module TinyAdmin
                   h1(class: 'title') { title }
                 }
                 div(class: 'col-8') {
-                  ul(class: 'nav justify-content-end') {
-                    (actions || {}).each do |action, action_class|
-                      li(class: 'nav-item mx-1') {
-                        href = route_for(context.slug, action: action)
-                        title = action_class.respond_to?(:title) ? action_class.title : action
-                        a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
-                      }
-                    end
-                  }
+                  actions_buttons
                 }
               }
 
@@ -81,6 +73,18 @@ module TinyAdmin
                 td(class: 'actions') {
                   a(href: route_for(context.slug, reference: record.id)) { 'show' }
                 }
+              }
+            end
+          }
+        end
+
+        def actions_buttons
+          ul(class: 'nav justify-content-end') {
+            (actions || {}).each do |action, action_class|
+              li(class: 'nav-item mx-1') {
+                href = route_for(context.slug, action: action)
+                title = action_class.respond_to?(:title) ? action_class.title : action
+                a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
               }
             end
           }
