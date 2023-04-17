@@ -47,7 +47,9 @@ module TinyAdmin
           thead {
             tr {
               fields.each_value do |field|
-                td(class: "field-header-#{field.name} field-header-type-#{field.type}") { field.title }
+                td(class: "field-header-#{field.name} field-header-type-#{field.type}") {
+                  field.options[:header] || field.title
+                }
               end
               td { whitespace }
             }

@@ -22,7 +22,7 @@ module TinyAdmin
                 field = fields[key]
                 div(class: "field-#{field.name} row lh-lg") {
                   if field
-                    div(class: 'field-header col-2') { field.title }
+                    div(class: 'field-header col-2') { field.options[:header] || field.title }
                   end
                   div(class: 'field-value col-10') {
                     if field.options && field.options[:link_to]
