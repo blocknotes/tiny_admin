@@ -7,9 +7,6 @@ module TinyAdmin
         attr_accessor :actions, :fields, :filters, :pagination_component, :prepare_record, :records
 
         def template
-          @fields = fields.each_with_object({}) { |field, result| result[field.name] = field }
-          @filters ||= {}
-
           super do
             div(class: 'index') {
               div(class: 'row') {
@@ -30,7 +27,7 @@ module TinyAdmin
               }
 
               div(class: 'row') {
-                div_class = filters.any? ? 'col-9' : 'col-12'
+                div_class = filters&.any? ? 'col-9' : 'col-12'
                 div(class: div_class) {
                   table(class: 'table') {
                     table_header if fields.any?
@@ -39,7 +36,7 @@ module TinyAdmin
                   }
                 }
 
-                if filters.any?
+                if filters&.any?
                   div(class: 'col-3') {
                     filters_form_attrs = { section_path: route_for(context.slug), filters: filters }
                     render TinyAdmin::Views::Components::FiltersForm.new(**filters_form_attrs)

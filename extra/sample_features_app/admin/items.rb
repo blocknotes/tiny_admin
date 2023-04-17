@@ -12,8 +12,8 @@ module Admin
 
   class ItemsRepo < ::TinyAdmin::Plugins::BaseRepository
     def fields(options: nil)
-      COLUMNS.map do |name|
-        Column.new(name, name.to_s.tr('_', ' '), :string, {})
+      COLUMNS.each_with_object({}) do |name, result|
+        result[name] = TinyAdmin::Field.create_field(name: name)
       end
     end
 

@@ -20,12 +20,12 @@ module TinyAdmin
       def fields(options: nil)
         if options
           types = model.columns.to_h { [_1.name, _1.type] }
-          options.map do |name, field_options|
-            TinyAdmin::Field.create_field(name: name, type: types[name], options: field_options)
+          options.each_with_object({}) do |(name, field_options), result|
+            result[name] = TinyAdmin::Field.create_field(name: name, type: types[name], options: field_options)
           end
         else
-          model.columns.map do |column|
-            TinyAdmin::Field.create_field(name: column.name, type: column.type)
+          model.columns.each_with_object({}) do |column, result|
+            result[column.name] = TinyAdmin::Field.create_field(name: column.name, type: column.type)
           end
         end
       end

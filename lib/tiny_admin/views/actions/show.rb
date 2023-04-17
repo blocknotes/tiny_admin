@@ -4,14 +4,7 @@ module TinyAdmin
   module Views
     module Actions
       class Show < DefaultLayout
-        attr_reader :fields, :prepare_record, :record
-        attr_accessor :actions
-
-        def setup_record(record:, fields:, prepare_record:)
-          @record = record
-          @fields = fields
-          @prepare_record = prepare_record
-        end
+        attr_accessor :actions, :fields, :prepare_record, :record
 
         def template
           super do
@@ -33,8 +26,8 @@ module TinyAdmin
                 }
               }
 
-              prepare_record.call(record).each_with_index do |(_key, value), index|
-                field = fields[index]
+              prepare_record.call(record).each do |key, value|
+                field = fields[key]
                 div(class: "field-#{field.name} row lh-lg") {
                   if field
                     div(class: 'field-header col-2') { field.title }

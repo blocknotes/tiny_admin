@@ -13,8 +13,13 @@ module TinyAdmin
 
     class << self
       def create_field(name:, title: nil, type: nil, options: {})
-        field_title = title || name.respond_to?(:humanize) ? name.humanize : name.tr('_', ' ').capitalize
-        new(name: name, title: field_title, type: type || :string, options: options)
+        field_name = name.to_s
+        new(
+          name: field_name,
+          title: title || field_name.respond_to?(:humanize) ? field_name.humanize : field_name.tr('_', ' ').capitalize,
+          type: type || :string,
+          options: options
+        )
       end
     end
   end
