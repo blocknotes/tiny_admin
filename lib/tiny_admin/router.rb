@@ -76,14 +76,14 @@ module TinyAdmin
     end
 
     def setup_collection_routes(router, options:)
-      repository = options[:repository].new(options[:model])
+      context.repository = options[:repository].new(options[:model])
       action_options = options[:index] || {}
 
       # Custom actions
       custom_actions = setup_custom_actions(
         router,
         options[:collection_actions],
-        repository: repository,
+        repository: context.repository,
         options: action_options
       )
 
@@ -91,14 +91,15 @@ module TinyAdmin
       actions = options[:only]
       if !actions || actions.include?(:index) || actions.include?('index')
         router.is do
-          index_action = TinyAdmin::Actions::Index.new(repository, params: request.params)
+          context.request = request
+          index_action = TinyAdmin::Actions::Index.new
           render_page index_action.call(app: self, context: context, options: action_options, actions: custom_actions)
         end
       end
     end
 
     def setup_member_routes(router, options:)
-      repository = options[:repository].new(options[:model])
+      context.repository = options[:repository].new(options[:model])
       action_options = (options[:show] || {}).merge(record_not_found_page: settings.record_not_found)
 
       router.on String do |reference|
@@ -108,7 +109,7 @@ module TinyAdmin
         custom_actions = setup_custom_actions(
           router,
           options[:member_actions],
-          repository: repository,
+          repository: context.repository,
           options: action_options
         )
 
@@ -116,7 +117,8 @@ module TinyAdmin
         actions = options[:only]
         if !actions || actions.include?(:show) || actions.include?('show')
           router.is do
-            show_action = TinyAdmin::Actions::Show.new(repository, params: request.params)
+            context.request = request
+            show_action = TinyAdmin::Actions::Show.new
             render_page show_action.call(app: self, context: context, options: action_options, actions: custom_actions)
           end
         end
@@ -124,12 +126,14 @@ module TinyAdmin
     end
 
     def setup_custom_actions(router, custom_actions, repository:, options:)
+      context.repository = repository
       (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
         action_class = action.is_a?(String) ? Object.const_get(action) : action
 
         router.get action_slug.to_s do
-          custom_action = action_class.new(repository, params: request.params)
+          context.request = request
+          custom_action = action_class.new
           render_page custom_action.call(app: self, context: context, options: options)
         end
 

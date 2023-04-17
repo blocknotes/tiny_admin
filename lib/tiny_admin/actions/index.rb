@@ -3,7 +3,15 @@
 module TinyAdmin
   module Actions
     class Index < BasicAction
-      attr_reader :current_page, :fields_options, :filters_list, :pagination, :pages, :query_string, :sort
+      attr_reader :current_page,
+                  :fields_options,
+                  :filters_list,
+                  :pagination,
+                  :pages,
+                  :params,
+                  :query_string,
+                  :repository,
+                  :sort
 
       def call(app:, context:, options:, actions:)
         evaluate_options(options)
@@ -28,6 +36,8 @@ module TinyAdmin
 
       def evaluate_options(options)
         @fields_options = attribute_options(options[:attributes])
+        @params = context.request.params
+        @repository = context.repository
         @filters_list = options[:filters]
         @pagination = options[:pagination] || 10
         @sort = options[:sort] || ['id']
@@ -40,8 +50,8 @@ module TinyAdmin
         filters = (filters_list || []).map { _1.is_a?(Hash) ? _1 : { field: _1 } }
         filters = filters.each_with_object({}) { |filter, result| result[filter[:field]] = filter }
         values = (params['q'] || {})
-        fields.each_with_object({}) do |field, result|
-          result[field] = { value: values[field.name], filter: filters[field.name] } if filters.key?(field.name)
+        fields.each_with_object({}) do |(name, field), result|
+          result[field] = { value: values[name], filter: filters[name] } if filters.key?(name)
         end
       end
 

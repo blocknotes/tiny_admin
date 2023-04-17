@@ -4,14 +4,7 @@ module TinyAdmin
   module Views
     module Actions
       class Show < DefaultLayout
-        attr_reader :fields, :prepare_record, :record
-        attr_accessor :actions
-
-        def setup_record(record:, fields:, prepare_record:)
-          @record = record
-          @fields = fields
-          @prepare_record = prepare_record
-        end
+        attr_accessor :actions, :fields, :prepare_record, :record
 
         def template
           super do
@@ -21,20 +14,12 @@ module TinyAdmin
                   h1(class: 'title') { title }
                 }
                 div(class: 'col-8') {
-                  ul(class: 'nav justify-content-end') {
-                    (actions || {}).each do |action, action_class|
-                      li(class: 'nav-item mx-1') {
-                        href = route_for(context.slug, reference: context.reference, action: action)
-                        title = action_class.respond_to?(:title) ? action_class.title : action
-                        a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
-                      }
-                    end
-                  }
+                  actions_buttons
                 }
               }
 
-              prepare_record.call(record).each_with_index do |(_key, value), index|
-                field = fields[index]
+              prepare_record.call(record).each do |key, value|
+                field = fields[key]
                 div(class: "field-#{field.name} row lh-lg") {
                   if field
                     div(class: 'field-header col-2') { field.title }
@@ -51,6 +36,20 @@ module TinyAdmin
               end
             }
           end
+        end
+
+        private
+
+        def actions_buttons
+          ul(class: 'nav justify-content-end') {
+            (actions || {}).each do |action, action_class|
+              li(class: 'nav-item mx-1') {
+                href = route_for(context.slug, reference: context.reference, action: action)
+                title = action_class.respond_to?(:title) ? action_class.title : action
+                a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
+              }
+            end
+          }
         end
       end
     end

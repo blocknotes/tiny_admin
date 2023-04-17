@@ -5,13 +5,6 @@ module TinyAdmin
     class BasicAction
       include Utils
 
-      attr_reader :params, :repository
-
-      def initialize(repository, params:)
-        @repository = repository
-        @params = params
-      end
-
       def attribute_options(options)
         options&.each_with_object({}) do |field, result|
           field_data =
