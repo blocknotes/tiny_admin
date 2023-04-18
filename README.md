@@ -16,7 +16,7 @@ Please ⭐ if you like it.
 
 ## Install
 
-- Add to your Gemfile: `gem 'tiny_admin', '~> 0.3'`
+- Add to your Gemfile: `gem 'tiny_admin', '~> 0.4'`
 - Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
   + in Rails, update _config/routes.rb_: `mount TinyAdmin::Router => '/admin'`
 - Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` (see [configuration](#configuration) below):
