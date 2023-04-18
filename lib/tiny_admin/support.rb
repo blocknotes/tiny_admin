@@ -3,6 +3,10 @@
 module TinyAdmin
   class Support
     class << self
+      def call(value, options: [])
+        value && options&.any? ? options.inject(value) { |result, message| result&.send(message) } : value
+      end
+
       def downcase(value, options: [])
         value&.downcase
       end

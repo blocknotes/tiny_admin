@@ -35,7 +35,7 @@ sections:
       pagination: 5
       attributes:
         - id
-        - title
+        - title: call, downcase, capitalize
         - field: author_id
           link_to: authors
         - category: upcase
@@ -66,6 +66,7 @@ sections:
         - description
         - field: author_id
           link_to: authors
+          call: author, name
         - category
         - published
         - position: format, %f
