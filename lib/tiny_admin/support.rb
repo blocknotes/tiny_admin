@@ -4,7 +4,7 @@ module TinyAdmin
   class Support
     class << self
       def call(value, options: [])
-        value && options&.any? ? options.inject(value) { |result, message| result&.send(message) } : value
+        options.inject(value) { |result, message| result&.send(message) } if value && options&.any?
       end
 
       def downcase(value, options: [])
@@ -12,7 +12,7 @@ module TinyAdmin
       end
 
       def format(value, options: [])
-        value && options&.any? ? Kernel.format(options.first, value) : value
+        Kernel.format(options.first, value) if value && options&.any?
       end
 
       def round(value, options: [])
@@ -20,11 +20,11 @@ module TinyAdmin
       end
 
       def strftime(value, options: [])
-        value ? value.strftime(options&.first || '%Y-%m-%d %H:%M') : ''
+        value&.strftime(options&.first || '%Y-%m-%d %H:%M')
       end
 
       def to_date(value, options: [])
-        value ? value.to_date.to_s : value
+        value.to_date.to_s if value
       end
 
       def upcase(value, options: [])
