@@ -61,10 +61,26 @@ module TinyAdmin
       @resources ||= {}
       @sections ||= []
       @root_path = '/' if @root_path == ''
-      if @authentication[:plugin] == Plugins::SimpleAuth
+
+      if @authentication[:plugin] <= Plugins::SimpleAuth
         @authentication[:logout] ||= ['logout', "#{root_path}/auth/logout"]
       end
       @navbar = prepare_navbar(sections, logout: authentication[:logout])
+    end
+
+    private
+
+    def convert_value(key, value)
+      if value.is_a?(Hash)
+        value.each_key do |key2|
+          path = [key, key2]
+          if DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)
+            self[key][key2] = Object.const_get(self[key][key2])
+          end
+        end
+      elsif value.is_a?(String) && (DEFAULTS[[key]].is_a?(Class) || DEFAULTS[[key]].is_a?(Module))
+        self[key] = Object.const_get(self[key])
+      end
     end
 
     def prepare_navbar(sections, logout:)
@@ -90,21 +106,6 @@ module TinyAdmin
       end
       items['auth/logout'] = logout if logout
       items
-    end
-
-    private
-
-    def convert_value(key, value)
-      if value.is_a?(Hash)
-        value.each_key do |key2|
-          path = [key, key2]
-          if DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)
-            self[key][key2] = Object.const_get(self[key][key2])
-          end
-        end
-      elsif value.is_a?(String) && (DEFAULTS[[key]].is_a?(Class) || DEFAULTS[[key]].is_a?(Module))
-        self[key] = Object.const_get(self[key])
-      end
     end
   end
 end
