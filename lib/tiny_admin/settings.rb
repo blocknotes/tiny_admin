@@ -63,7 +63,7 @@ module TinyAdmin
       @root_path = '/' if @root_path == ''
 
       if @authentication[:plugin] <= Plugins::SimpleAuth
-        @authentication[:logout] ||= ['logout', "#{root_path}/auth/logout"]
+        @authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
       end
       @navbar = prepare_navbar(sections, logout: authentication[:logout])
     end
@@ -88,24 +88,36 @@ module TinyAdmin
         slug = section[:slug]
         case section[:type]&.to_sym
         when :url
-          list[slug] = [section[:name], section[:url], section[:options]]
+          list[slug] = add_url_section(slug, section)
         when :page
-          page = section[:page]
-          pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
-          list[slug] = [section[:name], route_for(slug)]
+          list[slug] = add_page_section(slug, section)
         when :resource
-          repository = section[:repository] || settings.repository
-          resources[slug] = {
-            model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
-            repository: repository.is_a?(String) ? Object.const_get(repository) : repository
-          }
-          resources[slug].merge! section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
-          hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
-          list[slug] = [section[:name], route_for(slug)] unless hidden
+          list[slug] = add_resource_section(slug, section)
         end
       end
       items['auth/logout'] = logout if logout
       items
+    end
+
+    def add_url_section(_slug, section)
+      section.slice(:name, :options).tap { _1[:path] = section[:url] }
+    end
+
+    def add_page_section(slug, section)
+      page = section[:page]
+      pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
+      { name: section[:name], path: route_for(slug), class: pages[slug] }
+    end
+
+    def add_resource_section(slug, section)
+      repository = section[:repository] || settings.repository
+      resources[slug] = {
+        model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
+        repository: repository.is_a?(String) ? Object.const_get(repository) : repository
+      }
+      resources[slug].merge! section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
+      hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
+      { name: section[:name], path: route_for(slug) } unless hidden
     end
   end
 end
