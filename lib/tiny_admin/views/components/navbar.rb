@@ -3,15 +3,8 @@
 module TinyAdmin
   module Views
     module Components
-      class Navbar < Phlex::HTML
-        attr_reader :current_slug, :items, :root_path, :root_title
-
-        def initialize(root_path:, root_title:, items: [], current_slug: nil)
-          @root_path = root_path
-          @root_title = root_title
-          @items = items || []
-          @current_slug = current_slug
-        end
+      class Navbar < BasicComponent
+        attr_accessor :current_slug, :items, :root_path, :root_title
 
         def template
           nav(class: 'navbar navbar-expand-lg') {

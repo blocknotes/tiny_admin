@@ -30,8 +30,9 @@ module TinyAdmin
 
                 if filters&.any?
                   div(class: 'col-3') {
-                    filters_form_attrs = { section_path: route_for(context.slug), filters: filters }
-                    render TinyAdmin::Views::Components::FiltersForm.new(**filters_form_attrs)
+                    filters_form = TinyAdmin::Views::Components::FiltersForm.new
+                    filters_form.update_attributes(section_path: route_for(context.slug), filters: filters)
+                    render filters_form
                   }
                 end
               }

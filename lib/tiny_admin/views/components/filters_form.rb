@@ -3,13 +3,8 @@
 module TinyAdmin
   module Views
     module Components
-      class FiltersForm < Phlex::HTML
-        attr_reader :filters, :section_path
-
-        def initialize(section_path:, filters:)
-          @section_path = section_path
-          @filters = filters
-        end
+      class FiltersForm < BasicComponent
+        attr_accessor :filters, :section_path
 
         def template
           form(class: 'form_filters', method: 'get') {

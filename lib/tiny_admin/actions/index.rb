@@ -60,7 +60,7 @@ module TinyAdmin
         return if pages <= 1 || !pagination_component_class
 
         page.pagination_component = pagination_component_class.new
-        page.pagination_component.update(current: current_page, pages: pages, query_string: query_string)
+        page.pagination_component.update_attributes(current: current_page, pages: pages, query_string: query_string)
       end
     end
   end

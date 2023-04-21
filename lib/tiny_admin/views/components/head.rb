@@ -3,8 +3,8 @@
 module TinyAdmin
   module Views
     module Components
-      class Head < Phlex::HTML
-        attr_reader :extra_styles, :page_title, :style_links
+      class Head < BasicComponent
+        attr_accessor :extra_styles, :page_title, :style_links
 
         def template
           head {
@@ -18,12 +18,6 @@ module TinyAdmin
             end
             style { extra_styles } if extra_styles
           }
-        end
-
-        def update(page_title, style_links: [], extra_styles: nil)
-          @page_title = page_title
-          @style_links = style_links
-          @extra_styles = extra_styles
         end
       end
     end

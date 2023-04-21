@@ -3,8 +3,8 @@
 module TinyAdmin
   module Views
     module Components
-      class Pagination < Phlex::HTML
-        attr_reader :current, :pages, :query_string
+      class Pagination < BasicComponent
+        attr_accessor :current, :pages, :query_string
 
         def template
           div(class: 'pagination-div') {
@@ -23,12 +23,6 @@ module TinyAdmin
               }
             }
           }
-        end
-
-        def update(current:, pages:, query_string:)
-          @current = current
-          @pages = pages
-          @query_string = query_string
         end
 
         private

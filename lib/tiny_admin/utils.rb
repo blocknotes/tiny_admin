@@ -19,7 +19,8 @@ module TinyAdmin
         page.options = options
         page.head_component = settings.components[:head]&.new
         page.flash_component = settings.components[:flash]&.new
-        page.navbar_component = settings.components[:navbar]&.new(
+        page.navbar_component = settings.components[:navbar]&.new
+        page.navbar_component&.update_attributes(
           current_slug: context&.slug,
           root_path: settings.root_path,
           root_title: settings.root[:title],
