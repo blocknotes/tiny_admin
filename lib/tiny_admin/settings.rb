@@ -113,6 +113,7 @@ module TinyAdmin
         repository: repository.is_a?(String) ? Object.const_get(repository) : repository
       }
       resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
+      resource_options[:only] ||= %i[index show]
       context.resources[slug].merge!(resource_options)
       hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
       { name: section[:name], path: route_for(slug) } unless hidden

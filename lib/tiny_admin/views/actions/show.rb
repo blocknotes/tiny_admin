@@ -46,8 +46,9 @@ module TinyAdmin
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
                 href = route_for(context.slug, reference: context.reference, action: action)
-                title = action_class.respond_to?(:title) ? action_class.title : action
-                a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
+                a(href: href, class: 'nav-link btn btn-outline-secondary') {
+                  action_class.respond_to?(:title) ? action_class.title : action
+                }
               }
             end
           }

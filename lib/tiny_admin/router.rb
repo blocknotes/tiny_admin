@@ -88,12 +88,12 @@ module TinyAdmin
       )
 
       # Index
-      actions = options[:only]
-      if !actions || actions.include?(:index) || actions.include?('index')
+      if options[:only].include?(:index) || options[:only].include?('index')
         router.is do
+          context.actions = custom_actions
           context.request = request
           index_action = TinyAdmin::Actions::Index.new
-          render_page index_action.call(app: self, context: context, options: action_options, actions: custom_actions)
+          render_page index_action.call(app: self, context: context, options: action_options)
         end
       end
     end
@@ -114,12 +114,12 @@ module TinyAdmin
         )
 
         # Show
-        actions = options[:only]
-        if !actions || actions.include?(:show) || actions.include?('show')
+        if options[:only].include?(:show) || options[:only].include?('show')
           router.is do
+            context.actions = custom_actions
             context.request = request
             show_action = TinyAdmin::Actions::Show.new
-            render_page show_action.call(app: self, context: context, options: action_options, actions: custom_actions)
+            render_page show_action.call(app: self, context: context, options: action_options)
           end
         end
       end
@@ -132,6 +132,7 @@ module TinyAdmin
         action_class = action.is_a?(String) ? Object.const_get(action) : action
 
         router.get action_slug.to_s do
+          context.actions = {}
           context.request = request
           custom_action = action_class.new
           render_page custom_action.call(app: self, context: context, options: options)
