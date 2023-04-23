@@ -25,10 +25,10 @@ module TinyAdmin
                     div(class: 'field-header col-2') { field.options[:header] || field.title }
                   end
                   div(class: 'field-value col-10') {
-                    if field.options && field.options[:link_to]
-                      messages = (field.options[:call] || '').split(',').map(&:strip)
-                      label = messages.any? ? messages.inject(record) { |result, msg| result&.send(msg) } : value
-                      a(href: route_for(field.options[:link_to], reference: value)) { label }
+                    if field.options[:link_to]
+                      a(href: route_for(field.options[:link_to], reference: value)) {
+                        field.apply_call_option(record) || value
+                      }
                     else
                       value
                     end
