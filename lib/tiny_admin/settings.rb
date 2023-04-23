@@ -25,7 +25,6 @@ module TinyAdmin
                   :components,
                   :extra_styles,
                   :helper_class,
-                  :navbar,
                   :page_not_found,
                   :record_not_found,
                   :repository,
@@ -34,8 +33,6 @@ module TinyAdmin
                   :sections,
                   :scripts,
                   :style_links
-
-    attr_reader :pages, :resources
 
     def [](key)
       send(key)
@@ -57,15 +54,15 @@ module TinyAdmin
         end
       end
 
-      @pages ||= {}
-      @resources ||= {}
+      context.pages ||= {}
+      context.resources ||= {}
       @sections ||= []
       @root_path = '/' if @root_path == ''
 
       if @authentication[:plugin] <= Plugins::SimpleAuth
         @authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
       end
-      @navbar = prepare_navbar(sections, logout: authentication[:logout])
+      context.navbar = prepare_navbar(sections, logout: authentication[:logout])
     end
 
     private
@@ -105,17 +102,18 @@ module TinyAdmin
 
     def add_page_section(slug, section)
       page = section[:page]
-      pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
-      { name: section[:name], path: route_for(slug), class: pages[slug] }
+      context.pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
+      { name: section[:name], path: route_for(slug), class: context.pages[slug] }
     end
 
     def add_resource_section(slug, section)
       repository = section[:repository] || settings.repository
-      resources[slug] = {
+      context.resources[slug] = {
         model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
         repository: repository.is_a?(String) ? Object.const_get(repository) : repository
       }
-      resources[slug].merge! section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
+      resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
+      context.resources[slug].merge!(resource_options)
       hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
       { name: section[:name], path: route_for(slug) } unless hidden
     end

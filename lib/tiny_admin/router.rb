@@ -29,11 +29,11 @@ module TinyAdmin
         r.redirect settings.root_path
       end
 
-      context.settings.pages.each do |slug, data|
+      context.pages.each do |slug, data|
         setup_page_route(r, slug, data)
       end
 
-      context.settings.resources.each do |slug, options|
+      context.resources.each do |slug, options|
         setup_resource_routes(r, slug, options: options || {})
       end
 

@@ -24,7 +24,7 @@ module TinyAdmin
           current_slug: context&.slug,
           root_path: settings.root_path,
           root_title: settings.root[:title],
-          items: options&.include?(:no_menu) ? [] : settings.navbar
+          items: options&.include?(:no_menu) ? [] : context&.navbar
         )
         yield(page) if block_given?
       end

@@ -4,6 +4,14 @@ module TinyAdmin
   class Context
     include Singleton
 
-    attr_accessor :reference, :repository, :request, :router, :settings, :slug
+    attr_accessor :navbar,
+                  :pages,
+                  :reference,
+                  :repository,
+                  :request,
+                  :resources,
+                  :router,
+                  :settings,
+                  :slug
   end
 end
