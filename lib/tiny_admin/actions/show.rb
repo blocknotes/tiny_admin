@@ -3,18 +3,17 @@
 module TinyAdmin
   module Actions
     class Show < BasicAction
-      attr_reader :repository
-
-      def call(app:, context:, options:, actions:)
-        @repository = context.repository
+      def call(app:, context:, options:)
         fields_options = attribute_options(options[:attributes])
+        repository = context.repository
         record = repository.find(context.reference)
+        prepare_record = ->(record_data) { repository.show_record_attrs(record_data, fields: fields_options) }
 
         prepare_page(Views::Actions::Show) do |page|
           page.update_attributes(
-            actions: actions,
+            actions: context.actions,
             fields: repository.fields(options: fields_options),
-            prepare_record: ->(record_data) { repository.show_record_attrs(record_data, fields: fields_options) },
+            prepare_record: prepare_record,
             record: record,
             title: repository.show_title(record)
           )

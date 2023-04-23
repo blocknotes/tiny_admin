@@ -5,7 +5,8 @@ module TinyAdmin
     def params_to_s(params)
       list = params.each_with_object([]) do |(param, value), result|
         if value.is_a?(Hash)
-          result.concat(value.map { |k, v| "#{param}[#{k}]=#{v}" })
+          values = value.map { |key, val| "#{param}[#{key}]=#{val}" }
+          result.concat(values)
         else
           result.push(["#{param}=#{value}"])
         end
@@ -18,13 +19,13 @@ module TinyAdmin
         page.options = options
         page.head_component = settings.components[:head]&.new
         page.flash_component = settings.components[:flash]&.new
-        page.navbar_component = settings.components[:navbar]&.new(
+        page.navbar_component = settings.components[:navbar]&.new
+        page.navbar_component&.update_attributes(
           current_slug: context&.slug,
           root_path: settings.root_path,
           root_title: settings.root[:title],
-          items: options&.include?(:no_menu) ? [] : settings.navbar
+          items: options&.include?(:no_menu) ? [] : context&.navbar
         )
-
         yield(page) if block_given?
       end
     end

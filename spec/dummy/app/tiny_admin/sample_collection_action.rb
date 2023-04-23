@@ -7,7 +7,7 @@ class SampleCollectionPage < Phlex::HTML
 end
 
 class SampleCollectionAction < TinyAdmin::Actions::BasicAction
-  def call(app:, context:, options:, actions: [])
+  def call(app:, context:, options:)
     SampleCollectionPage
   end
 end

@@ -6,8 +6,9 @@ module TinyAdmin
       attr_accessor :flash_component, :head_component, :messages, :navbar_component, :options, :title
 
       def template(&block)
-        flash_component&.update(messages: messages)
-        head_component&.update(title, style_links: style_links, extra_styles: settings.extra_styles)
+        extra_styles = settings.extra_styles
+        flash_component&.messages = messages
+        head_component&.update_attributes(page_title: title, style_links: style_links, extra_styles: extra_styles)
 
         doctype
         html {

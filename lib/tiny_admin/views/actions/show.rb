@@ -25,10 +25,10 @@ module TinyAdmin
                     div(class: 'field-header col-2') { field.options[:header] || field.title }
                   end
                   div(class: 'field-value col-10') {
-                    if field.options && field.options[:link_to]
-                      messages = (field.options[:call] || '').split(',').map(&:strip)
-                      label = messages.any? ? messages.inject(record) { |result, msg| result&.send(msg) } : value
-                      a(href: route_for(field.options[:link_to], reference: value)) { label }
+                    if field.options[:link_to]
+                      a(href: route_for(field.options[:link_to], reference: value)) {
+                        field.apply_call_option(record) || value
+                      }
                     else
                       value
                     end
@@ -46,8 +46,9 @@ module TinyAdmin
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
                 href = route_for(context.slug, reference: context.reference, action: action)
-                title = action_class.respond_to?(:title) ? action_class.title : action
-                a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
+                a(href: href, class: 'nav-link btn btn-outline-secondary') {
+                  action_class.respond_to?(:title) ? action_class.title : action
+                }
               }
             end
           }

@@ -42,8 +42,8 @@ module TinyAdmin
         raise BaseRepository::RecordNotFound, e.message
       end
 
-      def list(page: 1, limit: 10, sort: ['id'], filters: nil)
-        query = model.all.order(sort)
+      def list(page: 1, limit: 10, sort: nil, filters: nil)
+        query = sort ? model.all.order(sort) : model.all
         query = apply_filters(query, filters) if filters
         page_offset = page.positive? ? (page - 1) * limit : 0
         records = query.offset(page_offset).limit(limit).to_a
