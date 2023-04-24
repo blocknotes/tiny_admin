@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'dummy_rails_app'
 require 'rails_helper'
 
 RSpec.describe 'Navbar component', type: :feature do
