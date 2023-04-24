@@ -15,6 +15,7 @@ sections:
     url: https://www.google.it
     options:
       target: _blank
+  - SectionGithubLink
   - slug: sample
     name: Sample page
     type: page

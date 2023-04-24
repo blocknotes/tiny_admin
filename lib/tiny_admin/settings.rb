@@ -82,7 +82,14 @@ module TinyAdmin
 
     def prepare_navbar(sections, logout:)
       items = sections.each_with_object({}) do |section, list|
-        slug = section[:slug]
+        unless section.is_a?(Hash)
+          section_class = Object.const_get(section)
+          next unless section_class.respond_to?(:to_h)
+
+          section = section_class.to_h
+        end
+
+        slug = section[:slug].to_s
         case section[:type]&.to_sym
         when :url
           list[slug] = add_url_section(slug, section)
