@@ -1,5 +1,5 @@
 ---
-name: Specs Rails 7.0
+name: Specs
 
 on:
   pull_request:
@@ -26,10 +26,10 @@ jobs:
           bundler-cache: true
 
       - name: Create database
-        run: cd spec/dummy && bundle exec rails db:create
+        run: cd spec/dummy_rails && bundle exec rails db:create
 
       - name: Apply migrations
-        run: cd spec/dummy && bundle exec rails db:migrate
+        run: cd spec/dummy_rails && bundle exec rails db:migrate
 
       - name: Run tests
         run: bundle exec rspec --profile

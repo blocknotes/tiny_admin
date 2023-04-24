@@ -10,7 +10,7 @@ require:
 AllCops:
   Exclude:
     - bin/*
-    - spec/dummy/**/*
+    - spec/dummy_rails/**/*
     - vendor/**/*
   NewCops: enable
   SuggestExtensions: false
