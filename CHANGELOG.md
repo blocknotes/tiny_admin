@@ -2,6 +2,12 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.5.0
+
+- feat: customize index entries links
+- feat: support config Objects for sections
+- feat: internal improvements
+
 ## 0.4.0
 
 - feat: introduce a Support class for attributes' formatters
