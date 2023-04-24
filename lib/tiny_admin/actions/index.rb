@@ -6,6 +6,7 @@ module TinyAdmin
       attr_reader :current_page,
                   :fields_options,
                   :filters_list,
+                  :links,
                   :pagination,
                   :pages,
                   :params,
@@ -25,6 +26,7 @@ module TinyAdmin
             actions: context.actions,
             fields: fields,
             filters: filters,
+            links: links,
             prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
             records: records,
             title: repository.index_title
@@ -41,6 +43,7 @@ module TinyAdmin
         @filters_list = options[:filters]
         @pagination = options[:pagination] || 10
         @sort = options[:sort]
+        @links = options[:links]
 
         @current_page = (params['p'] || 1).to_i
         @query_string = params_to_s(params.except('p'))

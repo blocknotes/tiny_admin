@@ -27,6 +27,14 @@ sections:
       - sample_col: SampleCollectionAction
     member_actions:
       - sample_mem: SampleMemberAction
+    index:
+      attributes:
+        - id
+        - name
+        - email
+      links:
+        - show
+        - sample_mem
   - slug: posts
     name: Posts
     type: resource

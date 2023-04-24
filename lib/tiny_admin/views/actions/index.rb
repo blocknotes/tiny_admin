@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Actions
       class Index < DefaultLayout
-        attr_accessor :actions, :fields, :filters, :pagination_component, :prepare_record, :records
+        attr_accessor :actions, :fields, :filters, :links, :pagination_component, :prepare_record, :records
 
         def template
           super do
@@ -74,8 +74,25 @@ module TinyAdmin
                     end
                   }
                 end
-                td(class: 'actions') {
-                  a(href: route_for(context.slug, reference: record.id)) { 'show' }
+
+                td(class: 'actions p-1') {
+                  div(class: 'btn-group btn-group-sm') {
+                    link_class = 'btn btn-outline-secondary'
+                    if links
+                      links.each do |link|
+                        whitespace
+                        if link == 'show'
+                          a(href: route_for(context.slug, reference: record.id), class: link_class) { 'show' }
+                        else
+                          a(href: route_for(context.slug, reference: record.id, action: link), class: link_class) {
+                            to_label(link)
+                          }
+                        end
+                      end
+                    else
+                      a(href: route_for(context.slug, reference: record.id), class: link_class) { 'show' }
+                    end
+                  }
                 }
               }
             end
@@ -87,8 +104,9 @@ module TinyAdmin
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
                 href = route_for(context.slug, action: action)
-                title = action_class.respond_to?(:title) ? action_class.title : action
-                a(href: href, class: 'nav-link btn btn-outline-secondary') { title }
+                a(href: href, class: 'nav-link btn btn-outline-secondary') {
+                  action_class.respond_to?(:title) ? action_class.title : action
+                }
               }
             end
           }
