@@ -37,6 +37,12 @@ module TinyAdmin
       route[0] == '/' ? route : route.prepend('/')
     end
 
+    def to_label(string)
+      return '' unless string
+
+      string.respond_to?(:humanize) ? string.humanize : string.tr('_', ' ').capitalize
+    end
+
     def context
       TinyAdmin::Context.instance
     end
