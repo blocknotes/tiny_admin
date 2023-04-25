@@ -20,12 +20,12 @@ module TinyAdmin
       def fields(options: nil)
         if options
           types = model.columns.to_h { [_1.name, _1.type] }
-          options.each_with_object({}) do |(name, field_options), result|
-            result[name] = TinyAdmin::Field.create_field(name: name, type: types[name], options: field_options)
+          options.to_h do |name, field_options|
+            [name, TinyAdmin::Field.create_field(name: name, type: types[name], options: field_options)]
           end
         else
-          model.columns.each_with_object({}) do |column, result|
-            result[column.name] = TinyAdmin::Field.create_field(name: column.name, type: column.type)
+          model.columns.to_h do |column|
+            [column.name, TinyAdmin::Field.create_field(name: column.name, type: column.type)]
           end
         end
       end
@@ -42,8 +42,12 @@ module TinyAdmin
         raise BaseRepository::RecordNotFound, e.message
       end
 
+      def collection
+        model.all
+      end
+
       def list(page: 1, limit: 10, sort: nil, filters: nil)
-        query = sort ? model.all.order(sort) : model.all
+        query = sort ? collection.order(sort) : collection
         query = apply_filters(query, filters) if filters
         page_offset = page.positive? ? (page - 1) * limit : 0
         records = query.offset(page_offset).limit(limit).to_a
