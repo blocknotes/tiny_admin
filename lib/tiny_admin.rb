@@ -16,6 +16,7 @@ module TinyAdmin
   end
 
   def configure_from_file(file)
+    TinyAdmin::Settings.instance.reset!
     config = YAML.load_file(file, symbolize_names: true)
     config.each do |key, value|
       TinyAdmin::Settings.instance[key] = value
