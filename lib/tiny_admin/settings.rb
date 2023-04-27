@@ -12,6 +12,7 @@ module TinyAdmin
       %i[components head] => Views::Components::Head,
       %i[components navbar] => Views::Components::Navbar,
       %i[components pagination] => Views::Components::Pagination,
+      %i[content_page] => Views::Pages::Content,
       %i[helper_class] => Support,
       %i[page_not_found] => Views::Pages::PageNotFound,
       %i[record_not_found] => Views::Pages::RecordNotFound,
@@ -23,6 +24,7 @@ module TinyAdmin
 
     attr_accessor :authentication,
                   :components,
+                  :content_page,
                   :extra_styles,
                   :helper_class,
                   :page_not_found,
@@ -83,7 +85,7 @@ module TinyAdmin
     def prepare_navbar(sections, logout:)
       items = sections.each_with_object({}) do |section, list|
         unless section.is_a?(Hash)
-          section_class = Object.const_get(section)
+          section_class = section.is_a?(String) ? Object.const_get(section) : section
           next unless section_class.respond_to?(:to_h)
 
           section = section_class.to_h
@@ -91,26 +93,30 @@ module TinyAdmin
 
         slug = section[:slug].to_s
         case section[:type]&.to_sym
-        when :url
-          list[slug] = add_url_section(slug, section)
+        when :content
+          list[slug] = add_content_section(slug, section)
         when :page
           list[slug] = add_page_section(slug, section)
         when :resource
           list[slug] = add_resource_section(slug, section)
+        when :url
+          list[slug] = add_url_section(slug, section)
         end
       end
       items['auth/logout'] = logout if logout
       items
     end
 
-    def add_url_section(_slug, section)
-      section.slice(:name, :options).tap { _1[:path] = section[:url] }
+    def add_content_section(slug, section)
+      context.pages[slug] = { class: content_page, content: section[:content] }
+      { name: section[:name], path: route_for(slug), class: content_page }
     end
 
     def add_page_section(slug, section)
       page = section[:page]
-      context.pages[slug] = page.is_a?(String) ? Object.const_get(page) : page
-      { name: section[:name], path: route_for(slug), class: context.pages[slug] }
+      page_class = page.is_a?(String) ? Object.const_get(page) : page
+      context.pages[slug] = { class: page_class }
+      { name: section[:name], path: route_for(slug), class: page_class }
     end
 
     def add_resource_section(slug, section)
@@ -124,6 +130,10 @@ module TinyAdmin
       context.resources[slug].merge!(resource_options)
       hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
       { name: section[:name], path: route_for(slug) } unless hidden
+    end
+
+    def add_url_section(_slug, section)
+      section.slice(:name, :options).tap { _1[:path] = section[:url] }
     end
   end
 end

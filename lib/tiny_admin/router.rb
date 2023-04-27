@@ -29,8 +29,8 @@ module TinyAdmin
         r.redirect settings.root_path
       end
 
-      context.pages.each do |slug, data|
-        setup_page_route(r, slug, data)
+      context.pages.each do |slug, page_data|
+        setup_page_route(r, slug, page_data)
       end
 
       context.resources.each do |slug, options|
@@ -60,10 +60,12 @@ module TinyAdmin
       end
     end
 
-    def setup_page_route(router, slug, page_class)
+    def setup_page_route(router, slug, page_data)
       router.get slug do
         context.slug = slug
-        render_page prepare_page(page_class)
+        page = prepare_page(page_data[:class])
+        page.update_attributes(content: page_data[:content]) if page_data[:content]
+        render_page page
       end
     end
 
