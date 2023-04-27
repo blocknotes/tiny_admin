@@ -9,13 +9,21 @@ module Admin
       end
     end
   end
+
+  module SampleSection
+    def to_h
+      {
+        slug: 'sample-page',
+        name: 'Sample Page',
+        type: :page,
+        page: SamplePage
+      }
+    end
+
+    module_function :to_h
+  end
 end
 
 TinyAdmin.configure do |settings|
-  (settings.sections ||= []).push(
-    slug: 'sample-page',
-    name: 'Sample Page',
-    type: :page,
-    page: Admin::SamplePage
-  )
+  (settings.sections ||= []).push(Admin::SampleSection)
 end

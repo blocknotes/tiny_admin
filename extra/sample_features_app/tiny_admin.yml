@@ -2,6 +2,8 @@
 root_path: '/'
 root:
   redirect: sample-page
+scripts:
+  - src: https://cdn.jsdelivr.net/npm/chart.js
 extra_styles: >
   .navbar {
     background-color: var(--bs-teal);
