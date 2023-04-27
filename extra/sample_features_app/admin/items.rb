@@ -47,14 +47,22 @@ module Admin
       "Item"
     end
   end
+
+  module ItemSection
+    def to_h
+      {
+        slug: 'items',
+        name: 'Items',
+        type: :resource,
+        model: Item,
+        repository: ItemsRepo
+      }
+    end
+
+    module_function :to_h
+  end
 end
 
 TinyAdmin.configure do |settings|
-  (settings.sections ||= []).push(
-    slug: 'items',
-    name: 'Items',
-    type: :resource,
-    model: Admin::Item,
-    repository: Admin::ItemsRepo
-  )
+  (settings.sections ||= []).push(Admin::ItemSection)
 end

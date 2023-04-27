@@ -20,6 +20,12 @@ sections:
     name: Sample page
     type: page
     page: SamplePage
+  - slug: test-content
+    name: Test content
+    type: content
+    content: >
+      <h1>Test content!</h1>
+      <p>Some test content</p>
   - slug: authors
     name: Authors
     type: resource

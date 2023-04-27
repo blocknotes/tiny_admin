@@ -1,6 +1,6 @@
 # Tiny Admin
 
-[![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin) [![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml) [![Specs Rails 7.0](https://github.com/blocknotes/tiny_admin/actions/workflows/specs_rails_70.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs_rails_70.yml)
+[![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin) [![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml) [![Specs](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml)
 
 A compact and composable dashboard component for Ruby.
 
@@ -51,6 +51,7 @@ Plugin available:
 Pages available:
 
 - **Root**: define how to present the content in the main page of the interface;
+- **Content**: define how to present page with inline content;
 - **PageNotFound**: define how to present pages not found;
 - **RecordNotFound**: define how to present record not found page;
 - **SimpleAuthLogin**: define how to present the login form for SimpleAuth plugin;
@@ -122,8 +123,23 @@ authentication:
 
 - `slug` (String): section reference identifier;
 - `name` (String): section's title;
-- `type` (String): the type of section: `url`, `page` or `resource`;
+- `type` (String): the type of section: `content`, `page`, `resource` or `url`;
 - other properties depends on the section's type.
+
+For _content_ sections:
+
+- `content` (String): the HTML content to present.
+
+Example:
+
+```yml
+slug: test-content
+name: Test content
+type: content
+content: >
+  <h1>Test content!</h1>
+  <p>Some test content</p>
+```
 
 For _url_ sections:
 
