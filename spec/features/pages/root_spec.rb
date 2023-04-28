@@ -18,7 +18,7 @@ RSpec.describe 'Root', type: :feature do
 
   context 'when redirect option is set' do
     before do
-      allow(TinyAdmin::Settings.instance).to receive(:root).and_return(redirect: 'posts')
+      allow(TinyAdmin.settings).to receive(:root).and_return(redirect: 'posts')
       visit '/admin'
       log_in
     end
