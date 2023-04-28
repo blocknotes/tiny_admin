@@ -144,10 +144,10 @@ module TinyAdmin
     end
 
     def add_resource_section(slug, section)
-      repository = section[:repository] || settings.repository
+      repo = section[:repository] || repository
       context.resources[slug] = {
         model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
-        repository: repository.is_a?(String) ? Object.const_get(repository) : repository
+        repository: repo.is_a?(String) ? Object.const_get(repo) : repo
       }
       resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
       resource_options[:only] ||= %i[index show]

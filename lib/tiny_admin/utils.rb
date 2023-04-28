@@ -17,13 +17,13 @@ module TinyAdmin
     def prepare_page(page_class, options: nil)
       page_class.new.tap do |page|
         page.options = options
-        page.head_component = settings.components[:head]&.new
-        page.flash_component = settings.components[:flash]&.new
-        page.navbar_component = settings.components[:navbar]&.new
+        page.head_component = TinyAdmin.settings.components[:head]&.new
+        page.flash_component = TinyAdmin.settings.components[:flash]&.new
+        page.navbar_component = TinyAdmin.settings.components[:navbar]&.new
         page.navbar_component&.update_attributes(
           current_slug: context&.slug,
-          root_path: settings.root_path,
-          root_title: settings.root[:title],
+          root_path: TinyAdmin.settings.root_path,
+          root_title: TinyAdmin.settings.root[:title],
           items: options&.include?(:no_menu) ? [] : context&.navbar
         )
         yield(page) if block_given?
@@ -31,7 +31,7 @@ module TinyAdmin
     end
 
     def route_for(section, reference: nil, action: nil, query: nil)
-      root_path = settings.root_path == '/' ? nil : settings.root_path
+      root_path = TinyAdmin.settings.root_path == '/' ? nil : TinyAdmin.settings.root_path
       route = [root_path, section, reference, action].compact.join("/")
       route << "?#{query}" if query
       route[0] == '/' ? route : route.prepend('/')
@@ -45,10 +45,6 @@ module TinyAdmin
 
     def context
       TinyAdmin::Context.instance
-    end
-
-    def settings
-      TinyAdmin::Settings.instance
     end
   end
 end
