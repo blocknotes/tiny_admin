@@ -2,6 +2,11 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.6.0
+
+- feat: new content section type
+- feat: improve settings system
+
 ## 0.5.0
 
 - feat: customize index entries links
