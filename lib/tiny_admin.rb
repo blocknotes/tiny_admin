@@ -12,16 +12,20 @@ loader.setup
 
 module TinyAdmin
   def configure(&block)
-    block&.call(TinyAdmin::Settings.instance) || TinyAdmin::Settings.instance
+    block&.call(settings) || settings
   end
 
   def configure_from_file(file)
-    TinyAdmin::Settings.instance.reset!
+    settings.reset!
     config = YAML.load_file(file, symbolize_names: true)
     config.each do |key, value|
-      TinyAdmin::Settings.instance[key] = value
+      settings[key] = value
     end
   end
 
-  module_function :configure, :configure_from_file
+  def settings
+    TinyAdmin::Settings.instance
+  end
+
+  module_function :configure, :configure_from_file, :settings
 end

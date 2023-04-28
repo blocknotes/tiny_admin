@@ -6,7 +6,7 @@ module TinyAdmin
       attr_accessor :flash_component, :head_component, :messages, :navbar_component, :options, :title
 
       def template(&block)
-        extra_styles = settings.extra_styles
+        extra_styles = TinyAdmin.settings.extra_styles
         flash_component&.messages = messages
         head_component&.update_attributes(page_title: title, style_links: style_links, extra_styles: extra_styles)
 
@@ -49,7 +49,7 @@ module TinyAdmin
       end
 
       def style_links
-        settings.style_links || [
+        TinyAdmin.settings.style_links || [
           # Bootstrap CDN
           {
             href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css',
@@ -61,7 +61,7 @@ module TinyAdmin
       end
 
       def render_scripts
-        (settings.scripts || []).each do |script_attrs|
+        (TinyAdmin.settings.scripts || []).each do |script_attrs|
           script(**script_attrs)
         end
       end

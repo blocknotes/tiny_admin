@@ -2,10 +2,11 @@
 
 module TinyAdmin
   class Router < BasicApp
+    TinyAdmin.settings.load_settings
+
     route do |r|
-      context.settings = TinyAdmin::Settings.instance
-      context.settings.load_settings
       context.router = r
+      context.settings = TinyAdmin.settings
 
       r.on 'auth' do
         context.slug = nil
@@ -26,7 +27,7 @@ module TinyAdmin
 
       r.post '' do
         context.slug = nil
-        r.redirect settings.root_path
+        r.redirect TinyAdmin.settings.root_path
       end
 
       context.pages.each do |slug, page_data|
@@ -51,10 +52,10 @@ module TinyAdmin
 
     def root_route(router)
       context.slug = nil
-      if settings.root[:redirect]
-        router.redirect route_for(settings.root[:redirect])
+      if TinyAdmin.settings.root[:redirect]
+        router.redirect route_for(TinyAdmin.settings.root[:redirect])
       else
-        page = settings.root[:page]
+        page = TinyAdmin.settings.root[:page]
         page_class = page.is_a?(String) ? Object.const_get(page) : page
         render_page prepare_page(page_class)
       end
@@ -102,7 +103,7 @@ module TinyAdmin
 
     def setup_member_routes(router, options:)
       context.repository = options[:repository].new(options[:model])
-      action_options = (options[:show] || {}).merge(record_not_found_page: settings.record_not_found)
+      action_options = (options[:show] || {}).merge(record_not_found_page: TinyAdmin.settings.record_not_found)
 
       router.on String do |reference|
         context.reference = reference

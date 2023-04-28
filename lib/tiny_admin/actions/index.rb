@@ -21,7 +21,7 @@ module TinyAdmin
         records, total_count = repository.list(page: current_page, limit: pagination, filters: filters, sort: sort)
 
         prepare_page(Views::Actions::Index) do |page|
-          setup_pagination(page, settings.components[:pagination], total_count: total_count)
+          setup_pagination(page, TinyAdmin.settings.components[:pagination], total_count: total_count)
           page.update_attributes(
             actions: context.actions,
             fields: fields,
