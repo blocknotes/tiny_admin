@@ -6,7 +6,7 @@ RSpec.describe 'TinyAdmin' do
 
     let(:file) { file_fixture('basic_config.yml') }
     let(:root) { { title: 'Test' } }
-    let(:settings) { instance_double(TinyAdmin::Settings, :[]= => nil) }
+    let(:settings) { instance_double(TinyAdmin::Settings, :[]= => nil, reset!: nil) }
 
     before do
       allow(TinyAdmin::Settings).to receive(:instance).and_return(settings)

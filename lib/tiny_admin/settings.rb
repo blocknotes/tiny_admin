@@ -22,26 +22,40 @@ module TinyAdmin
       %i[root title] => 'TinyAdmin'
     }.freeze
 
-    attr_accessor :authentication,
-                  :components,
-                  :content_page,
-                  :extra_styles,
-                  :helper_class,
-                  :page_not_found,
-                  :record_not_found,
-                  :repository,
-                  :root,
-                  :root_path,
-                  :sections,
-                  :scripts,
-                  :style_links
+    OPTIONS = %i[
+      authentication
+      components
+      content_page
+      extra_styles
+      helper_class
+      page_not_found
+      record_not_found
+      repository
+      root
+      root_path
+      sections
+      scripts
+      style_links
+    ].freeze
 
-    def [](key)
-      send(key)
+    OPTIONS.each do |option|
+      define_method(option) do
+        self[option]
+      end
+
+      define_method("#{option}=") do |value|
+        self[option] = value
+      end
     end
 
-    def []=(key, value)
-      send("#{key}=", value)
+    def [](*path)
+      key, option = fetch_setting(path)
+      option[key]
+    end
+
+    def []=(*path, value)
+      key, option = fetch_setting(path)
+      option[key] = value
       convert_value(key, value)
     end
 
@@ -58,16 +72,26 @@ module TinyAdmin
 
       context.pages ||= {}
       context.resources ||= {}
-      @sections ||= []
-      @root_path = '/' if @root_path == ''
+      self.sections ||= []
+      self.root_path = '/' if root_path == ''
 
-      if @authentication[:plugin] <= Plugins::SimpleAuth
-        @authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
+      if authentication[:plugin] <= Plugins::SimpleAuth
+        authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
       end
       context.navbar = prepare_navbar(sections, logout: authentication[:logout])
     end
 
+    def reset!
+      @options = {}
+    end
+
     private
+
+    def fetch_setting(path)
+      @options ||= {}
+      *parts, last = path.map(&:to_sym)
+      [last, parts.inject(@options) { |result, part| result[part] ||= {} }]
+    end
 
     def convert_value(key, value)
       if value.is_a?(Hash)
