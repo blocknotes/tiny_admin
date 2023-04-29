@@ -2,9 +2,9 @@
 
 module TinyAdmin
   class Router < BasicApp
-    TinyAdmin.settings.load_settings
-
     route do |r|
+      TinyAdmin.settings.load_settings
+
       context.router = r
       context.settings = TinyAdmin.settings
 

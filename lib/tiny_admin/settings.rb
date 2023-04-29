@@ -97,7 +97,7 @@ module TinyAdmin
       if value.is_a?(Hash)
         value.each_key do |key2|
           path = [key, key2]
-          if DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)
+          if (DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)) && self[key][key2].is_a?(String)
             self[key][key2] = Object.const_get(self[key][key2])
           end
         end
