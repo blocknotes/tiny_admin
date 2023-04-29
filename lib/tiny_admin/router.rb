@@ -6,7 +6,6 @@ module TinyAdmin
       TinyAdmin.settings.load_settings
 
       context.router = r
-      context.settings = TinyAdmin.settings
 
       r.on 'auth' do
         context.slug = nil

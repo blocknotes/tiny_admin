@@ -44,7 +44,7 @@ module TinyAdmin
     end
 
     def context
-      TinyAdmin::Context.instance
+      @context ||= TinyAdmin.settings.context
     end
   end
 end

@@ -3,7 +3,6 @@
 module TinyAdmin
   class Settings
     include Singleton
-    include Utils
 
     DEFAULTS = {
       %i[authentication plugin] => Plugins::NoAuth,
@@ -38,6 +37,8 @@ module TinyAdmin
       style_links
     ].freeze
 
+    attr_reader :context
+
     OPTIONS.each do |option|
       define_method(option) do
         self[option]
@@ -70,15 +71,14 @@ module TinyAdmin
         end
       end
 
-      context.pages ||= {}
-      context.resources ||= {}
+      @context ||= TinyAdmin::Context.new(self)
       self.sections ||= []
       self.root_path = '/' if root_path == ''
 
       if authentication[:plugin] <= Plugins::SimpleAuth
         authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
       end
-      context.navbar = prepare_navbar(sections, logout: authentication[:logout])
+      context.prepare_sections(sections, logout: authentication[:logout])
     end
 
     def reset!
@@ -104,60 +104,6 @@ module TinyAdmin
       elsif value.is_a?(String) && (DEFAULTS[[key]].is_a?(Class) || DEFAULTS[[key]].is_a?(Module))
         self[key] = Object.const_get(self[key])
       end
-    end
-
-    def prepare_navbar(sections, logout:)
-      items = sections.each_with_object({}) do |section, list|
-        unless section.is_a?(Hash)
-          section_class = section.is_a?(String) ? Object.const_get(section) : section
-          next unless section_class.respond_to?(:to_h)
-
-          section = section_class.to_h
-        end
-
-        slug = section[:slug].to_s
-        case section[:type]&.to_sym
-        when :content
-          list[slug] = add_content_section(slug, section)
-        when :page
-          list[slug] = add_page_section(slug, section)
-        when :resource
-          list[slug] = add_resource_section(slug, section)
-        when :url
-          list[slug] = add_url_section(slug, section)
-        end
-      end
-      items['auth/logout'] = logout if logout
-      items
-    end
-
-    def add_content_section(slug, section)
-      context.pages[slug] = { class: content_page, content: section[:content] }
-      { name: section[:name], path: route_for(slug), class: content_page }
-    end
-
-    def add_page_section(slug, section)
-      page = section[:page]
-      page_class = page.is_a?(String) ? Object.const_get(page) : page
-      context.pages[slug] = { class: page_class }
-      { name: section[:name], path: route_for(slug), class: page_class }
-    end
-
-    def add_resource_section(slug, section)
-      repo = section[:repository] || repository
-      context.resources[slug] = {
-        model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
-        repository: repo.is_a?(String) ? Object.const_get(repo) : repo
-      }
-      resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
-      resource_options[:only] ||= %i[index show]
-      context.resources[slug].merge!(resource_options)
-      hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
-      { name: section[:name], path: route_for(slug) } unless hidden
-    end
-
-    def add_url_section(_slug, section)
-      section.slice(:name, :options).tap { _1[:path] = section[:url] }
     end
   end
 end
