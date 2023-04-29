@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module TinyAdmin
-  class Context
+  class Store
     include Utils
 
-    attr_accessor :actions, :reference, :repository, :request, :router, :slug
     attr_reader :navbar, :pages, :resources, :settings
 
     def initialize(settings)

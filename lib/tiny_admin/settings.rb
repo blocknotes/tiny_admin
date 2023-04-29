@@ -37,7 +37,7 @@ module TinyAdmin
       style_links
     ].freeze
 
-    attr_reader :context
+    attr_reader :store
 
     OPTIONS.each do |option|
       define_method(option) do
@@ -71,14 +71,14 @@ module TinyAdmin
         end
       end
 
-      @context ||= TinyAdmin::Context.new(self)
+      @store ||= TinyAdmin::Store.new(self)
       self.sections ||= []
       self.root_path = '/' if root_path == ''
 
       if authentication[:plugin] <= Plugins::SimpleAuth
         authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
       end
-      context.prepare_sections(sections, logout: authentication[:logout])
+      store.prepare_sections(sections, logout: authentication[:logout])
     end
 
     def reset!

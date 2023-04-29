@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Actions
       class Index < DefaultLayout
-        attr_accessor :actions, :fields, :filters, :links, :pagination_component, :prepare_record, :records
+        attr_accessor :actions, :fields, :filters, :links, :pagination_component, :prepare_record, :records, :slug
 
         def template
           super do
@@ -31,7 +31,7 @@ module TinyAdmin
                 if filters&.any?
                   div(class: 'col-3') {
                     filters_form = TinyAdmin::Views::Components::FiltersForm.new
-                    filters_form.update_attributes(section_path: route_for(context.slug), filters: filters)
+                    filters_form.update_attributes(section_path: route_for(slug), filters: filters)
                     render filters_form
                   }
                 end
@@ -82,15 +82,15 @@ module TinyAdmin
                       links.each do |link|
                         whitespace
                         if link == 'show'
-                          a(href: route_for(context.slug, reference: record.id), class: link_class) { 'show' }
+                          a(href: route_for(slug, reference: record.id), class: link_class) { 'show' }
                         else
-                          a(href: route_for(context.slug, reference: record.id, action: link), class: link_class) {
+                          a(href: route_for(slug, reference: record.id, action: link), class: link_class) {
                             to_label(link)
                           }
                         end
                       end
                     else
-                      a(href: route_for(context.slug, reference: record.id), class: link_class) { 'show' }
+                      a(href: route_for(slug, reference: record.id), class: link_class) { 'show' }
                     end
                   }
                 }
@@ -103,7 +103,7 @@ module TinyAdmin
           ul(class: 'nav justify-content-end') {
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
-                href = route_for(context.slug, action: action)
+                href = route_for(slug, action: action)
                 a(href: href, class: 'nav-link btn btn-outline-secondary') {
                   action_class.respond_to?(:title) ? action_class.title : action
                 }
