@@ -24,7 +24,7 @@ module TinyAdmin
           current_slug: slug,
           root_path: TinyAdmin.settings.root_path,
           root_title: TinyAdmin.settings.root[:title],
-          items: options&.include?(:no_menu) ? [] : store&.navbar
+          items: options&.include?(:no_menu) ? [] : TinyAdmin.settings.store&.navbar
         )
         yield(page) if block_given?
       end
@@ -41,10 +41,6 @@ module TinyAdmin
       return '' unless string
 
       string.respond_to?(:humanize) ? string.humanize : string.tr('_', ' ').capitalize
-    end
-
-    def store
-      @store ||= TinyAdmin.settings.store
     end
   end
 end

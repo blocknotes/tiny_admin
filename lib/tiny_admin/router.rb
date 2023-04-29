@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module TinyAdmin
-  Context = Struct.new(:actions, :navbar, :reference, :repository, :request, :router, :slug, keyword_init: true)
-
   class Router < BasicApp
     route do |r|
       TinyAdmin.settings.load_settings
@@ -39,6 +37,10 @@ module TinyAdmin
     end
 
     private
+
+    def store
+      @store ||= TinyAdmin.settings.store
+    end
 
     def render_page(page)
       if page.respond_to?(:messages=)
@@ -90,7 +92,6 @@ module TinyAdmin
         router.is do
           context = Context.new(
             actions: custom_actions,
-            navbar: store.navbar,
             repository: repository,
             request: request,
             router: router,
@@ -123,7 +124,6 @@ module TinyAdmin
             context = Context.new(
               actions: custom_actions,
               reference: reference,
-              navbar: store.navbar,
               repository: repository,
               request: request,
               router: router,
@@ -144,7 +144,6 @@ module TinyAdmin
         router.get action_slug.to_s do
           context = Context.new(
             actions: {},
-            navbar: store.navbar,
             reference: reference,
             repository: repository,
             request: request,
