@@ -14,17 +14,17 @@ module TinyAdmin
       list.join('&')
     end
 
-    def prepare_page(page_class, options: nil)
+    def prepare_page(page_class, slug: nil, options: nil)
       page_class.new.tap do |page|
         page.options = options
         page.head_component = TinyAdmin.settings.components[:head]&.new
         page.flash_component = TinyAdmin.settings.components[:flash]&.new
         page.navbar_component = TinyAdmin.settings.components[:navbar]&.new
         page.navbar_component&.update_attributes(
-          current_slug: context&.slug,
+          current_slug: slug,
           root_path: TinyAdmin.settings.root_path,
           root_title: TinyAdmin.settings.root[:title],
-          items: options&.include?(:no_menu) ? [] : context&.navbar
+          items: options&.include?(:no_menu) ? [] : TinyAdmin.settings.store&.navbar
         )
         yield(page) if block_given?
       end
@@ -41,10 +41,6 @@ module TinyAdmin
       return '' unless string
 
       string.respond_to?(:humanize) ? string.humanize : string.tr('_', ' ').capitalize
-    end
-
-    def context
-      TinyAdmin::Context.instance
     end
   end
 end

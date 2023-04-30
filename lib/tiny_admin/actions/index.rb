@@ -3,7 +3,8 @@
 module TinyAdmin
   module Actions
     class Index < BasicAction
-      attr_reader :current_page,
+      attr_reader :context,
+                  :current_page,
                   :fields_options,
                   :filters_list,
                   :links,
@@ -15,12 +16,13 @@ module TinyAdmin
                   :sort
 
       def call(app:, context:, options:)
+        @context = context
         evaluate_options(options)
         fields = repository.fields(options: fields_options)
         filters = prepare_filters(fields, filters_list)
         records, total_count = repository.list(page: current_page, limit: pagination, filters: filters, sort: sort)
 
-        prepare_page(Views::Actions::Index) do |page|
+        prepare_page(Views::Actions::Index, slug: context.slug) do |page|
           setup_pagination(page, TinyAdmin.settings.components[:pagination], total_count: total_count)
           page.update_attributes(
             actions: context.actions,
@@ -29,6 +31,7 @@ module TinyAdmin
             links: links,
             prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
             records: records,
+            slug: context.slug,
             title: repository.index_title
           )
         end
