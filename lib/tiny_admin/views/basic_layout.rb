@@ -5,7 +5,7 @@ module TinyAdmin
     class BasicLayout < Phlex::HTML
       include Utils
 
-      attr_accessor :content
+      attr_accessor :content, :widgets
 
       def update_attributes(attributes)
         attributes.each do |key, value|

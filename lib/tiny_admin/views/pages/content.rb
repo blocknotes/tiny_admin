@@ -7,7 +7,11 @@ module TinyAdmin
         def template
           super do
             div(class: 'content') {
-              unsafe_raw(content)
+              div(class: 'content-data') {
+                unsafe_raw(content)
+              }
+
+              render TinyAdmin::Views::Components::Widgets.new(widgets) if widgets&.any?
             }
           end
         end

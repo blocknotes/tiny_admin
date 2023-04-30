@@ -37,6 +37,10 @@ module TinyAdmin
       route[0] == '/' ? route : route.prepend('/')
     end
 
+    def to_class(klass)
+      klass.is_a?(String) ? Object.const_get(klass) : klass
+    end
+
     def to_label(string)
       return '' unless string
 
