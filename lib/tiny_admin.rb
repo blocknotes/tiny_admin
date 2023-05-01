@@ -4,6 +4,7 @@ require 'phlex'
 require 'roda'
 require 'zeitwerk'
 
+require 'forwardable'
 require 'singleton'
 require 'yaml'
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'forwardable'
-
 module TinyAdmin
   class Router < BasicApp
     extend Forwardable
