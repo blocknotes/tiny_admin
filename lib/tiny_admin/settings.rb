@@ -76,7 +76,7 @@ module TinyAdmin
       self.root_path = '/' if root_path == ''
 
       if authentication[:plugin] <= Plugins::SimpleAuth
-        authentication[:logout] ||= { name: 'logout', path: "#{root_path}/auth/logout" }
+        authentication[:logout] ||= TinyAdmin::Section.new(name: 'logout', path: "#{root_path}/auth/logout")
       end
       store.prepare_sections(sections, logout: authentication[:logout])
     end

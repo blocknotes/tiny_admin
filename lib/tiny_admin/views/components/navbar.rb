@@ -26,11 +26,11 @@ module TinyAdmin
                   items.each do |slug, item|
                     classes = %w[nav-link]
                     classes << 'active' if slug == current_slug
-                    link_attributes = { class: classes.join(' '), href: item[:path], 'aria-current' => 'page' }
-                    link_attributes.merge!(item[:options]) if item[:options]
+                    link_attributes = { class: classes.join(' '), href: item.path, 'aria-current' => 'page' }
+                    link_attributes.merge!(item.options) if item.options
 
                     li(class: 'nav-item') {
-                      a(**link_attributes) { item[:name] }
+                      a(**link_attributes) { item.name }
                     }
                   end
                 }
