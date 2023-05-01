@@ -13,7 +13,7 @@ module TinyAdmin
     end
 
     def prepare_sections(sections, logout:)
-      @navbar = sections.each_with_object({}) do |section, list|
+      @navbar = sections.each_with_object([]) do |section, list|
         unless section.is_a?(Hash)
           section_class = to_class(section)
           next unless section_class.respond_to?(:to_h)
@@ -24,45 +24,44 @@ module TinyAdmin
         slug = section[:slug].to_s
         case section[:type]&.to_sym
         when :content
-          list[slug] = add_content_section(slug, section)
+          list << add_content_section(slug, section)
         when :page
-          list[slug] = add_page_section(slug, section)
+          list << add_page_section(slug, section)
         when :resource
-          list[slug] = add_resource_section(slug, section)
+          list << add_resource_section(slug, section)
         when :url
-          list[slug] = add_url_section(slug, section)
+          list << add_url_section(slug, section)
         end
       end
-      navbar['auth/logout'] = logout if logout
+      navbar << logout if logout
     end
 
     private
 
     def add_content_section(slug, section)
       pages[slug] = { class: settings.content_page, content: section[:content], widgets: section[:widgets] }
-      { name: section[:name], path: TinyAdmin.route_for(slug), class: settings.content_page }
+      TinyAdmin::Section.new(name: section[:name], slug: slug)
     end
 
     def add_page_section(slug, section)
-      page_class = to_class(section[:page])
-      pages[slug] = { class: page_class }
-      { name: section[:name], path: TinyAdmin.route_for(slug), class: page_class }
+      pages[slug] = { class: to_class(section[:page]) }
+      TinyAdmin::Section.new(name: section[:name], slug: slug)
     end
 
     def add_resource_section(slug, section)
-      resources[slug] = {
+      resource = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
+      resource[:only] ||= %i[index show]
+      resources[slug] = resource.merge(
         model: to_class(section[:model]),
         repository: to_class(section[:repository] || settings.repository)
-      }
-      resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
-      resource_options[:only] ||= %i[index show]
-      resources[slug].merge!(resource_options)
+      )
+
       hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
-      { name: section[:name], path: TinyAdmin.route_for(slug) } unless hidden
+      TinyAdmin::Section.new(name: section[:name], slug: slug) unless hidden
     end
 
-    def add_url_section(_slug, section)
-      section.slice(:name, :options).tap { _1[:path] = section[:url] }
+    def add_url_section(slug, section)
+      TinyAdmin::Section.new(name: section[:name], options: section[:options], path: section[:url], slug: slug)
     end
   end
 end

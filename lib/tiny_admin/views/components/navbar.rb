@@ -23,14 +23,14 @@ module TinyAdmin
               }
               div(class: 'collapse navbar-collapse', id: 'navbarNav') {
                 ul(class: 'navbar-nav') {
-                  items.each do |slug, item|
+                  items.each do |item|
                     classes = %w[nav-link]
-                    classes << 'active' if slug == current_slug
-                    link_attributes = { class: classes.join(' '), href: item[:path], 'aria-current' => 'page' }
-                    link_attributes.merge!(item[:options]) if item[:options]
+                    classes << 'active' if item.slug == current_slug
+                    link_attributes = { class: classes.join(' '), href: item.path, 'aria-current' => 'page' }
+                    link_attributes.merge!(item.options) if item.options
 
                     li(class: 'nav-item') {
-                      a(**link_attributes) { item[:name] }
+                      a(**link_attributes) { item.name }
                     }
                   end
                 }
