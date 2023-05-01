@@ -18,7 +18,8 @@ module TinyAdmin
       %i[repository] => Plugins::ActiveRecordRepository,
       %i[root_path] => '/admin',
       %i[root page] => Views::Pages::Root,
-      %i[root title] => 'TinyAdmin'
+      %i[root title] => 'TinyAdmin',
+      %i[sections] => []
     }.freeze
 
     OPTIONS = %i[
@@ -72,7 +73,6 @@ module TinyAdmin
       end
 
       @store ||= TinyAdmin::Store.new(self)
-      self.sections ||= []
       self.root_path = '/' if root_path == ''
 
       if authentication[:plugin] <= Plugins::SimpleAuth

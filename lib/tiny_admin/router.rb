@@ -139,7 +139,7 @@ module TinyAdmin
     def setup_custom_actions(router, custom_actions, options:, repository:, slug:, reference: nil)
       (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
-        action_class = action.is_a?(String) ? Object.const_get(action) : action
+        action_class = to_class(action)
 
         router.get action_slug.to_s do
           context = Context.new(

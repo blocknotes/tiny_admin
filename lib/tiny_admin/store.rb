@@ -15,7 +15,7 @@ module TinyAdmin
     def prepare_sections(sections, logout:)
       @navbar = sections.each_with_object({}) do |section, list|
         unless section.is_a?(Hash)
-          section_class = section.is_a?(String) ? Object.const_get(section) : section
+          section_class = to_class(section)
           next unless section_class.respond_to?(:to_h)
 
           section = section_class.to_h
@@ -44,17 +44,15 @@ module TinyAdmin
     end
 
     def add_page_section(slug, section)
-      page = section[:page]
-      page_class = page.is_a?(String) ? Object.const_get(page) : page
+      page_class = to_class(section[:page])
       pages[slug] = { class: page_class }
       { name: section[:name], path: route_for(slug), class: page_class }
     end
 
     def add_resource_section(slug, section)
-      repo = section[:repository] || settings.repository
       resources[slug] = {
-        model: section[:model].is_a?(String) ? Object.const_get(section[:model]) : section[:model],
-        repository: repo.is_a?(String) ? Object.const_get(repo) : repo
+        model: to_class(section[:model]),
+        repository: to_class(section[:repository] || settings.repository)
       }
       resource_options = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
       resource_options[:only] ||= %i[index show]

@@ -11,7 +11,9 @@ module TinyAdmin
             div(class: 'index') {
               div(class: 'row') {
                 div(class: 'col-4') {
-                  h1(class: 'title') { title }
+                  h1(class: 'title') {
+                    title
+                  }
                 }
                 div(class: 'col-8') {
                   actions_buttons
