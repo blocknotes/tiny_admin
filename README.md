@@ -1,6 +1,9 @@
 # Tiny Admin
 
-[![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin) [![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml) [![Specs](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml)
+[![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin)
+[![Gem Downloads](https://badgen.net/rubygems/dt/tiny_admin)](https://rubygems.org/gems/tiny_admin)
+[![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml)
+[![Specs](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml)
 
 A compact and composable dashboard component for Ruby.
 
@@ -16,7 +19,7 @@ Please ⭐ if you like it.
 
 ## Install
 
-- Add to your Gemfile: `gem 'tiny_admin', '~> 0.6'`
+- Add to your Gemfile: `gem 'tiny_admin', '~> 0.7'`
 - Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
   + in Rails, update _config/routes.rb_: `mount TinyAdmin::Router => '/admin'`
 - Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` with a YAML config file (see [configuration](#configuration) below):

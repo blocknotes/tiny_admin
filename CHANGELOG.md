@@ -2,6 +2,11 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.7.0
+
+- feat: widgets
+- feat: internal changes => context, store, section classes
+
 ## 0.6.0
 
 - feat: new content section type
