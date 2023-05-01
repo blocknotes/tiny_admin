@@ -26,7 +26,7 @@ module TinyAdmin
                   end
                   div(class: 'field-value col-10') {
                     if field.options[:link_to]
-                      a(href: route_for(field.options[:link_to], reference: value)) {
+                      a(href: TinyAdmin.route_for(field.options[:link_to], reference: value)) {
                         field.apply_call_option(record) || value
                       }
                     else
@@ -47,7 +47,7 @@ module TinyAdmin
           ul(class: 'nav justify-content-end') {
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
-                href = route_for(slug, reference: reference, action: action)
+                href = TinyAdmin.route_for(slug, reference: reference, action: action)
                 a(href: href, class: 'nav-link btn btn-outline-secondary') {
                   action_class.respond_to?(:title) ? action_class.title : action
                 }

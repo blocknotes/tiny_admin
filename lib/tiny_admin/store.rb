@@ -40,13 +40,13 @@ module TinyAdmin
 
     def add_content_section(slug, section)
       pages[slug] = { class: settings.content_page, content: section[:content], widgets: section[:widgets] }
-      { name: section[:name], path: route_for(slug), class: settings.content_page }
+      { name: section[:name], path: TinyAdmin.route_for(slug), class: settings.content_page }
     end
 
     def add_page_section(slug, section)
       page_class = to_class(section[:page])
       pages[slug] = { class: page_class }
-      { name: section[:name], path: route_for(slug), class: page_class }
+      { name: section[:name], path: TinyAdmin.route_for(slug), class: page_class }
     end
 
     def add_resource_section(slug, section)
@@ -58,7 +58,7 @@ module TinyAdmin
       resource_options[:only] ||= %i[index show]
       resources[slug].merge!(resource_options)
       hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
-      { name: section[:name], path: route_for(slug) } unless hidden
+      { name: section[:name], path: TinyAdmin.route_for(slug) } unless hidden
     end
 
     def add_url_section(_slug, section)

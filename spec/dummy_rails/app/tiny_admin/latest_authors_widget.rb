@@ -4,7 +4,9 @@ class LatestAuthorsWidget < TinyAdmin::Views::BasicWidget
 
     ul {
       Author.last(3).each do |author|
-        li { author.to_s }
+        li {
+          a(href: TinyAdmin.route_for('authors', reference: author.id)) { author.to_s }
+        }
       end
     }
   end

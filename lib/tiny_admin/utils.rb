@@ -33,13 +33,6 @@ module TinyAdmin
       end
     end
 
-    def route_for(section, reference: nil, action: nil, query: nil)
-      root_path = TinyAdmin.settings.root_path == '/' ? nil : TinyAdmin.settings.root_path
-      route = [root_path, section, reference, action].compact.join("/")
-      route << "?#{query}" if query
-      route[0] == '/' ? route : route.prepend('/')
-    end
-
     def to_class(klass)
       klass.is_a?(String) ? Object.const_get(klass) : klass
     end

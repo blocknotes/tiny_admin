@@ -4,7 +4,9 @@ class LatestPostsWidget < TinyAdmin::Views::BasicWidget
 
     ul {
       Post.last(3).each do |post|
-        li { post.to_s }
+        li {
+          a(href: TinyAdmin.route_for('posts', reference: post.id)) { post.to_s }
+        }
       end
     }
   end
