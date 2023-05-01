@@ -80,6 +80,7 @@ The following options are supported:
 - `title` (String): root section's title;
 - `page` (String): a view object to render;
 - `redirect` (String): alternative to _page_ option - redirects to a specific slug;
+- `widgets` (Array): list of widgets (as View components) to present.
 
 Example:
 
@@ -87,6 +88,9 @@ Example:
 root:
   title: MyAdmin
   redirect: posts
+  widgets:
+    - LatestAuthorsWidget
+    - LatestPostsWidget
 ```
 
 `helper_class` (String): class or module with helper methods, used for attributes' formatters.
@@ -124,6 +128,7 @@ authentication:
 - `slug` (String): section reference identifier;
 - `name` (String): section's title;
 - `type` (String): the type of section: `content`, `page`, `resource` or `url`;
+- `widgets` (Array): list of widgets (as View components) to present;
 - other properties depends on the section's type.
 
 For _content_ sections:
@@ -139,6 +144,9 @@ type: content
 content: >
   <h1>Test content!</h1>
   <p>Some test content</p>
+widgets:
+  - LatestAuthorsWidget
+  - LatestPostsWidget
 ```
 
 For _url_ sections:
@@ -179,6 +187,7 @@ For _resource_ sections:
 - `show` (Hash): detail's action options (see below);
 - `collection_actions` (Array of hashes): custom collection's actions;
 - `member_actions` (Array of hashes): custom details's actions;
+- `widgets` (Array): list of widgets (as View components) to present;
 - `only` (Array of strings): list of supported actions (ex. `index`);
 - `options` (Array of strings): resource options (ex. `hidden`).
 
@@ -256,6 +265,9 @@ Example:
           header: The author
           link_to: authors
           call: author, name
+      widgets:
+        - LatestAuthorsWidget
+        - LatestPostsWidget
 ```
 
 ### Sample
@@ -280,6 +292,9 @@ authentication:
   # password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 root:
   title: Test Admin
+  widgets:
+    - LatestAuthorsWidget
+    - LatestPostsWidget
   # page: RootPage
 helper_class: AdminHelper
 page_not_found: PageNotFound

@@ -11,7 +11,9 @@ module TinyAdmin
             div(class: 'index') {
               div(class: 'row') {
                 div(class: 'col-4') {
-                  h1(class: 'title') { title }
+                  h1(class: 'title') {
+                    title
+                  }
                 }
                 div(class: 'col-8') {
                   actions_buttons
@@ -31,13 +33,15 @@ module TinyAdmin
                 if filters&.any?
                   div(class: 'col-3') {
                     filters_form = TinyAdmin::Views::Components::FiltersForm.new
-                    filters_form.update_attributes(section_path: route_for(slug), filters: filters)
+                    filters_form.update_attributes(section_path: TinyAdmin.route_for(slug), filters: filters)
                     render filters_form
                   }
                 end
               }
 
               render pagination_component if pagination_component
+
+              render TinyAdmin::Views::Components::Widgets.new(widgets)
             }
           end
         end
@@ -66,7 +70,7 @@ module TinyAdmin
                   field = fields[key]
                   td(class: "field-value-#{field.name} field-value-type-#{field.type}") {
                     if field.options && field.options[:link_to]
-                      a(href: route_for(field.options[:link_to], reference: value)) {
+                      a(href: TinyAdmin.route_for(field.options[:link_to], reference: value)) {
                         field.apply_call_option(record) || value
                       }
                     else
@@ -82,15 +86,15 @@ module TinyAdmin
                       links.each do |link|
                         whitespace
                         if link == 'show'
-                          a(href: route_for(slug, reference: record.id), class: link_class) { 'show' }
+                          a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) { 'show' }
                         else
-                          a(href: route_for(slug, reference: record.id, action: link), class: link_class) {
+                          a(href: TinyAdmin.route_for(slug, reference: record.id, action: link), class: link_class) {
                             to_label(link)
                           }
                         end
                       end
                     else
-                      a(href: route_for(slug, reference: record.id), class: link_class) { 'show' }
+                      a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) { 'show' }
                     end
                   }
                 }
@@ -103,7 +107,7 @@ module TinyAdmin
           ul(class: 'nav justify-content-end') {
             (actions || {}).each do |action, action_class|
               li(class: 'nav-item mx-1') {
-                href = route_for(slug, action: action)
+                href = TinyAdmin.route_for(slug, action: action)
                 a(href: href, class: 'nav-link btn btn-outline-secondary') {
                   action_class.respond_to?(:title) ? action_class.title : action
                 }

@@ -7,7 +7,7 @@ module TinyAdmin
         def template
           super do
             div(class: 'root') {
-              h1(class: 'title') { 'Tiny Admin' }
+              render TinyAdmin::Views::Components::Widgets.new(widgets)
             }
           end
         end
