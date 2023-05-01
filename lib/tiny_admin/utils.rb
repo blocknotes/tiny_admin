@@ -14,7 +14,7 @@ module TinyAdmin
       list.join('&')
     end
 
-    def prepare_page(page_class, slug: nil, options: nil)
+    def prepare_page(page_class, slug: nil, attributes: nil, options: nil)
       page_class.new.tap do |page|
         page.options = options
         page.head_component = TinyAdmin.settings.components[:head]&.new
@@ -26,6 +26,9 @@ module TinyAdmin
           root_title: TinyAdmin.settings.root[:title],
           items: options&.include?(:no_menu) ? [] : TinyAdmin.settings.store&.navbar
         )
+        attrs = attributes || {}
+        attrs[:widgets] = attrs[:widgets].map { to_class(_1) } if attrs[:widgets]
+        page.update_attributes(attrs) unless attrs.empty?
         yield(page) if block_given?
       end
     end

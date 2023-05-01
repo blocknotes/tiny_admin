@@ -11,7 +11,7 @@ module TinyAdmin
                 unsafe_raw(content)
               }
 
-              render TinyAdmin::Views::Components::Widgets.new(widgets) if widgets&.any?
+              render TinyAdmin::Views::Components::Widgets.new(widgets)
             }
           end
         end

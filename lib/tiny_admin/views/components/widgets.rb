@@ -5,10 +5,12 @@ module TinyAdmin
     module Components
       class Widgets < BasicComponent
         def initialize(widgets)
-          @widgets = widgets || []
+          @widgets = widgets
         end
 
         def template
+          return if @widgets.nil? || @widgets.empty?
+
           div(class: 'container widgets') {
             @widgets.each_slice(2).each do |row|
               div(class: 'row') {

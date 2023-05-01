@@ -5,6 +5,9 @@ authentication:
 root:
   title: Test Admin
   # page: RootPage
+  widgets:
+    - LatestAuthorsWidget
+    - LatestPostsWidget
 helper_class: AdminHelper
 # page_not_found: PageNotFound
 # record_not_found: RecordNotFound

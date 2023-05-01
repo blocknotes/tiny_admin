@@ -35,6 +35,8 @@ module TinyAdmin
                   }
                 }
               end
+
+              render TinyAdmin::Views::Components::Widgets.new(widgets)
             }
           end
         end

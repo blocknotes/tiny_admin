@@ -39,7 +39,7 @@ module TinyAdmin
     private
 
     def add_content_section(slug, section)
-      pages[slug] = { class: settings.content_page, content: section[:content] }
+      pages[slug] = { class: settings.content_page, content: section[:content], widgets: section[:widgets] }
       { name: section[:name], path: route_for(slug), class: settings.content_page }
     end
 

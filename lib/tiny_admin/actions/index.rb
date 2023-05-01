@@ -21,19 +21,20 @@ module TinyAdmin
         fields = repository.fields(options: fields_options)
         filters = prepare_filters(fields)
         records, count = repository.list(page: current_page, limit: pagination, filters: filters, sort: options[:sort])
+        attributes = {
+          actions: context.actions,
+          fields: fields,
+          filters: filters,
+          links: options[:links],
+          prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
+          records: records,
+          slug: context.slug,
+          title: repository.index_title,
+          widgets: options[:widgets]
+        }
 
-        prepare_page(Views::Actions::Index, slug: context.slug) do |page|
+        prepare_page(Views::Actions::Index, slug: context.slug, attributes: attributes) do |page|
           setup_pagination(page, TinyAdmin.settings.components[:pagination], total_count: count)
-          page.update_attributes(
-            actions: context.actions,
-            fields: fields,
-            filters: filters,
-            links: options[:links],
-            prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
-            records: records,
-            slug: context.slug,
-            title: repository.index_title
-          )
         end
       end
 

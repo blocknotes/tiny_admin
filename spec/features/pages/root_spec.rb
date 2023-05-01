@@ -12,7 +12,7 @@ RSpec.describe 'Root', type: :feature do
 
     it 'loads the root page', :aggregate_failures do
       expect(page).to have_current_path('/admin')
-      expect(page).to have_content('Tiny Admin')
+      expect(page).to have_css('.root')
     end
   end
 

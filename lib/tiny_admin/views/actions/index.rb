@@ -40,6 +40,8 @@ module TinyAdmin
               }
 
               render pagination_component if pagination_component
+
+              render TinyAdmin::Views::Components::Widgets.new(widgets)
             }
           end
         end
