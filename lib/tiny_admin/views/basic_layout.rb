@@ -7,6 +7,10 @@ module TinyAdmin
 
       attr_accessor :content, :widgets
 
+      def label_for(value, options: [])
+        TinyAdmin.settings.helper_class.label_for(value, options: options)
+      end
+
       def update_attributes(attributes)
         attributes.each do |key, value|
           send("#{key}=", value)

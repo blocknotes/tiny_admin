@@ -86,15 +86,20 @@ module TinyAdmin
                       links.each do |link|
                         whitespace
                         if link == 'show'
-                          a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) { 'show' }
+                          a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
+                            label_for('Show', options: ['actions.index.links.show'])
+                          }
                         else
                           a(href: TinyAdmin.route_for(slug, reference: record.id, action: link), class: link_class) {
-                            to_label(link)
+                            fallback = humanize(link)
+                            label_for(fallback, options: ["actions.index.links.#{link}"])
                           }
                         end
                       end
                     else
-                      a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) { 'show' }
+                      a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
+                        label_for('Show', options: ['actions.index.links.show'])
+                      }
                     end
                   }
                 }

@@ -12,7 +12,11 @@ module TinyAdmin
       end
 
       r.post 'unauthenticated' do
-        render_login(warnings: ['Failed to authenticate'])
+        warning = TinyAdmin.settings.helper_class.label_for(
+          'Failed to authenticate',
+          options: ['authentication.unauthenticated']
+        )
+        render_login(warnings: [warning])
       end
 
       r.get 'logout' do

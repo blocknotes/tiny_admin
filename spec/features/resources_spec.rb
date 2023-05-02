@@ -20,7 +20,7 @@ RSpec.describe 'Resources', type: :feature do
       expect(page).to have_css('h1.title', text: 'Authors')
       expect(page).to have_css('td', text: author.name)
       expect(page).to have_css('td', text: author.email)
-      expect(page).to have_link('show', href: "/admin/authors/#{author.id}")
+      expect(page).to have_link('Show', href: "/admin/authors/#{author.id}")
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe 'Resources', type: :feature do
       visit '/admin'
       log_in
       click_link('Authors')
-      find('tr.row_1 a', text: 'show').click
+      find('tr.row_1 a', text: 'Show').click
     end
 
     it 'loads the show page', :aggregate_failures do
@@ -64,7 +64,7 @@ RSpec.describe 'Resources', type: :feature do
       visit '/admin'
       log_in
       click_link('Posts')
-      find('tr.row_1 a', text: 'show').click
+      find('tr.row_1 a', text: 'Show').click
     end
 
     it 'loads the show page', :aggregate_failures do
