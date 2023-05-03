@@ -15,6 +15,10 @@ module TinyAdmin
         Kernel.format(options.first, value) if value && options&.any?
       end
 
+      def label_for(value, options: [])
+        value
+      end
+
       def round(value, options: [])
         value&.round(options&.first&.to_i || 2)
       end

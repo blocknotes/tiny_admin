@@ -37,7 +37,7 @@ module TinyAdmin
       klass.is_a?(String) ? Object.const_get(klass) : klass
     end
 
-    def to_label(string)
+    def humanize(string)
       return '' unless string
 
       string.respond_to?(:humanize) ? string.humanize : string.tr('_', ' ').capitalize

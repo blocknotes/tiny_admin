@@ -17,8 +17,12 @@ module TinyAdmin
                 when :boolean
                   select(class: 'form-select', id: "filter-#{name}", name: "q[#{name}]") {
                     option(value: '') { '-' }
-                    option(value: '0', selected: filter[:value] == '0') { 'false' }
-                    option(value: '1', selected: filter[:value] == '1') { 'true' }
+                    option(value: '0', selected: filter[:value] == '0') {
+                      TinyAdmin.settings.helper_class.label_for('false', options: ['components.filters_form.boolean.false'])
+                    }
+                    option(value: '1', selected: filter[:value] == '1') {
+                      TinyAdmin.settings.helper_class.label_for('true', options: ['components.filters_form.boolean.true'])
+                    }
                   }
                 when :date
                   input(type: 'date', class: 'form-control', id: "filter-#{name}", name: "q[#{name}]", value: filter[:value])
@@ -40,9 +44,13 @@ module TinyAdmin
             end
 
             div(class: 'mt-3') {
-              a(href: section_path, class: 'button_clear btn btn-secondary text-white') { 'clear' }
+              a(href: section_path, class: 'button_clear btn btn-secondary text-white') {
+                TinyAdmin.settings.helper_class.label_for('Clear', options: ['components.filters_form.buttons.clear'])
+              }
               whitespace
-              button(type: 'submit', class: 'button_filter btn btn-secondary') { 'filter' }
+              button(type: 'submit', class: 'button_filter btn btn-secondary') {
+                TinyAdmin.settings.helper_class.label_for('Filter', options: ['components.filters_form.buttons.submit'])
+              }
             }
           }
         end
