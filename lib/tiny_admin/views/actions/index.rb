@@ -69,7 +69,7 @@ module TinyAdmin
                 attributes.each do |key, value|
                   field = fields[key]
                   td(class: "field-value-#{field.name} field-value-type-#{field.type}") {
-                    render TinyAdmin::Views::Components::FieldValue.new(field, value, record: record)
+                    render TinyAdmin.settings.components[:field_value].new(field, value, record: record)
                   }
                 end
 

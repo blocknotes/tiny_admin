@@ -25,7 +25,7 @@ module TinyAdmin
                     div(class: 'field-header col-2') { field.options[:header] || field.title }
                   end
                   div(class: 'field-value col-10') {
-                    render TinyAdmin::Views::Components::FieldValue.new(field, value, record: record)
+                    render TinyAdmin.settings.components[:field_value].new(field, value, record: record)
                   }
                 }
               end

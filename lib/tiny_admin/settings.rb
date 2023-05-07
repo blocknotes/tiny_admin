@@ -7,6 +7,7 @@ module TinyAdmin
     DEFAULTS = {
       %i[authentication plugin] => Plugins::NoAuth,
       %i[authentication login] => Views::Pages::SimpleAuthLogin,
+      %i[components field_value] => Views::Components::FieldValue,
       %i[components flash] => Views::Components::Flash,
       %i[components head] => Views::Components::Head,
       %i[components navbar] => Views::Components::Navbar,
