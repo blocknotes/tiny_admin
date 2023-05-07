@@ -29,4 +29,6 @@ group :development, :test do
   # Tools
   # gem 'overcommit', '~> 0.59'
   gem 'pry-rails'
+  gem 'sorbet'
+  gem 'tapioca', require: false
 end

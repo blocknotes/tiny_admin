@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'phlex', '~> 1'
   spec.add_runtime_dependency 'roda', '~> 3'
+  spec.add_runtime_dependency 'sorbet-runtime'
   spec.add_runtime_dependency 'tilt', '~> 2'
   spec.add_runtime_dependency 'zeitwerk', '~> 2'
 end

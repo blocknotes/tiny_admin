@@ -1,0 +1,9 @@
+--dir
+.
+--ignore=_misc/
+--ignore=bin/
+--ignore=coverage/
+--ignore=extra/
+--ignore=tmp/
+--ignore=vendor/
+--ignore=spec/
