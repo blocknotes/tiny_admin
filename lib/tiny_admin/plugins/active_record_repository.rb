@@ -6,10 +6,7 @@ module TinyAdmin
       def index_record_attrs(record, fields: nil)
         return record.attributes.transform_values(&:to_s) unless fields
 
-        fields.to_h do |name, field|
-          value = record.send(name)
-          [name, translate_value(value, field)]
-        end
+        fields.to_h { [_1, record.send(_1)] }
       end
 
       def index_title
