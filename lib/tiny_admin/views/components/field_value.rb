@@ -4,6 +4,8 @@ module TinyAdmin
   module Views
     module Components
       class FieldValue < BasicComponent
+        attr_reader :field, :value, :record
+
         def initialize(field, value, record:)
           @field = field
           @value = value
@@ -11,14 +13,17 @@ module TinyAdmin
         end
 
         def template
-          val = @field.translate_value(@value)
-          if @field.options && @field.options[:link_to]
-            a(href: TinyAdmin.route_for(@field.options[:link_to], reference: val)) {
-              @field.apply_call_option(@record) || val
+          translated_value = field.translate_value(value)
+          value_class = field.options[:options]&.include?('value_class') ? "value-#{value}" : nil
+          if field.options[:link_to]
+            a(href: TinyAdmin.route_for(field.options[:link_to], reference: translated_value)) {
+              span(class: value_class) {
+                field.apply_call_option(record) || translated_value
+              }
             }
           else
-            span {
-              val
+            span(class: value_class) {
+              translated_value
             }
           end
         end
