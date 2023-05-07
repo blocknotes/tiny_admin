@@ -25,13 +25,7 @@ module TinyAdmin
                     div(class: 'field-header col-2') { field.options[:header] || field.title }
                   end
                   div(class: 'field-value col-10') {
-                    if field.options[:link_to]
-                      a(href: TinyAdmin.route_for(field.options[:link_to], reference: value)) {
-                        field.apply_call_option(record) || value
-                      }
-                    else
-                      value
-                    end
+                    render TinyAdmin::Views::Components::FieldValue.new(field, value, record: record)
                   }
                 }
               end

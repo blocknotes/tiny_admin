@@ -69,13 +69,7 @@ module TinyAdmin
                 attributes.each do |key, value|
                   field = fields[key]
                   td(class: "field-value-#{field.name} field-value-type-#{field.type}") {
-                    if field.options && field.options[:link_to]
-                      a(href: TinyAdmin.route_for(field.options[:link_to], reference: value)) {
-                        field.apply_call_option(record) || value
-                      }
-                    else
-                      value
-                    end
+                    render TinyAdmin::Views::Components::FieldValue.new(field, value, record: record)
                   }
                 end
 
