@@ -1,28 +1,11 @@
 # frozen_string_literal: true
 
-# --- dependencies -------------------------------------------------------------
-begin
-  require 'bundler/inline'
-rescue LoadError => e
-  abort "#{e} - Bundler version 1.10 or later is required. Please update your Bundler"
-end
+require 'bundler'
+Bundler.require
 
-gemfile(true) do
-  source 'https://rubygems.org'
-
-  gem 'rack'
-  gem 'rackup'
-  gem 'webrick'
-
-  gem 'roda'
-
-  gem 'tiny_admin', path: '../../'
-end
-
-# --- Roda application ---------------------------------------------------------
 require_relative '../tiny_admin_settings'
 
-class App < Roda
+class RodaApp < Roda
   route do |r|
     r.root do
       'Root page'
@@ -34,4 +17,4 @@ class App < Roda
   end
 end
 
-Rackup::Server.new(app: App, Port: 3000).start
+Rackup::Server.new(app: RodaApp, Port: 3000).start if __FILE__ == $PROGRAM_NAME
