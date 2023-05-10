@@ -2,6 +2,12 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.8.0
+
+- feat: new label_for support method (useful for translations)
+- feat: value_class field option
+- feat: internal improvements
+
 ## 0.7.0
 
 - feat: widgets
