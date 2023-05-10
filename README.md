@@ -85,6 +85,8 @@ The following options are supported:
 - `redirect` (String): alternative to _page_ option - redirects to a specific slug;
 - `widgets` (Array): list of widgets (as View components) to present.
 
+> 📚 [Wiki Root page](https://github.com/blocknotes/tiny_admin/wiki/Root) available
+
 Example:
 
 ```yml
@@ -97,6 +99,8 @@ root:
 ```
 
 `helper_class` (String): class or module with helper methods, used for attributes' formatters.
+
+> 📚 [Wiki Helper methods page](https://github.com/blocknotes/tiny_admin/wiki/Helper-methods) available
 
 `page_not_found` (String): a view object to render when a missing page is requested.
 
@@ -113,10 +117,14 @@ root:
 
 `extra_styles` (String): inline CSS styles.
 
+> 📚 [Wiki Styles and scripts page](https://github.com/blocknotes/tiny_admin/wiki/Styles-and-scripts) available
+
 `authentication` (Hash): define the authentication method, properties:
 
 - `plugin` (String): a plugin class to use (ex. `TinyAdmin::Plugins::SimpleAuth`);
 - `password` (String): a password hash used by _SimpleAuth_ plugin (generated with `Digest::SHA512.hexdigest("some password")`).
+
+> 📚 [Wiki Authentication page](https://github.com/blocknotes/tiny_admin/wiki/Authentication) available
 
 Example:
 
@@ -133,6 +141,8 @@ authentication:
 - `type` (String): the type of section: `content`, `page`, `resource` or `url`;
 - `widgets` (Array): list of widgets (as View components) to present;
 - other properties depends on the section's type.
+
+> 📚 [Wiki Pages page](https://github.com/blocknotes/tiny_admin/wiki/Pages) available
 
 For _content_ sections:
 
@@ -186,6 +196,9 @@ For _resource_ sections:
 
 - `model` (String): the class to use to fetch the data on an item of a collection;
 - `repository` (String): the class to get the properties related to the model;
+
+> 📚 [Wiki Repository page](https://github.com/blocknotes/tiny_admin/wiki/Repository) available
+
 - `index` (Hash): collection's action options (see below);
 - `show` (Hash): detail's action options (see below);
 - `collection_actions` (Array of hashes): custom collection's actions;
