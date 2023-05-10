@@ -1,7 +1,10 @@
 # frozen_string_literal: true
+# typed: true
 
 module TinyAdmin
   module Utils
+    include Kernel
+
     def params_to_s(params)
       list = params.each_with_object([]) do |(param, value), result|
         if value.is_a?(Hash)
