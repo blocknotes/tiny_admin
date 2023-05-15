@@ -58,14 +58,15 @@ module TinyAdmin
         router.redirect route_for(TinyAdmin.settings.root[:redirect])
       else
         page_class = to_class(TinyAdmin.settings.root[:page])
-        render_page prepare_page(page_class, attributes: TinyAdmin.settings.root.slice(:content, :title, :widgets))
+        attributes = TinyAdmin.settings.root.slice(:content, :title, :widgets)
+        render_page prepare_page(page_class, attributes: attributes, params: request.params)
       end
     end
 
     def setup_page_route(router, slug, page_data)
       router.get slug do
         attributes = page_data.slice(:content, :title, :widgets)
-        render_page prepare_page(page_data[:class], slug: slug, attributes: attributes)
+        render_page prepare_page(page_data[:class], slug: slug, attributes: attributes, params: request.params)
       end
     end
 

@@ -5,7 +5,7 @@ module TinyAdmin
     class BasicLayout < Phlex::HTML
       include Utils
 
-      attr_accessor :content, :widgets
+      attr_accessor :content, :params, :widgets
 
       def label_for(value, options: [])
         TinyAdmin.settings.helper_class.label_for(value, options: options)
