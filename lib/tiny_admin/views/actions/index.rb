@@ -28,6 +28,8 @@ module TinyAdmin
 
                     table_body
                   }
+
+                  render pagination_component if pagination_component
                 }
 
                 if filters&.any?
@@ -38,8 +40,6 @@ module TinyAdmin
                   }
                 end
               }
-
-              render pagination_component if pagination_component
 
               render TinyAdmin::Views::Components::Widgets.new(widgets)
             }

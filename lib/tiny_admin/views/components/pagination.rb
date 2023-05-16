@@ -4,23 +4,31 @@ module TinyAdmin
   module Views
     module Components
       class Pagination < BasicComponent
-        attr_accessor :current, :pages, :query_string
+        attr_accessor :current, :pages, :query_string, :total_count
 
         def template
-          div(class: 'pagination-div') {
-            nav('aria-label' => 'Pagination') {
-              ul(class: 'pagination justify-content-center') {
-                if pages <= 10
-                  pages_range(1..pages)
-                elsif current <= 4 || current >= pages - 3
-                  pages_range(1..(current <= 4 ? current + 2 : 4), with_dots: true)
-                  pages_range((current > pages - 4 ? current - 2 : pages - 2)..pages)
-                else
-                  pages_range(1..1, with_dots: true)
-                  pages_range(current - 2..current + 2, with_dots: true)
-                  pages_range(pages..pages)
-                end
+          div(class: 'container') {
+            div(class: 'row') {
+              div(class: 'col total-count') {
+                "#{total_count} items"
               }
+              div(class: 'col col-6 text-center pagination-div') {
+                nav(class: 'd-inline-block', 'aria-label': 'Pagination') {
+                  ul(class: 'pagination') {
+                    if pages <= 10
+                      pages_range(1..pages)
+                    elsif current <= 4 || current >= pages - 3
+                      pages_range(1..(current <= 4 ? current + 2 : 4), with_dots: true)
+                      pages_range((current > pages - 4 ? current - 2 : pages - 2)..pages)
+                    else
+                      pages_range(1..1, with_dots: true)
+                      pages_range(current - 2..current + 2, with_dots: true)
+                      pages_range(pages..pages)
+                    end
+                  }
+                }
+              }
+              div(class: 'col')
             }
           }
         end
