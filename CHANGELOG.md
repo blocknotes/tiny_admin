@@ -2,6 +2,12 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.9.0
+
+- feat: expose pagination total count
+- feat: handle params in pages
+- feat: support a setup method for pages
+
 ## 0.8.0
 
 - feat: new label_for support method (useful for translations)

@@ -19,7 +19,7 @@ Please ⭐ if you like it.
 
 ## Install
 
-- Add to your Gemfile: `gem 'tiny_admin', '~> 0.8'`
+- Add to your Gemfile: `gem 'tiny_admin', '~> 0.9'`
 - Mount the app in a route (check some examples with: Hanami, Rails, Roda and standalone in [extra](extra))
   + in Rails, update _config/routes.rb_: `mount TinyAdmin::Router => '/admin'`
 - Configure the dashboard using `TinyAdmin.configure` and/or `TinyAdmin.configure_from_file` with a YAML config file (see [configuration](#configuration) below):
@@ -218,6 +218,8 @@ model: Post
 
 #### Resource index options
 
+> 📚 [Wiki Resource index page](https://github.com/blocknotes/tiny_admin/wiki/Resource-index) available
+
 The Index hash supports the following options:
 
 - `attributes` (Array): fields to expose in the resource list page;
@@ -256,6 +258,8 @@ Example:
 ```
 
 #### Resource show options
+
+> 📚 [Wiki Resource show page](https://github.com/blocknotes/tiny_admin/wiki/Resource-show) available
 
 The Show hash supports the following options:
 
