@@ -1,0 +1,13 @@
+module TinyAdmin
+  module Views
+    class BasicLayout
+      attr_accessor content: untyped
+      attr_accessor params: untyped
+      attr_accessor widgets: untyped
+
+      def label_for: (String, options: Array[untyped]) -> String?
+
+      def update_attributes: (Hash[Symbol, untyped]) -> void
+    end
+  end
+end

@@ -1,0 +1,5 @@
+module TinyAdmin
+  class BasicApp
+    def self.authentication_plugin: () -> void
+  end
+end

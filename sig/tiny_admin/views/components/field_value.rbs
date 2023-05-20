@@ -1,0 +1,15 @@
+module TinyAdmin
+  module Views
+    module Components
+      class FieldValue
+        attr_reader field: Field
+        attr_reader record: untyped
+        attr_reader value: untyped
+
+        def initialize: (Field, untyped, record: untyped) -> void
+
+        def template: () ?{ (untyped) -> void } -> void
+      end
+    end
+  end
+end

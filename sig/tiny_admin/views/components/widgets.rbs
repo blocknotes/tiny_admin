@@ -1,0 +1,13 @@
+module TinyAdmin
+  module Views
+    module Components
+      class Widgets
+        @widgets: Array[untyped]?
+
+        def initialize: (Array[untyped]?) -> void
+
+        def template: () ?{ (untyped) -> void } -> void
+      end
+    end
+  end
+end

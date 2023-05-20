@@ -1,0 +1,20 @@
+module TinyAdmin
+  module Views
+    module Components
+      class Pagination
+        attr_accessor current: Integer
+        attr_accessor pages: Integer
+        attr_accessor query_string: String
+        attr_accessor total_count: Integer
+
+        def template: () ?{ (untyped) -> void } -> void
+
+        private
+
+        def dots: () -> void
+
+        def pages_range: (Range[Integer], ?with_dots: bool) -> void
+      end
+    end
+  end
+end

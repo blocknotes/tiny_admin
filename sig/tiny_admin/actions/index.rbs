@@ -1,0 +1,26 @@
+module TinyAdmin
+  module Actions
+    class Index
+      attr_reader context: untyped
+      attr_reader current_page: Integer
+      attr_reader fields_options: untyped
+      attr_reader links: untyped
+      attr_reader options: untyped
+      attr_reader pagination: Integer
+      attr_reader pages: untyped
+      attr_reader params: untyped
+      attr_reader query_string: String
+      attr_reader repository: untyped
+
+      def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> void
+
+      private
+
+      def evaluate_options: (Hash[Symbol, untyped]) -> void
+
+      def prepare_filters: (Hash[untyped, untyped]) -> void
+
+      def setup_pagination: (untyped, untyped, total_count: Integer) -> void
+    end
+  end
+end

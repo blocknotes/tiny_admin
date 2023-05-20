@@ -1,0 +1,22 @@
+module TinyAdmin
+  class Store
+    attr_reader navbar: Array[Section]
+    attr_reader pages: Hash[String, Hash[Symbol, untyped]]
+    attr_reader resources: Hash[String, Hash[Symbol, untyped]]
+    attr_reader settings: Settings
+
+    def initialize: (Settings) -> void
+
+    def prepare_sections: (Array[untyped], logout: TinyAdmin::Section?) -> void
+
+    private
+
+    def add_content_section: (String, Hash[Symbol, untyped]) -> TinyAdmin::Section
+
+    def add_page_section: (String, Hash[Symbol, untyped]) -> TinyAdmin::Section
+
+    def add_resource_section: (String, Hash[Symbol, untyped]) -> TinyAdmin::Section
+
+    def add_url_section: (String, Hash[Symbol, untyped]) -> TinyAdmin::Section
+  end
+end

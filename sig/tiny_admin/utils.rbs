@@ -1,0 +1,11 @@
+module TinyAdmin
+  module Utils
+    def humanize: (String?) -> String
+
+    def params_to_s: (Enumerable[untyped]) -> String
+
+    def prepare_page: (untyped, ?slug: String?, ?attributes: Hash[untyped, untyped]?, ?options: Array[Symbol]?, ?params: Enumerable[untyped]?) ?{ (untyped) -> void } -> untyped
+
+    def to_class: (untyped) -> untyped
+  end
+end

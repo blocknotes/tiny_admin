@@ -1,0 +1,7 @@
+module TinyAdmin
+  module Plugins
+    module NoAuth
+      def self.configure: (untyped, Hash[untyped, untyped]) -> void
+    end
+  end
+end

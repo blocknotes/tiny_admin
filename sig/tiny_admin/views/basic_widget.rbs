@@ -1,0 +1,6 @@
+module TinyAdmin
+  module Views
+    class BasicWidget
+    end
+  end
+end

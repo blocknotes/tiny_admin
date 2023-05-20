@@ -1,0 +1,10 @@
+module TinyAdmin
+  class Section
+    attr_reader name: String
+    attr_reader options: Hash[Symbol, String]
+    attr_reader path: String
+    attr_reader slug: String?
+
+    def initialize: (name: String, ?slug: String?, ?path: String?, ?options: Hash[Symbol, String]) -> void
+  end
+end

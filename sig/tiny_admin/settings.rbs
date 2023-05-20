@@ -1,0 +1,24 @@
+module TinyAdmin
+  class Settings
+    DEFAULTS: Hash[Array[Symbol], untyped]
+    OPTIONS: Array[Symbol]
+
+    @options: Hash[Array[Symbol], untyped]
+
+    attr_reader store: Store
+
+    def []: (*String | Symbol) -> untyped
+
+    def []=: (*String | Symbol, untyped) -> untyped
+
+    def load_settings: () -> void
+
+    def reset!: () -> void
+
+    private
+
+    def convert_value: (untyped, untyped) -> void
+
+    def fetch_setting: (Array[String | Symbol]) -> Array[untyped]
+  end
+end
