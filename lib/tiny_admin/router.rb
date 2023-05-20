@@ -53,9 +53,9 @@ module TinyAdmin
       render(inline: page.call)
     end
 
-    def root_route(router)
+    def root_route(req)
       if TinyAdmin.settings.root[:redirect]
-        router.redirect route_for(TinyAdmin.settings.root[:redirect])
+        req.redirect route_for(TinyAdmin.settings.root[:redirect])
       else
         page_class = to_class(TinyAdmin.settings.root[:page])
         attributes = TinyAdmin.settings.root.slice(:content, :title, :widgets)
@@ -63,27 +63,27 @@ module TinyAdmin
       end
     end
 
-    def setup_page_route(router, slug, page_data)
-      router.get slug do
+    def setup_page_route(req, slug, page_data)
+      req.get slug do
         attributes = page_data.slice(:content, :title, :widgets)
         render_page prepare_page(page_data[:class], slug: slug, attributes: attributes, params: request.params)
       end
     end
 
-    def setup_resource_routes(router, slug, options:)
-      router.on slug do
-        setup_collection_routes(router, slug, options: options)
-        setup_member_routes(router, slug, options: options)
+    def setup_resource_routes(req, slug, options:)
+      req.on slug do
+        setup_collection_routes(req, slug, options: options)
+        setup_member_routes(req, slug, options: options)
       end
     end
 
-    def setup_collection_routes(router, slug, options:)
+    def setup_collection_routes(req, slug, options:)
       repository = options[:repository].new(options[:model])
       action_options = options[:index] || {}
 
       # Custom actions
       custom_actions = setup_custom_actions(
-        router,
+        req,
         options[:collection_actions],
         options: action_options,
         repository: repository,
@@ -92,12 +92,12 @@ module TinyAdmin
 
       # Index
       if options[:only].include?(:index) || options[:only].include?('index')
-        router.is do
+        req.is do
           context = Context.new(
             actions: custom_actions,
             repository: repository,
             request: request,
-            router: router,
+            router: req,
             slug: slug
           )
           index_action = TinyAdmin::Actions::Index.new
@@ -106,14 +106,14 @@ module TinyAdmin
       end
     end
 
-    def setup_member_routes(router, slug, options:)
+    def setup_member_routes(req, slug, options:)
       repository = options[:repository].new(options[:model])
       action_options = (options[:show] || {}).merge(record_not_found_page: TinyAdmin.settings.record_not_found)
 
-      router.on String do |reference|
+      req.on String do |reference|
         # Custom actions
         custom_actions = setup_custom_actions(
-          router,
+          req,
           options[:member_actions],
           options: action_options,
           repository: repository,
@@ -123,13 +123,13 @@ module TinyAdmin
 
         # Show
         if options[:only].include?(:show) || options[:only].include?('show')
-          router.is do
+          req.is do
             context = Context.new(
               actions: custom_actions,
               reference: reference,
               repository: repository,
               request: request,
-              router: router,
+              router: req,
               slug: slug
             )
             show_action = TinyAdmin::Actions::Show.new
@@ -139,18 +139,18 @@ module TinyAdmin
       end
     end
 
-    def setup_custom_actions(router, custom_actions, options:, repository:, slug:, reference: nil)
+    def setup_custom_actions(req, custom_actions = nil, options:, repository:, slug:, reference: nil)
       (custom_actions || []).each_with_object({}) do |custom_action, result|
         action_slug, action = custom_action.first
         action_class = to_class(action)
 
-        router.get action_slug.to_s do
+        req.get action_slug.to_s do
           context = Context.new(
             actions: {},
             reference: reference,
             repository: repository,
             request: request,
-            router: router,
+            router: req,
             slug: slug
           )
           custom_action = action_class.new

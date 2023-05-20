@@ -58,12 +58,12 @@ module TinyAdmin
         end
       end
 
-      def setup_pagination(page, pagination_component_class, total_count:)
+      def setup_pagination(page, pagination_component, total_count:)
         @pages = (total_count / pagination.to_f).ceil
-        return if pages <= 1 || !pagination_component_class
+        return if pages <= 1 || !pagination_component
 
         attributes = { current: current_page, pages: pages, query_string: query_string, total_count: total_count }
-        page.pagination_component = pagination_component_class.new
+        page.pagination_component = pagination_component.new
         page.pagination_component.update_attributes(attributes)
       end
     end

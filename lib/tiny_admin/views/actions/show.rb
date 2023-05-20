@@ -4,7 +4,12 @@ module TinyAdmin
   module Views
     module Actions
       class Show < DefaultLayout
-        attr_accessor :actions, :fields, :prepare_record, :record, :reference, :slug
+        attr_accessor :actions,
+                      :fields,
+                      :prepare_record,
+                      :record,
+                      :reference,
+                      :slug
 
         def template
           super do
