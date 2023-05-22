@@ -1,0 +1,23 @@
+module TinyAdmin
+  class Router
+    @store: Store
+
+    private
+
+    def render_page: (untyped) -> void
+
+    def root_route: (untyped) -> void
+
+    def setup_collection_routes: (untyped, String, options: Hash[Symbol, untyped]) -> void
+
+    def setup_custom_actions: (untyped, Array[Hash[Symbol, untyped]]?, options: Hash[Symbol, untyped], repository: untyped, slug: String, ?reference: untyped?) -> Hash[String, untyped]
+
+    def setup_member_routes: (untyped, String, Hash[Symbol, untyped]) -> void
+
+    def setup_page_route: (untyped, String, Hash[Symbol, untyped]) -> void
+
+    def setup_resource_routes: (untyped, String, Hash[Symbol, untyped]) -> void
+
+    def store: () -> Store
+  end
+end

@@ -1,0 +1,10 @@
+module TinyAdmin
+  class Context < Struct
+    attr_accessor actions: untyped
+    attr_accessor reference: untyped
+    attr_accessor repository: untyped
+    attr_accessor request: untyped
+    attr_accessor router: untyped
+    attr_accessor slug: String
+  end
+end

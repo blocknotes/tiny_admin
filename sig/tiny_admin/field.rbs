@@ -1,0 +1,16 @@
+module TinyAdmin
+  class Field
+    attr_reader name: String
+    attr_reader options: Hash[Symbol, untyped]
+    attr_reader title: String
+    attr_reader type: Symbol
+
+    def initialize: (name: String, title: String, type: Symbol, options: Hash[Symbol, String]) -> void
+
+    def apply_call_option: (untyped) -> void
+
+    def translate_value: (untyped) -> String?
+
+    def self.create_field: (name: String, ?title: String?, ?type: Symbol?, ?options: Hash[Symbol, untyped]) -> Field
+  end
+end

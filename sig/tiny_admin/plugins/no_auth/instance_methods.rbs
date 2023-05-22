@@ -1,0 +1,13 @@
+module TinyAdmin
+  module Plugins
+    module NoAuth
+      module InstanceMethods
+        def authenticate_user!: () -> void
+
+        def current_user: () -> untyped
+
+        def logout_user: () -> void
+      end
+    end
+  end
+end

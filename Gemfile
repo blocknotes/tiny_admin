@@ -13,6 +13,8 @@ group :development, :test do
   gem 'warden'
   gem 'webrick'
 
+  gem 'rbs'
+
   # Testing
   gem 'capybara'
   gem 'capybara-screenshot'

@@ -1,0 +1,9 @@
+module TinyAdmin
+  module Views
+    module Components
+      class BasicComponent
+        def update_attributes: (Hash[Symbol, untyped]) -> void
+      end
+    end
+  end
+end

@@ -1,0 +1,24 @@
+module TinyAdmin
+  module Views
+    class DefaultLayout
+      attr_accessor flash_component: untyped?
+      attr_accessor head_component: untyped?
+      attr_accessor messages: Hash[Symbol, Array[String]?]?
+      attr_accessor navbar_component: untyped?
+      attr_accessor options: Array[Symbol]?
+      attr_accessor title: String?
+
+      def template: () ?{ (untyped) -> void } -> void
+
+      private
+
+      def body_class: () -> String
+
+      def main_content: () { () -> void } -> void
+
+      def render_scripts: () -> Array[untyped]
+
+      def style_links: () -> Array[Hash[Symbol, String]]
+    end
+  end
+end

@@ -1,0 +1,26 @@
+module TinyAdmin
+  module Views
+    module Actions
+      class Index
+        attr_accessor actions: Hash[String, untyped]
+        attr_accessor fields: Hash[String, Field]
+        attr_accessor filters: Hash[Field, Hash[Symbol, untyped]]?
+        attr_accessor links: Array[String]?
+        attr_accessor pagination_component: untyped
+        attr_accessor prepare_record: Proc
+        attr_accessor records: Enumerable[untyped]
+        attr_accessor slug: String
+
+        def template: () ?{ (untyped) -> void } -> void
+
+        private
+
+        def actions_buttons: () -> void
+
+        def table_body: () -> void
+
+        def table_header: () -> void
+      end
+    end
+  end
+end

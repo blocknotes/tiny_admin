@@ -32,4 +32,7 @@ jobs:
         run: cd spec/dummy_rails && bundle exec rails db:migrate
 
       - name: Run tests
-        run: bundle exec rspec --profile
+        env:
+          RUBYOPT: '-rbundler/setup -rrbs/test/setup'
+          RBS_TEST_TARGET: 'TinyAdmin::*'
+        run: bin/rspec --profile

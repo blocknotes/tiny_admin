@@ -1,0 +1,13 @@
+module TinyAdmin
+  module Views
+    module Components
+      class Head
+        attr_accessor extra_styles: String?
+        attr_accessor page_title: String?
+        attr_accessor style_links: Array[Hash[Symbol, String]]
+
+        def template: () ?{ (untyped) -> void } -> void
+      end
+    end
+  end
+end

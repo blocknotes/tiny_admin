@@ -1,0 +1,11 @@
+module TinyAdmin
+  VERSION: String
+
+  def configure: () { (Settings) -> untyped } -> untyped
+
+  def configure_from_file: (String) -> void
+
+  def route_for: (String, reference: String?, action: String?, query: String?) -> String
+
+  def settings: -> Settings
+end

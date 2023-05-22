@@ -1,0 +1,23 @@
+module TinyAdmin
+  module Plugins
+    class ActiveRecordRepository
+      def apply_filters: (untyped, Enumerable[untyped]) -> untyped
+
+      def collection: () -> untyped
+
+      def fields: (options: Hash[untyped, untyped]?) -> Hash[String, Field]
+
+      def find: (untyped) -> untyped
+
+      def index_record_attrs: (untyped, fields: Hash[untyped, untyped]?) -> Hash[untyped, untyped]
+
+      def index_title: () -> String
+
+      def list: (page: Integer, limit: Integer, sort: untyped?, filters: untyped?) -> Array[untyped]
+
+      def show_title: (untyped) -> String
+
+      alias show_record_attrs index_record_attrs
+    end
+  end
+end

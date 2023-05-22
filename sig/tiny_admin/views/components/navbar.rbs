@@ -1,0 +1,14 @@
+module TinyAdmin
+  module Views
+    module Components
+      class Navbar
+        attr_accessor current_slug: String?
+        attr_accessor items: Array[Section]
+        attr_accessor root_path: String
+        attr_accessor root_title: String?
+
+        def template: () ?{ (untyped) -> void } -> void
+      end
+    end
+  end
+end

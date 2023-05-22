@@ -4,7 +4,14 @@ module TinyAdmin
   module Views
     module Actions
       class Index < DefaultLayout
-        attr_accessor :actions, :fields, :filters, :links, :pagination_component, :prepare_record, :records, :slug
+        attr_accessor :actions,
+                      :fields,
+                      :filters,
+                      :links,
+                      :pagination_component,
+                      :prepare_record,
+                      :records,
+                      :slug
 
         def template
           super do

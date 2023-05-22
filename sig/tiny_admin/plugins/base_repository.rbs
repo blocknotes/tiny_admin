@@ -1,0 +1,11 @@
+module TinyAdmin
+  module Plugins
+    class BaseRepository
+      RecordNotFound: untyped
+
+      attr_reader model: untyped
+
+      def initialize: (untyped) -> void
+    end
+  end
+end

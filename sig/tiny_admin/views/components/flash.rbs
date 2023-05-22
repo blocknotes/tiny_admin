@@ -1,0 +1,11 @@
+module TinyAdmin
+  module Views
+    module Components
+      class Flash
+        attr_accessor messages: Hash[Symbol, Array[String]?]?
+
+        def template: () ?{ (untyped) -> void } -> void
+      end
+    end
+  end
+end

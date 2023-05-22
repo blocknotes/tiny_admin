@@ -1,0 +1,19 @@
+module TinyAdmin
+  class Support
+    def self.call: (?untyped, options: Array[String]?) -> String?
+
+    def self.downcase: (?untyped, options: Array[String]?) -> String?
+
+    def self.format: (?untyped, options: Array[String]?) -> String?
+
+    def self.label_for: (?untyped, options: Array[String]?) -> String?
+
+    def self.round: (?untyped, options: Array[String]?) -> String?
+
+    def self.strftime: (?untyped, options: Array[String]?) -> String?
+
+    def self.to_date: (?untyped, options: Array[String]?) -> String?
+
+    def self.upcase: (?untyped, options: Array[String]?) -> String?
+  end
+end

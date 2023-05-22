@@ -1,0 +1,7 @@
+module TinyAdmin
+  class Authentication
+    private
+
+    def render_login: (?notices: Array[String]?, ?warnings: Array[String]?, ?errors: Array[String]?) -> void
+  end
+end
