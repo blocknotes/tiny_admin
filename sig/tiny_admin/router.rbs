@@ -4,6 +4,8 @@ module TinyAdmin
 
     private
 
+    def authorization: () -> untyped
+
     def render_page: (untyped) -> void
 
     def root_route: (untyped) -> void

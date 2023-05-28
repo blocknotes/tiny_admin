@@ -43,6 +43,12 @@ Plugins available:
 
 - **NoAuth**: no authentication.
 
+### Authorization
+
+Plugins available:
+
+- **Authorization**: base class to provide an authorization per action, the host application should inherit from it and override the class method `allowed?`.
+
 ### Repository
 
 Plugin available:
@@ -133,6 +139,10 @@ authentication:
   plugin: TinyAdmin::Plugins::SimpleAuth
   password: 'f1891cea80fc05e433c943254c6bdabc159577a02a7395dfebbfbc4f7661d4af56f2d372131a45936de40160007368a56ef216a30cb202c66d3145fd24380906'
 ```
+
+`authorization_class` (String): a plugin class to use;
+
+> 📚 [Wiki Authentication page](https://github.com/blocknotes/tiny_admin/wiki/Authorization) available
 
 `sections` (Array of hashes): define the admin sections, properties:
 

@@ -1,0 +1,7 @@
+module TinyAdmin
+  module Plugins
+    class Authorization
+      def self.allowed?: (untyped, untyped, ?untyped?) -> bool
+    end
+  end
+end

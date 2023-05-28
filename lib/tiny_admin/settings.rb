@@ -7,6 +7,7 @@ module TinyAdmin
     DEFAULTS = {
       %i[authentication plugin] => Plugins::NoAuth,
       %i[authentication login] => Views::Pages::SimpleAuthLogin,
+      %i[authorization_class] => Plugins::Authorization,
       %i[components field_value] => Views::Components::FieldValue,
       %i[components flash] => Views::Components::Flash,
       %i[components head] => Views::Components::Head,
@@ -14,6 +15,7 @@ module TinyAdmin
       %i[components pagination] => Views::Components::Pagination,
       %i[content_page] => Views::Pages::Content,
       %i[helper_class] => Support,
+      %i[page_not_allowed] => Views::Pages::PageNotAllowed,
       %i[page_not_found] => Views::Pages::PageNotFound,
       %i[record_not_found] => Views::Pages::RecordNotFound,
       %i[repository] => Plugins::ActiveRecordRepository,
@@ -25,10 +27,12 @@ module TinyAdmin
 
     OPTIONS = %i[
       authentication
+      authorization_class
       components
       content_page
       extra_styles
       helper_class
+      page_not_allowed
       page_not_found
       record_not_found
       repository
