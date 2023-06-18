@@ -2,6 +2,11 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.10.0
+
+- feat: authorization support
+- feat: RBS signatures
+
 ## 0.9.0
 
 - feat: expose pagination total count
