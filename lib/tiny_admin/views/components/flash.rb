@@ -6,7 +6,7 @@ module TinyAdmin
       class Flash < BasicComponent
         attr_accessor :messages
 
-        def template
+        def view_template
           @messages ||= {}
           notices = messages[:notices]
           warnings = messages[:warnings]

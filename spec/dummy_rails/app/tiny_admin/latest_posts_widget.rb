@@ -1,5 +1,5 @@
 class LatestPostsWidget < TinyAdmin::Views::BasicWidget
-  def template
+  def view_template
     h2 { 'Latest posts' }
 
     ul {

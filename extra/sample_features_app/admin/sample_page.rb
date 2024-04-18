@@ -2,7 +2,7 @@
 
 module Admin
   class SamplePage < TinyAdmin::Views::DefaultLayout
-    def template
+    def view_template
       super do
         h1 { 'Sample page' }
         p { 'This is a sample page' }

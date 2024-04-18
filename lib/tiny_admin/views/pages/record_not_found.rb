@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Pages
       class RecordNotFound < DefaultLayout
-        def template
+        def view_template
           super do
             div(class: 'record_not_found') {
               h1(class: 'title') { title }

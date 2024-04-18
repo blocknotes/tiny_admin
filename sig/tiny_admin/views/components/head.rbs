@@ -6,7 +6,7 @@ module TinyAdmin
         attr_accessor page_title: String?
         attr_accessor style_links: Array[Hash[Symbol, String]]
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
       end
     end
   end

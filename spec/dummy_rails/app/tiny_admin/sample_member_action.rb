@@ -1,5 +1,5 @@
 class SampleMemberPage < Phlex::HTML
-  def template
+  def view_template
     p {
       'Custom member action'
     }

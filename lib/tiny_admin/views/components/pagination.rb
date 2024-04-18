@@ -6,7 +6,7 @@ module TinyAdmin
       class Pagination < BasicComponent
         attr_accessor :current, :pages, :query_string, :total_count
 
-        def template
+        def view_template
           div(class: 'container') {
             div(class: 'row') {
               div(class: 'col total-count') {

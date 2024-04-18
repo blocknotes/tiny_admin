@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Pages
       class Content < DefaultLayout
-        def template
+        def view_template
           super do
             div(class: 'content') {
               div(class: 'content-data') {

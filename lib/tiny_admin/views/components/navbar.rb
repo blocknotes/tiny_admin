@@ -6,7 +6,7 @@ module TinyAdmin
       class Navbar < BasicComponent
         attr_accessor :current_slug, :items, :root_path, :root_title
 
-        def template
+        def view_template
           nav(class: 'navbar navbar-expand-lg') {
             div(class: 'container') {
               a(class: 'navbar-brand', href: root_path) { root_title }

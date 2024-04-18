@@ -8,7 +8,7 @@ module TinyAdmin
       attr_accessor options: Array[Symbol]?
       attr_accessor title: String?
 
-      def template: () ?{ (untyped) -> void } -> void
+      def view_template: () ?{ (untyped) -> void } -> void
 
       private
 

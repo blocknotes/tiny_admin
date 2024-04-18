@@ -9,7 +9,7 @@ module TinyAdmin
         attr_accessor reference: untyped
         attr_accessor slug: String
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
 
         private
 

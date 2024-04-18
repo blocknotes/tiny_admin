@@ -11,7 +11,7 @@ module TinyAdmin
                       :reference,
                       :slug
 
-        def template
+        def view_template
           super do
             div(class: 'show') {
               div(class: 'row') {

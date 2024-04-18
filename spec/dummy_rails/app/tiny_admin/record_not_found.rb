@@ -1,5 +1,5 @@
 class RecordNotFound < TinyAdmin::Views::DefaultLayout
-  def template
+  def view_template
     super do
       h1 { 'Record not found!' }
     end

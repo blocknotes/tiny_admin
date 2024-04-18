@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Pages
       class Root < DefaultLayout
-        def template
+        def view_template
           super do
             div(class: 'root') {
               render TinyAdmin::Views::Components::Widgets.new(widgets)

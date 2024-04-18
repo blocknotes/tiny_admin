@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SamplePage < TinyAdmin::Views::DefaultLayout
-  def template
+  def view_template
     super do
       h1 { 'Sample page' }
       p { 'This is a sample page' }
@@ -10,7 +10,7 @@ class SamplePage < TinyAdmin::Views::DefaultLayout
 end
 
 class SamplePage2 < TinyAdmin::Views::DefaultLayout
-  def template
+  def view_template
     super do
       h1 { 'Sample page 2' }
       p { 'This is another sample page' }

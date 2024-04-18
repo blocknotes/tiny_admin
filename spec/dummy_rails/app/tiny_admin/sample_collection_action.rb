@@ -1,5 +1,5 @@
 class SampleCollectionPage < Phlex::HTML
-  def template
+  def view_template
     p {
       'Custom collection action'
     }
