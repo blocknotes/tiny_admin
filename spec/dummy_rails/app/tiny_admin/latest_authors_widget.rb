@@ -1,5 +1,5 @@
 class LatestAuthorsWidget < TinyAdmin::Views::BasicWidget
-  def template
+  def view_template
     h2 { 'Latest authors' }
 
     ul {

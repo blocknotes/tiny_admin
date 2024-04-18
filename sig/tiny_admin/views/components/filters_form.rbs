@@ -5,7 +5,7 @@ module TinyAdmin
         attr_accessor filters: (Hash[Field, Hash[Symbol, untyped]])
         attr_accessor section_path: String
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
       end
     end
   end

@@ -8,7 +8,7 @@ module TinyAdmin
           @widgets = widgets
         end
 
-        def template
+        def view_template
           return if @widgets.nil? || @widgets.empty?
 
           div(class: 'container widgets') {

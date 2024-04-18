@@ -6,9 +6,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 group :development, :test do
-  gem 'rails', '~> 7.0'
+  gem 'rails', '~> 7.1'
 
-  gem 'sqlite3'
+  gem 'sqlite3', '< 2.0'
   gem 'tilt'
   gem 'warden'
   gem 'webrick'

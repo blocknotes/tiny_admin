@@ -7,7 +7,7 @@ module TinyAdmin
         attr_accessor query_string: String
         attr_accessor total_count: Integer
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
 
         private
 

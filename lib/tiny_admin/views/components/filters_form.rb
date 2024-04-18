@@ -6,7 +6,7 @@ module TinyAdmin
       class FiltersForm < BasicComponent
         attr_accessor :filters, :section_path
 
-        def template
+        def view_template
           form(class: 'form_filters', method: 'get') {
             filters.each do |field, filter|
               name = field.name

@@ -8,7 +8,7 @@ module TinyAdmin
 
         def initialize: (Field, untyped, record: untyped) -> void
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
       end
     end
   end

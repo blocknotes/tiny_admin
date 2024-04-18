@@ -13,7 +13,7 @@ module TinyAdmin
                       :records,
                       :slug
 
-        def template
+        def view_template
           super do
             div(class: 'index') {
               div(class: 'row') {

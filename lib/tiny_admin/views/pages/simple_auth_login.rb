@@ -4,7 +4,7 @@ module TinyAdmin
   module Views
     module Pages
       class SimpleAuthLogin < DefaultLayout
-        def template
+        def view_template
           super do
             div(class: 'simple_auth_login') {
               h1(class: 'title') { title }

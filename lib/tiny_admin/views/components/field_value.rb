@@ -12,7 +12,7 @@ module TinyAdmin
           @record = record
         end
 
-        def template
+        def view_template
           translated_value = field.translate_value(value)
           value_class = field.options[:options]&.include?('value_class') ? "value-#{value}" : nil
           if field.options[:link_to]

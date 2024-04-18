@@ -6,7 +6,7 @@ module TinyAdmin
       class Head < BasicComponent
         attr_accessor :extra_styles, :page_title, :style_links
 
-        def template
+        def view_template
           head {
             meta charset: 'utf-8'
             meta name: 'viewport', content: 'width=device-width, initial-scale=1'

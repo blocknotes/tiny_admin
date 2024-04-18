@@ -6,7 +6,7 @@ module TinyAdmin
 
         def initialize: (Array[untyped]?) -> void
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
       end
     end
   end

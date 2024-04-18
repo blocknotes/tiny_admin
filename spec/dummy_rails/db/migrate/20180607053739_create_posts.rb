@@ -3,6 +3,7 @@
 class CreatePosts < ActiveRecord::Migration[5.2]
   def change
     create_table :posts do |t|
+      t.integer :state
       t.string :title
       t.text :description
       t.belongs_to :author, foreign_key: true

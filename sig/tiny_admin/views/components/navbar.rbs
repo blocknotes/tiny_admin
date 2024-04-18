@@ -7,7 +7,7 @@ module TinyAdmin
         attr_accessor root_path: String
         attr_accessor root_title: String?
 
-        def template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ (untyped) -> void } -> void
       end
     end
   end
