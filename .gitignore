@@ -14,3 +14,4 @@ Gemfile.lock
 /spec/dummy_rails/log
 /spec/dummy_rails/tmp
 /spec/dummy_rails/db/*.sqlite3
+/spec/dummy_rails/db/*.sqlite3-*
