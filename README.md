@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/tiny_admin.svg)](https://badge.fury.io/rb/tiny_admin)
 [![Gem Downloads](https://badgen.net/rubygems/dt/tiny_admin)](https://rubygems.org/gems/tiny_admin)
 [![Linters](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/linters.yml)
-[![Specs](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/specs.yml)
+[![Specs](https://github.com/blocknotes/tiny_admin/actions/workflows/tests.yml/badge.svg)](https://github.com/blocknotes/tiny_admin/actions/workflows/tests.yml)
 
 A compact and composable dashboard component for Ruby.
 
