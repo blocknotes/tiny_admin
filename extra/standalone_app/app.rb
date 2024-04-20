@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
-require 'bundler'
-Bundler.require
+# => ruby app.rb
+
+require 'bundler/inline'
+
+gemfile(true) do
+  source 'https://rubygems.org'
+
+  gem 'rackup'
+
+  gem 'tiny_admin', path: '../../'
+end
 
 require_relative '../tiny_admin_settings'
 
