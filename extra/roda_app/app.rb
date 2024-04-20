@@ -1,14 +1,23 @@
 # frozen_string_literal: true
 
-require 'bundler'
-Bundler.require
+# => ruby app.rb
+
+require 'bundler/inline'
+
+gemfile(true) do
+  source 'https://rubygems.org'
+
+  gem 'rackup'
+  gem 'roda'
+  gem 'tiny_admin', path: '../../'
+end
 
 require_relative '../tiny_admin_settings'
 
 class RodaApp < Roda
   route do |r|
     r.root do
-      'Root page'
+      'Root page - go to /admin for TinyAdmin'
     end
 
     r.on 'admin' do

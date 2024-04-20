@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# => bundle exec ruby app.rb
+
 require 'bundler'
 Bundler.require
 
