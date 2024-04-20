@@ -2,6 +2,10 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.10.1
+
+- refactor: change Phlex template references to view_template
+
 ## 0.10.0
 
 - feat: authorization support
