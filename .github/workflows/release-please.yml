@@ -1,5 +1,8 @@
 ---
 on:
+  pull_request:
+    types: [labeled]
+
   push:
     branches:
       - main
@@ -18,3 +21,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: ruby
+          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"refactor","section":"Refactorings","hidden":false},{"type":"build","section":"Miscellaneous","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"test","section":"Test","hidden":false}]'
