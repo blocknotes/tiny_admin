@@ -3,7 +3,8 @@
 module TinyAdmin
   module Plugins
     class BaseRepository
-      RecordNotFound = Class.new(StandardError)
+      class RecordNotFound < StandardError
+      end
 
       attr_reader :model
 

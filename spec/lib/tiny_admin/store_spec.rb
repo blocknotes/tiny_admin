@@ -23,7 +23,7 @@ RSpec.describe TinyAdmin::Store do
   describe "#prepare_sections" do
     context "with a content section" do
       let(:sections) do
-        [{slug: "about", name: "About", type: :content, content: "<h1>About</h1>"}]
+        [{ slug: "about", name: "About", type: :content, content: "<h1>About</h1>" }]
       end
 
       it "adds to pages and navbar", :aggregate_failures do
@@ -42,7 +42,7 @@ RSpec.describe TinyAdmin::Store do
       end
 
       let(:sections) do
-        [{slug: "dashboard", name: "Dashboard", type: :page, page: page_class}]
+        [{ slug: "dashboard", name: "Dashboard", type: :page, page: page_class }]
       end
 
       it "adds to pages and navbar", :aggregate_failures do
@@ -56,7 +56,7 @@ RSpec.describe TinyAdmin::Store do
 
     context "with a resource section" do
       let(:sections) do
-        [{slug: "authors", name: "Authors", type: :resource, model: Author}]
+        [{ slug: "authors", name: "Authors", type: :resource, model: Author }]
       end
 
       it "adds to resources and navbar", :aggregate_failures do
@@ -71,7 +71,7 @@ RSpec.describe TinyAdmin::Store do
 
     context "with a hidden resource section" do
       let(:sections) do
-        [{slug: "secret", name: "Secret", type: :resource, model: Author, options: [:hidden]}]
+        [{ slug: "secret", name: "Secret", type: :resource, model: Author, options: [:hidden] }]
       end
 
       it "adds to resources but not to visible navbar items", :aggregate_failures do
@@ -84,14 +84,14 @@ RSpec.describe TinyAdmin::Store do
 
     context "with a url section" do
       let(:sections) do
-        [{slug: "google", name: "Google", type: :url, url: "https://google.com", options: {target: "_blank"}}]
+        [{ slug: "google", name: "Google", type: :url, url: "https://google.com", options: { target: "_blank" } }]
       end
 
       it "adds to navbar with the url as path", :aggregate_failures do
         store.prepare_sections(sections, logout: nil)
         expect(store.navbar.size).to eq(1)
         expect(store.navbar.first.path).to eq("https://google.com")
-        expect(store.navbar.first.options).to eq({target: "_blank"})
+        expect(store.navbar.first.options).to eq({ target: "_blank" })
       end
 
       it "does not add to pages or resources", :aggregate_failures do
@@ -105,7 +105,7 @@ RSpec.describe TinyAdmin::Store do
       let(:section_module) do
         mod = Class.new do
           def self.to_h
-            {slug: "dynamic", name: "Dynamic", type: :content, content: "<p>Hi</p>"}
+            { slug: "dynamic", name: "Dynamic", type: :content, content: "<p>Hi</p>" }
           end
         end
         mod
@@ -143,9 +143,9 @@ RSpec.describe TinyAdmin::Store do
     context "with multiple section types" do
       let(:sections) do
         [
-          {slug: "about", name: "About", type: :content, content: "<p>Test</p>"},
-          {slug: "users", name: "Users", type: :resource, model: Author},
-          {slug: "ext", name: "External", type: :url, url: "https://example.com"}
+          { slug: "about", name: "About", type: :content, content: "<p>Test</p>" },
+          { slug: "users", name: "Users", type: :resource, model: Author },
+          { slug: "ext", name: "External", type: :url, url: "https://example.com" }
         ]
       end
 

@@ -20,8 +20,8 @@ RSpec.describe TinyAdmin::Section do
     end
 
     it "stores provided options" do
-      section = described_class.new(name: "Link", slug: "link", options: {target: "_blank"})
-      expect(section.options).to eq({target: "_blank"})
+      section = described_class.new(name: "Link", slug: "link", options: { target: "_blank" })
+      expect(section.options).to eq({ target: "_blank" })
     end
   end
 end

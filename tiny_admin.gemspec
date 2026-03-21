@@ -28,8 +28,8 @@ Gem::Specification.new do |spec|
   spec.files         = Dir['{app,db,lib}/**/*', 'LICENSE.txt', 'README.md']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'phlex', '~> 1', '>= 1.10.0'
-  spec.add_runtime_dependency 'roda', '~> 3'
-  spec.add_runtime_dependency 'tilt', '~> 2'
-  spec.add_runtime_dependency 'zeitwerk', '~> 2'
+  spec.add_dependency 'phlex', '~> 1', '>= 1.10.0'
+  spec.add_dependency 'roda', '~> 3'
+  spec.add_dependency 'tilt', '~> 2'
+  spec.add_dependency 'zeitwerk', '~> 2'
 end

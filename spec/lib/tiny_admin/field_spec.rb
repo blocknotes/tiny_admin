@@ -21,7 +21,7 @@ RSpec.describe TinyAdmin::Field do
     end
 
     it "uses the provided options when given" do
-      options = {method: "downcase"}
+      options = { method: "downcase" }
       field = described_class.create_field(name: "name", options: options)
       expect(field.options).to eq(options)
     end
@@ -39,7 +39,7 @@ RSpec.describe TinyAdmin::Field do
 
   describe "#apply_call_option" do
     it "chains method calls on the target" do
-      field = described_class.new(name: "title", title: "Title", type: :string, options: {call: "to_s, downcase"})
+      field = described_class.new(name: "title", title: "Title", type: :string, options: { call: "to_s, downcase" })
       expect(field.apply_call_option(42)).to eq("42")
     end
 
@@ -49,7 +49,7 @@ RSpec.describe TinyAdmin::Field do
     end
 
     it "handles nil target safely via safe navigation" do
-      field = described_class.new(name: "title", title: "Title", type: :string, options: {call: "nonexistent"})
+      field = described_class.new(name: "title", title: "Title", type: :string, options: { call: "nonexistent" })
       expect(field.apply_call_option(nil)).to be_nil
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe TinyAdmin::Field do
     end
 
     it "applies the helper method from options" do
-      field = described_class.new(name: "name", title: "Name", type: :string, options: {method: "downcase"})
+      field = described_class.new(name: "name", title: "Name", type: :string, options: { method: "downcase" })
       allow(TinyAdmin.settings).to receive(:helper_class).and_return(TinyAdmin::Support)
       expect(field.translate_value("HELLO")).to eq("hello")
     end
@@ -81,7 +81,7 @@ RSpec.describe TinyAdmin::Field do
 
       field = described_class.new(
         name: "name", title: "Name", type: :string,
-        options: {method: "upcase", converter: "TestConverter"}
+        options: { method: "upcase", converter: "TestConverter" }
       )
       expect(field.translate_value("hello")).to eq("HELLO")
     end
@@ -89,7 +89,7 @@ RSpec.describe TinyAdmin::Field do
     it "passes additional args to the method" do
       field = described_class.new(
         name: "value", title: "Value", type: :float,
-        options: {method: "round, 1"}
+        options: { method: "round, 1" }
       )
       allow(TinyAdmin.settings).to receive(:helper_class).and_return(TinyAdmin::Support)
       expect(field.translate_value(3.456)).to eq(3.5)

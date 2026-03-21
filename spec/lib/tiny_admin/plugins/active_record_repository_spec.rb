@@ -31,7 +31,7 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
     end
 
     it "returns only specified fields when options given" do
-      options = {"name" => {}, "email" => {}}
+      options = { "name" => {}, "email" => {} }
       fields = repository.fields(options: options)
       expect(fields.keys).to eq(["name", "email"])
     end
@@ -72,7 +72,7 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
     end
 
     it "returns only specified fields when fields given", :aggregate_failures do
-      attrs = repository.index_record_attrs(author, fields: {"name" => nil, "email" => nil})
+      attrs = repository.index_record_attrs(author, fields: { "name" => nil, "email" => nil })
       expect(attrs.keys).to eq(["name", "email"])
       expect(attrs["name"]).to eq(author.name)
     end
@@ -93,7 +93,7 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
     end
 
     it "sorts when sort option given" do
-      records, = repository.list(page: 1, limit: 10, sort: {name: :desc})
+      records, = repository.list(page: 1, limit: 10, sort: { name: :desc })
       names = records.map(&:name)
       expect(names).to eq(names.sort.reverse)
     end
@@ -104,7 +104,7 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
 
     it "filters string fields with LIKE" do
       title_field = TinyAdmin::Field.new(name: "title", title: "Title", type: :string)
-      filters = {title_field => {value: "post 1"}}
+      filters = { title_field => { value: "post 1" } }
       results = post_repository.apply_filters(Post.all, filters)
       results.each do |post|
         expect(post.title.downcase).to include("post 1")
@@ -114,7 +114,7 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
     it "filters non-string fields with equality" do
       author = Author.first
       author_field = TinyAdmin::Field.new(name: "author_id", title: "Author", type: :integer)
-      filters = {author_field => {value: author.id}}
+      filters = { author_field => { value: author.id } }
       results = post_repository.apply_filters(Post.all, filters)
       results.each do |post|
         expect(post.author_id).to eq(author.id)
@@ -123,14 +123,14 @@ RSpec.describe TinyAdmin::Plugins::ActiveRecordRepository do
 
     it "skips filters with nil or empty values" do
       title_field = TinyAdmin::Field.new(name: "title", title: "Title", type: :string)
-      filters = {title_field => {value: nil}}
+      filters = { title_field => { value: nil } }
       results = post_repository.apply_filters(Post.all, filters)
       expect(results.count).to eq(Post.count)
     end
 
     it "sanitizes SQL LIKE input" do
       title_field = TinyAdmin::Field.new(name: "title", title: "Title", type: :string)
-      filters = {title_field => {value: "100%"}}
+      filters = { title_field => { value: "100%" } }
       # Should not raise or cause SQL injection
       expect { post_repository.apply_filters(Post.all, filters).to_a }.not_to raise_error
     end

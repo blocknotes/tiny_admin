@@ -22,7 +22,7 @@ module TinyAdmin
                       pages_range((current > pages - 4 ? current - 2 : pages - 2)..pages)
                     else
                       pages_range(1..1, with_dots: true)
-                      pages_range(current - 2..current + 2, with_dots: true)
+                      pages_range((current - 2)..(current + 2), with_dots: true)
                       pages_range(pages..pages)
                     end
                   }
