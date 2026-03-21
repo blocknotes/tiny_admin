@@ -12,8 +12,8 @@ module Admin
 
   class ItemsRepo < ::TinyAdmin::Plugins::BaseRepository
     def fields(options: nil)
-      COLUMNS.each_with_object({}) do |name, result|
-        result[name] = TinyAdmin::Field.create_field(name: name)
+      COLUMNS.to_h do |name|
+        [name, TinyAdmin::Field.create_field(name: name)]
       end
     end
 
@@ -28,7 +28,7 @@ module Admin
     def list(page: 1, limit: 10, filters: nil, sort: ['id'])
       page_offset = page.positive? ? (page - 1) * limit : 0
       [
-        RECORDS[page_offset...page_offset + limit],
+        RECORDS[page_offset...(page_offset + limit)],
         RECORDS.size
       ]
     end

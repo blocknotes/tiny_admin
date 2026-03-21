@@ -8,7 +8,7 @@ module TinyAdmin
       end
 
       module InstanceMethods
-        def authenticate_user!
+        def authenticate_user! # rubocop:disable Naming/PredicateMethod
           true
         end
 

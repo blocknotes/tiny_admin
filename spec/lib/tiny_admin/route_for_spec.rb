@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "TinyAdmin.route_for" do
+RSpec.describe "TinyAdmin.route_for" do # rubocop:disable RSpec/DescribeClass
   before do
     allow(TinyAdmin.settings).to receive(:root_path).and_return("/admin")
   end
