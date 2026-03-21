@@ -9,7 +9,7 @@ RSpec.describe TinyAdmin::Utils do
     end
 
     it "converts nested hash params to bracket notation", :aggregate_failures do
-      result = utils_instance.params_to_s("q" => {"title" => "test", "author" => "john"})
+      result = utils_instance.params_to_s("q" => { "title" => "test", "author" => "john" })
       expect(result).to include("q[title]=test")
       expect(result).to include("q[author]=john")
     end
@@ -19,7 +19,7 @@ RSpec.describe TinyAdmin::Utils do
     end
 
     it "handles mixed flat and nested params", :aggregate_failures do
-      result = utils_instance.params_to_s("p" => "1", "q" => {"name" => "test"})
+      result = utils_instance.params_to_s("p" => "1", "q" => { "name" => "test" })
       expect(result).to include("p=1")
       expect(result).to include("q[name]=test")
     end

@@ -49,7 +49,7 @@ RSpec.describe TinyAdmin::Settings do
     end
 
     it "converts nested string class names to constants" do
-      settings[:authentication] = {plugin: "TinyAdmin::Plugins::NoAuth"}
+      settings[:authentication] = { plugin: "TinyAdmin::Plugins::NoAuth" }
       expect(settings[:authentication, :plugin]).to eq(TinyAdmin::Plugins::NoAuth)
     end
 

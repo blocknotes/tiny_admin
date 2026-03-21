@@ -11,35 +11,36 @@ RSpec.describe TinyAdmin::Actions::BasicAction do
     it "handles simple string field names" do
       result = action.attribute_options(["id", "name"])
       expect(result).to eq(
-        "id" => {field: "id"},
-        "name" => {field: "name"}
+        "id" => { field: "id" },
+        "name" => { field: "name" }
       )
     end
 
     it "handles single-entry hash with method shorthand" do
-      result = action.attribute_options([{title: "downcase, capitalize"}])
+      result = action.attribute_options([{ title: "downcase, capitalize" }])
       expect(result).to eq(
-        "title" => {field: "title", method: "downcase, capitalize"}
+        "title" => { field: "title", method: "downcase, capitalize" }
       )
     end
 
     it "handles multi-entry hash with explicit field key" do
-      result = action.attribute_options([{field: "author_id", link_to: "authors"}])
+      result = action.attribute_options([{ field: "author_id", link_to: "authors" }])
       expect(result).to eq(
-        "author_id" => {field: "author_id", link_to: "authors"}
+        "author_id" => { field: "author_id", link_to: "authors" }
       )
     end
 
     it "handles mixed input types" do
-      result = action.attribute_options([
+      opts = [
         "id",
-        {title: "upcase"},
-        {field: "created_at", method: "strftime, %Y-%m-%d"}
-      ])
+        { title: "upcase" },
+        { field: "created_at", method: "strftime, %Y-%m-%d" }
+      ]
+      result = action.attribute_options(opts)
       expect(result).to eq(
-        "id" => {field: "id"},
-        "title" => {field: "title", method: "upcase"},
-        "created_at" => {field: "created_at", method: "strftime, %Y-%m-%d"}
+        "id" => { field: "id" },
+        "title" => { field: "title", method: "upcase" },
+        "created_at" => { field: "created_at", method: "strftime, %Y-%m-%d" }
       )
     end
   end
