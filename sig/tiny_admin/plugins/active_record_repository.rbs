@@ -5,15 +5,15 @@ module TinyAdmin
 
       def collection: () -> untyped
 
-      def fields: (options: Hash[untyped, untyped]?) -> Hash[String, Field]
+      def fields: (?options: Hash[untyped, untyped]?) -> Hash[String, Field]
 
       def find: (untyped) -> untyped
 
-      def index_record_attrs: (untyped, fields: Hash[untyped, untyped]?) -> Hash[untyped, untyped]
+      def index_record_attrs: (untyped, ?fields: Hash[untyped, untyped]?) -> Hash[untyped, untyped]
 
       def index_title: () -> String
 
-      def list: (page: Integer, limit: Integer, sort: untyped?, filters: untyped?) -> Array[untyped]
+      def list: (?page: Integer, ?limit: Integer, ?sort: untyped?, ?filters: untyped?) -> [Array[untyped], Integer]
 
       def show_title: (untyped) -> String
 
