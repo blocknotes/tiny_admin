@@ -5,7 +5,7 @@ module TinyAdmin
     class DefaultLayout < BasicLayout
       attr_accessor :flash_component, :head_component, :messages, :navbar_component, :options, :title
 
-      def view_template(&block)
+      def view_template
         extra_styles = TinyAdmin.settings.extra_styles
         flash_component&.messages = messages
         head_component&.update_attributes(page_title: title, style_links: style_links, extra_styles: extra_styles)
@@ -20,7 +20,7 @@ module TinyAdmin
             main_content {
               render flash_component if flash_component
 
-              yield_content(&block)
+              yield
             }
 
             render_scripts
