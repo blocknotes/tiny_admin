@@ -5,6 +5,6 @@ module TinyAdmin
     attr_reader path: String
     attr_reader slug: String?
 
-    def initialize: (name: String, ?slug: String?, ?path: String?, ?options: Hash[Symbol, String]) -> void
+    def initialize: (name: String, ?slug: String?, ?path: String?, ?options: Hash[Symbol, String]?) -> void
   end
 end
