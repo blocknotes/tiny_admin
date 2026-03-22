@@ -1,9 +1,7 @@
 module TinyAdmin
   module Views
     module Pages
-      class RecordNotFound < DefaultLayout
-        def view_template: () ?{ () -> void } -> void
-
+      class RecordNotFound < ErrorPage
         def title: () -> String
       end
     end

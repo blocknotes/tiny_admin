@@ -6,6 +6,8 @@ module TinyAdmin
 
     def authorization: () -> untyped
 
+    def authorize!: (Symbol, ?String?) { () -> void } -> void
+
     def render_page: (untyped) -> void
 
     def root_route: (untyped) -> void
