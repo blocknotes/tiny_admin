@@ -28,7 +28,9 @@ module TinyAdmin
       end
 
       def to_date(value, options: [])
-        value.to_date.to_s if value
+        value&.to_date&.to_s
+      rescue NoMethodError, ArgumentError
+        value&.to_s
       end
 
       def upcase(value, options: [])

@@ -22,16 +22,13 @@ module TinyAdmin
         end
 
         slug = section[:slug].to_s
-        case section[:type]&.to_sym
-        when :content
-          list << add_content_section(slug, section)
-        when :page
-          list << add_page_section(slug, section)
-        when :resource
-          list << add_resource_section(slug, section)
-        when :url
-          list << add_url_section(slug, section)
-        end
+        item = case section[:type]&.to_sym
+               when :content then add_content_section(slug, section)
+               when :page then add_page_section(slug, section)
+               when :resource then add_resource_section(slug, section)
+               when :url then add_url_section(slug, section)
+               end
+        list << item if item
       end
       navbar << logout if logout
     end

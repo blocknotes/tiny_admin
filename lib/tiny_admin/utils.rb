@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module TinyAdmin
   module Utils
     def params_to_s(params)
       list = params.each_with_object([]) do |(param, value), result|
         if value.is_a?(Hash)
-          values = value.map { |key, val| "#{param}[#{key}]=#{val}" }
+          values = value.map { |key, val| "#{CGI.escape(param.to_s)}[#{CGI.escape(key.to_s)}]=#{CGI.escape(val.to_s)}" }
           result.concat(values)
         else
-          result.push(["#{param}=#{value}"])
+          result.push("#{CGI.escape(param.to_s)}=#{CGI.escape(value.to_s)}")
         end
       end
       list.join("&")

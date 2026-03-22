@@ -88,6 +88,11 @@ RSpec.describe TinyAdmin::Support do
     it "returns nil when value is nil" do
       expect(described_class.to_date(nil)).to be_nil
     end
+
+    it "falls back to to_s when to_date raises an error" do
+      value = "not-a-date"
+      expect(described_class.to_date(value)).to eq("not-a-date")
+    end
   end
 
   describe ".label_for" do
