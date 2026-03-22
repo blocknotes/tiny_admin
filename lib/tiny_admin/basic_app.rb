@@ -17,7 +17,7 @@ module TinyAdmin
     plugin :flash
     plugin :not_found
     plugin :render, engine: "html"
-    plugin :sessions, secret: SecureRandom.hex(64)
+    plugin :sessions, secret: ENV.fetch("TINY_ADMIN_SECRET") { SecureRandom.hex(64) }
 
     plugin authentication_plugin, TinyAdmin.settings.authentication
 
