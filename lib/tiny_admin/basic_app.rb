@@ -5,9 +5,11 @@ module TinyAdmin
     include Utils
 
     class << self
+      include Utils
+
       def authentication_plugin
         plugin = TinyAdmin.settings.authentication&.dig(:plugin)
-        plugin_class = plugin.is_a?(String) ? Object.const_get(plugin) : plugin
+        plugin_class = to_class(plugin) if plugin
         plugin_class || TinyAdmin::Plugins::NoAuth
       end
     end

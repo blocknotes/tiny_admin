@@ -67,6 +67,8 @@ module TinyAdmin
     end
 
     def load_settings
+      return if @loaded
+
       # default values
       DEFAULTS.each do |(option, param), default|
         if param
@@ -80,15 +82,18 @@ module TinyAdmin
       @store ||= TinyAdmin::Store.new(self)
       self.root_path = "/" if root_path == ""
 
-      if authentication[:plugin] <= Plugins::SimpleAuth
+      if authentication[:plugin].is_a?(Module) && authentication[:plugin] <= Plugins::SimpleAuth
         logout_path = "#{root_path}/auth/logout"
         authentication[:logout] ||= TinyAdmin::Section.new(name: "logout", slug: "logout", path: logout_path)
       end
       store.prepare_sections(sections, logout: authentication[:logout])
+      @loaded = true
     end
 
     def reset!
       @options = {}
+      @store = nil
+      @loaded = false
     end
 
     private

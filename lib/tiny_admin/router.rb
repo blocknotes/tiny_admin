@@ -54,7 +54,7 @@ module TinyAdmin
     end
 
     def root_route(req)
-      if authorization.allowed?(current_user, :root)
+      authorize!(:root) do
         if TinyAdmin.settings.root[:redirect]
           req.redirect route_for(TinyAdmin.settings.root[:redirect])
         else
@@ -62,18 +62,14 @@ module TinyAdmin
           attributes = TinyAdmin.settings.root.slice(:content, :title, :widgets)
           render_page prepare_page(page_class, attributes: attributes, params: request.params)
         end
-      else
-        render_page prepare_page(TinyAdmin.settings.page_not_allowed)
       end
     end
 
     def setup_page_route(req, slug, page_data)
       req.get slug do
-        if authorization.allowed?(current_user, :page, slug)
+        authorize!(:page, slug) do
           attributes = page_data.slice(:content, :title, :widgets)
           render_page prepare_page(page_data[:class], slug: slug, attributes: attributes, params: request.params)
-        else
-          render_page prepare_page(TinyAdmin.settings.page_not_allowed)
         end
       end
     end
@@ -101,7 +97,7 @@ module TinyAdmin
       # Index
       if options[:only].include?(:index) || options[:only].include?("index")
         req.is do
-          if authorization.allowed?(current_user, :resource_index, slug)
+          authorize!(:resource_index, slug) do
             context = Context.new(
               actions: custom_actions,
               repository: repository,
@@ -111,8 +107,6 @@ module TinyAdmin
             )
             index_action = TinyAdmin::Actions::Index.new
             render_page index_action.call(app: self, context: context, options: action_options)
-          else
-            render_page prepare_page(TinyAdmin.settings.page_not_allowed)
           end
         end
       end
@@ -136,7 +130,7 @@ module TinyAdmin
         # Show
         if options[:only].include?(:show) || options[:only].include?("show")
           req.is do
-            if authorization.allowed?(current_user, :resource_show, slug)
+            authorize!(:resource_show, slug) do
               context = Context.new(
                 actions: custom_actions,
                 reference: reference,
@@ -147,8 +141,6 @@ module TinyAdmin
               )
               show_action = TinyAdmin::Actions::Show.new
               render_page show_action.call(app: self, context: context, options: action_options)
-            else
-              render_page prepare_page(TinyAdmin.settings.page_not_allowed)
             end
           end
         end
@@ -161,7 +153,7 @@ module TinyAdmin
         action_class = to_class(action)
 
         req.get action_slug.to_s do
-          if authorization.allowed?(current_user, :custom_action, action_slug.to_s)
+          authorize!(:custom_action, action_slug.to_s) do
             context = Context.new(
               actions: {},
               reference: reference,
@@ -172,8 +164,6 @@ module TinyAdmin
             )
             custom_action = action_class.new
             render_page custom_action.call(app: self, context: context, options: options)
-          else
-            render_page prepare_page(TinyAdmin.settings.page_not_allowed)
           end
         end
 
@@ -183,6 +173,14 @@ module TinyAdmin
 
     def authorization
       TinyAdmin.settings.authorization_class
+    end
+
+    def authorize!(action, param = nil)
+      if authorization.allowed?(current_user, action, param)
+        yield
+      else
+        render_page prepare_page(TinyAdmin.settings.page_not_allowed)
+      end
     end
   end
 end
