@@ -1,0 +1,9 @@
+module TinyAdmin
+  module Views
+    module Pages
+      class Content < DefaultLayout
+        def view_template: () ?{ () -> void } -> void
+      end
+    end
+  end
+end

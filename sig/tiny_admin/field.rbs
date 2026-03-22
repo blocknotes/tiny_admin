@@ -5,9 +5,9 @@ module TinyAdmin
     attr_reader title: String
     attr_reader type: Symbol
 
-    def initialize: (name: String, title: String, type: Symbol, ?options: Hash[Symbol, String]) -> void
+    def initialize: (name: String, title: String, type: Symbol, ?options: Hash[Symbol, untyped]) -> void
 
-    def apply_call_option: (untyped) -> void
+    def apply_call_option: (untyped) -> untyped
 
     def translate_value: (untyped) -> untyped
 

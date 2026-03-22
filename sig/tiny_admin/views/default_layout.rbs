@@ -1,6 +1,6 @@
 module TinyAdmin
   module Views
-    class DefaultLayout
+    class DefaultLayout < BasicLayout
       attr_accessor flash_component: untyped?
       attr_accessor head_component: untyped?
       attr_accessor messages: Hash[Symbol, Array[String]?]?
