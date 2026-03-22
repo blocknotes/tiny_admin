@@ -7,6 +7,38 @@ module TinyAdmin
 
     attr_reader store: Store
 
+    # Dynamically defined accessors for OPTIONS
+    def authentication: () -> untyped
+    def authentication=: (untyped) -> untyped
+    def authorization_class: () -> untyped
+    def authorization_class=: (untyped) -> untyped
+    def components: () -> untyped
+    def components=: (untyped) -> untyped
+    def content_page: () -> untyped
+    def content_page=: (untyped) -> untyped
+    def extra_styles: () -> untyped
+    def extra_styles=: (untyped) -> untyped
+    def helper_class: () -> untyped
+    def helper_class=: (untyped) -> untyped
+    def page_not_allowed: () -> untyped
+    def page_not_allowed=: (untyped) -> untyped
+    def page_not_found: () -> untyped
+    def page_not_found=: (untyped) -> untyped
+    def record_not_found: () -> untyped
+    def record_not_found=: (untyped) -> untyped
+    def repository: () -> untyped
+    def repository=: (untyped) -> untyped
+    def root: () -> untyped
+    def root=: (untyped) -> untyped
+    def root_path: () -> untyped
+    def root_path=: (untyped) -> untyped
+    def sections: () -> untyped
+    def sections=: (untyped) -> untyped
+    def scripts: () -> untyped
+    def scripts=: (untyped) -> untyped
+    def style_links: () -> untyped
+    def style_links=: (untyped) -> untyped
+
     def []: (*String | Symbol) -> untyped
 
     def []=: (*String | Symbol, untyped) -> untyped

@@ -1,6 +1,6 @@
 module TinyAdmin
   module Actions
-    class Index
+    class Index < BasicAction
       attr_reader context: untyped
       attr_reader current_page: Integer
       attr_reader fields_options: untyped
@@ -12,7 +12,7 @@ module TinyAdmin
       attr_reader query_string: String
       attr_reader repository: untyped
 
-      def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> void
+      def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> untyped
 
       private
 

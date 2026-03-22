@@ -1,7 +1,8 @@
 module TinyAdmin
   module Plugins
     class BaseRepository
-      RecordNotFound: untyped
+      class RecordNotFound < StandardError
+      end
 
       attr_reader model: untyped
 

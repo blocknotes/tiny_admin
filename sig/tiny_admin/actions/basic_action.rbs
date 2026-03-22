@@ -1,6 +1,8 @@
 module TinyAdmin
   module Actions
     class BasicAction
+      include Utils
+
       def attribute_options: (Array[untyped]?) -> Hash[untyped, untyped]?
     end
   end

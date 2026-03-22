@@ -1,6 +1,6 @@
 module TinyAdmin
   module Plugins
-    class ActiveRecordRepository
+    class ActiveRecordRepository < BaseRepository
       def apply_filters: (untyped, Enumerable[untyped]) -> untyped
 
       def collection: () -> untyped

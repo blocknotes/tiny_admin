@@ -1,0 +1,11 @@
+module TinyAdmin
+  module Views
+    module Pages
+      class PageNotFound < DefaultLayout
+        def view_template: () ?{ () -> void } -> void
+
+        def title: () -> String
+      end
+    end
+  end
+end

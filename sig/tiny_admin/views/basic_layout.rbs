@@ -1,6 +1,8 @@
 module TinyAdmin
   module Views
     class BasicLayout
+      include Utils
+
       attr_accessor content: untyped
       attr_accessor params: untyped
       attr_accessor widgets: untyped

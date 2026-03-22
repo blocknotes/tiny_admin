@@ -1,7 +1,7 @@
 module TinyAdmin
   module Actions
-    class Show
-      def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> void
+    class Show < BasicAction
+      def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> untyped
     end
   end
 end
