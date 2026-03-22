@@ -75,6 +75,8 @@ module TinyAdmin
                 attributes = prepare_record.call(record)
                 attributes.each do |key, value|
                   field = fields[key]
+                  next unless field
+
                   td(class: "field-value-#{field.name} field-value-type-#{field.type}") {
                     render TinyAdmin.settings.components[:field_value].new(field, value, record: record)
                   }
@@ -110,16 +112,9 @@ module TinyAdmin
         end
 
         def actions_buttons
-          ul(class: "nav justify-content-end") {
-            (actions || {}).each do |action, action_class|
-              li(class: "nav-item mx-1") {
-                href = TinyAdmin.route_for(slug, action: action)
-                a(href: href, class: "nav-link btn btn-outline-secondary") {
-                  action_class.respond_to?(:title) ? action_class.title : action
-                }
-              }
-            end
-          }
+          buttons = TinyAdmin::Views::Components::ActionsButtons.new
+          buttons.update_attributes(actions: actions, slug: slug)
+          render buttons
         end
       end
     end

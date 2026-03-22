@@ -3,15 +3,7 @@
 module TinyAdmin
   module Views
     module Pages
-      class PageNotAllowed < DefaultLayout
-        def view_template
-          super do
-            div(class: "page_not_allowed") {
-              h1(class: "title") { title }
-            }
-          end
-        end
-
+      class PageNotAllowed < ErrorPage
         def title
           "Page not allowed"
         end

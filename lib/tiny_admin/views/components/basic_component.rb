@@ -4,11 +4,7 @@ module TinyAdmin
   module Views
     module Components
       class BasicComponent < Phlex::HTML
-        def update_attributes(attributes)
-          attributes.each do |key, value|
-            send("#{key}=", value)
-          end
-        end
+        include Attributes
       end
     end
   end
