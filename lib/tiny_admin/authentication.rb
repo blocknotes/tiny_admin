@@ -3,7 +3,7 @@
 module TinyAdmin
   class Authentication < BasicApp
     route do |r|
-      r.get 'unauthenticated' do
+      r.get "unauthenticated" do
         if current_user
           r.redirect TinyAdmin.settings.root_path
         else
@@ -11,15 +11,15 @@ module TinyAdmin
         end
       end
 
-      r.post 'unauthenticated' do
+      r.post "unauthenticated" do
         warning = TinyAdmin.settings.helper_class.label_for(
-          'Failed to authenticate',
-          options: ['authentication.unauthenticated']
+          "Failed to authenticate",
+          options: ["authentication.unauthenticated"]
         )
         render_login(warnings: [warning])
       end
 
-      r.get 'logout' do
+      r.get "logout" do
         logout_user
         r.redirect TinyAdmin.settings.root_path
       end
@@ -33,9 +33,9 @@ module TinyAdmin
 
       page = prepare_page(login, options: %i[no_menu compact_layout])
       page.messages = {
-        notices: notices || flash['notices'],
-        warnings: warnings || flash['warnings'],
-        errors: errors || flash['errors']
+        notices: notices || flash["notices"],
+        warnings: warnings || flash["warnings"],
+        errors: errors || flash["errors"]
       }
       render(inline: page.call)
     end

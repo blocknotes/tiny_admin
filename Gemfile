@@ -1,34 +1,34 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
 group :development, :test do
-  gem 'rails', '~> 7.1'
+  gem "rails", "~> 7.1"
 
-  gem 'sqlite3', '< 2.0'
-  gem 'tilt'
-  gem 'warden'
-  gem 'webrick'
+  gem "sqlite3", "< 2.0"
+  gem "tilt"
+  gem "warden"
+  gem "webrick"
 
-  gem 'rbs'
+  gem "rbs"
 
   # Testing
-  gem 'capybara'
-  gem 'capybara-screenshot'
-  gem 'rspec-rails'
-  gem 'simplecov', require: false
+  gem "capybara"
+  gem "capybara-screenshot"
+  gem "rspec-rails"
+  gem "simplecov", require: false
 
   # Linters
   # gem 'fasterer'
-  gem 'rubocop'
-  gem 'rubocop-packaging'
-  gem 'rubocop-performance'
-  gem 'rubocop-rspec'
+  gem "rubocop"
+  gem "rubocop-packaging"
+  gem "rubocop-performance"
+  gem "rubocop-rspec"
 
   # Tools
   # gem 'overcommit', '~> 0.59'
-  gem 'pry-rails'
+  gem "pry-rails"
 end

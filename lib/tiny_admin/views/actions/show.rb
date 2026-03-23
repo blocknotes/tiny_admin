@@ -13,12 +13,12 @@ module TinyAdmin
 
         def view_template
           super do
-            div(class: 'show') {
-              div(class: 'row') {
-                div(class: 'col-4') {
-                  h1(class: 'title') { title }
+            div(class: "show") {
+              div(class: "row") {
+                div(class: "col-4") {
+                  h1(class: "title") { title }
                 }
-                div(class: 'col-8') {
+                div(class: "col-8") {
                   actions_buttons
                 }
               }
@@ -27,9 +27,9 @@ module TinyAdmin
                 field = fields[key]
                 div(class: "field-#{field.name} row lh-lg") {
                   if field
-                    div(class: 'field-header col-2') { field.options[:header] || field.title }
+                    div(class: "field-header col-2") { field.options[:header] || field.title }
                   end
-                  div(class: 'field-value col-10') {
+                  div(class: "field-value col-10") {
                     render TinyAdmin.settings.components[:field_value].new(field, value, record: record)
                   }
                 }
@@ -43,11 +43,11 @@ module TinyAdmin
         private
 
         def actions_buttons
-          ul(class: 'nav justify-content-end') {
+          ul(class: "nav justify-content-end") {
             (actions || {}).each do |action, action_class|
-              li(class: 'nav-item mx-1') {
+              li(class: "nav-item mx-1") {
                 href = TinyAdmin.route_for(slug, reference: reference, action: action)
-                a(href: href, class: 'nav-link btn btn-outline-secondary') {
+                a(href: href, class: "nav-link btn btn-outline-secondary") {
                   action_class.respond_to?(:title) ? action_class.title : action
                 }
               }

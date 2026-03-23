@@ -3,11 +3,11 @@
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
-require 'rspec/rails'
-require 'capybara/rails'
-require 'capybara-screenshot/rspec'
+require "rspec/rails"
+require "capybara/rails"
+require "capybara-screenshot/rspec"
 
-Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
+Dir[File.expand_path("support/**/*.rb", __dir__)].each { |f| require f }
 
 if defined? ActiveRecord
   # Checks for pending migrations and applies them before tests are run.
@@ -27,6 +27,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.disable_monkey_patching!
 
-  config.include_context 'with some data'
-  config.include_context 'Capybara helpers'
+  config.include_context "with some data"
+  config.include_context "Capybara helpers"
 end

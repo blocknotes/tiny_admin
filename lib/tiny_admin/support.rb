@@ -24,7 +24,7 @@ module TinyAdmin
       end
 
       def strftime(value, options: [])
-        value&.strftime(options&.first || '%Y-%m-%d %H:%M')
+        value&.strftime(options&.first || "%Y-%m-%d %H:%M")
       end
 
       def to_date(value, options: [])

@@ -6,8 +6,8 @@ module TinyAdmin
       class Content < DefaultLayout
         def view_template
           super do
-            div(class: 'content') {
-              div(class: 'content-data') {
+            div(class: "content") {
+              div(class: "content-data") {
                 unsafe_raw(content)
               }
 

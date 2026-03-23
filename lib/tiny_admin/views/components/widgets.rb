@@ -11,15 +11,15 @@ module TinyAdmin
         def view_template
           return if @widgets.nil? || @widgets.empty?
 
-          div(class: 'container widgets') {
+          div(class: "container widgets") {
             @widgets.each_slice(2).each do |row|
-              div(class: 'row') {
+              div(class: "row") {
                 row.each do |widget|
                   next unless widget < Phlex::HTML
 
-                  div(class: 'col') {
-                    div(class: 'card') {
-                      div(class: 'card-body') {
+                  div(class: "col") {
+                    div(class: "card") {
+                      div(class: "card-body") {
                         render widget.new
                       }
                     }

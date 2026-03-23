@@ -33,3 +33,7 @@ Style/ExplicitBlockArgument:
 Style/GuardClause:
   Exclude:
     - lib/tiny_admin/router.rb
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes

@@ -6,14 +6,14 @@ module TinyAdmin
       class PageNotFound < DefaultLayout
         def view_template
           super do
-            div(class: 'page_not_found') {
-              h1(class: 'title') { title }
+            div(class: "page_not_found") {
+              h1(class: "title") { title }
             }
           end
         end
 
         def title
-          'Page not found'
+          "Page not found"
         end
       end
     end

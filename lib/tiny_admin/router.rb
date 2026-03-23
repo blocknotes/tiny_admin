@@ -9,7 +9,7 @@ module TinyAdmin
     route do |r|
       TinyAdmin.settings.load_settings
 
-      r.on 'auth' do
+      r.on "auth" do
         r.run Authentication
       end
 
@@ -25,7 +25,7 @@ module TinyAdmin
         # :nocov:
       end
 
-      r.post '' do
+      r.post "" do
         r.redirect TinyAdmin.settings.root_path
       end
 
@@ -48,7 +48,7 @@ module TinyAdmin
 
     def render_page(page)
       if page.respond_to?(:messages=)
-        page.messages = { notices: flash['notices'], warnings: flash['warnings'], errors: flash['errors'] }
+        page.messages = { notices: flash["notices"], warnings: flash["warnings"], errors: flash["errors"] }
       end
       render(inline: page.call)
     end
@@ -99,7 +99,7 @@ module TinyAdmin
       )
 
       # Index
-      if options[:only].include?(:index) || options[:only].include?('index')
+      if options[:only].include?(:index) || options[:only].include?("index")
         req.is do
           if authorization.allowed?(current_user, :resource_index, slug)
             context = Context.new(
@@ -134,7 +134,7 @@ module TinyAdmin
         )
 
         # Show
-        if options[:only].include?(:show) || options[:only].include?('show')
+        if options[:only].include?(:show) || options[:only].include?("show")
           req.is do
             if authorization.allowed?(current_user, :resource_show, slug)
               context = Context.new(

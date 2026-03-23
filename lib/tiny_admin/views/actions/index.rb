@@ -15,22 +15,22 @@ module TinyAdmin
 
         def view_template
           super do
-            div(class: 'index') {
-              div(class: 'row') {
-                div(class: 'col-4') {
-                  h1(class: 'title') {
+            div(class: "index") {
+              div(class: "row") {
+                div(class: "col-4") {
+                  h1(class: "title") {
                     title
                   }
                 }
-                div(class: 'col-8') {
+                div(class: "col-8") {
                   actions_buttons
                 }
               }
 
-              div(class: 'row') {
-                div_class = filters&.any? ? 'col-9' : 'col-12'
+              div(class: "row") {
+                div_class = filters&.any? ? "col-9" : "col-12"
                 div(class: div_class) {
-                  table(class: 'table') {
+                  table(class: "table") {
                     table_header if fields.any?
 
                     table_body
@@ -40,7 +40,7 @@ module TinyAdmin
                 }
 
                 if filters&.any?
-                  div(class: 'col-3') {
+                  div(class: "col-3") {
                     filters_form = TinyAdmin::Views::Components::FiltersForm.new
                     filters_form.update_attributes(section_path: TinyAdmin.route_for(slug), filters: filters)
                     render filters_form
@@ -80,15 +80,15 @@ module TinyAdmin
                   }
                 end
 
-                td(class: 'actions p-1') {
-                  div(class: 'btn-group btn-group-sm') {
-                    link_class = 'btn btn-outline-secondary'
+                td(class: "actions p-1") {
+                  div(class: "btn-group btn-group-sm") {
+                    link_class = "btn btn-outline-secondary"
                     if links
                       links.each do |link|
                         whitespace
-                        if link == 'show'
+                        if link == "show"
                           a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
-                            label_for('Show', options: ['actions.index.links.show'])
+                            label_for("Show", options: ["actions.index.links.show"])
                           }
                         else
                           a(href: TinyAdmin.route_for(slug, reference: record.id, action: link), class: link_class) {
@@ -99,7 +99,7 @@ module TinyAdmin
                       end
                     else
                       a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
-                        label_for('Show', options: ['actions.index.links.show'])
+                        label_for("Show", options: ["actions.index.links.show"])
                       }
                     end
                   }
@@ -110,11 +110,11 @@ module TinyAdmin
         end
 
         def actions_buttons
-          ul(class: 'nav justify-content-end') {
+          ul(class: "nav justify-content-end") {
             (actions || {}).each do |action, action_class|
-              li(class: 'nav-item mx-1') {
+              li(class: "nav-item mx-1") {
                 href = TinyAdmin.route_for(slug, action: action)
-                a(href: href, class: 'nav-link btn btn-outline-secondary') {
+                a(href: href, class: "nav-link btn btn-outline-secondary") {
                   action_class.respond_to?(:title) ? action_class.title : action
                 }
               }

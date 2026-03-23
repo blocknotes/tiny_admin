@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'dummy_rails_app'
-require 'rails_helper'
+require "dummy_rails_app"
+require "rails_helper"
 
-RSpec.describe 'Pages', type: :feature do
+RSpec.describe "Pages", type: :feature do
   before do
-    visit '/admin'
+    visit "/admin"
     log_in
   end
 
-  it 'loads a sample page', :aggregate_failures do
-    click_link('Sample page')
-    expect(page).to have_current_path('/admin/sample')
-    expect(page).to have_css('p', text: 'This is just a sample page')
+  it "loads a sample page", :aggregate_failures do
+    click_link("Sample page")
+    expect(page).to have_current_path("/admin/sample")
+    expect(page).to have_css("p", text: "This is just a sample page")
   end
 end

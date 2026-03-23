@@ -13,7 +13,7 @@ module TinyAdmin
         end
 
         def current_user
-          'admin'
+          "admin"
         end
 
         def logout_user

@@ -54,7 +54,7 @@ module TinyAdmin
       def apply_filters(query, filters)
         filters.each do |field, filter|
           value = filter&.dig(:value)
-          next if value.nil? || value == ''
+          next if value.nil? || value == ""
 
           query =
             case field.type
