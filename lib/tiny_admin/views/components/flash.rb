@@ -12,10 +12,10 @@ module TinyAdmin
           warnings = messages[:warnings]
           errors = messages[:errors]
 
-          div(class: 'flash') {
-            div(class: 'notices alert alert-success', role: 'alert') { notices.join(', ') } if notices&.any?
-            div(class: 'notices alert alert-warning', role: 'alert') { warnings.join(', ') } if warnings&.any?
-            div(class: 'notices alert alert-danger', role: 'alert') { errors.join(', ') } if errors&.any?
+          div(class: "flash") {
+            div(class: "notices alert alert-success", role: "alert") { notices.join(", ") } if notices&.any?
+            div(class: "notices alert alert-warning", role: "alert") { warnings.join(", ") } if warnings&.any?
+            div(class: "notices alert alert-danger", role: "alert") { errors.join(", ") } if errors&.any?
           }
         end
       end

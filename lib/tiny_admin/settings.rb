@@ -19,9 +19,9 @@ module TinyAdmin
       %i[page_not_found] => Views::Pages::PageNotFound,
       %i[record_not_found] => Views::Pages::RecordNotFound,
       %i[repository] => Plugins::ActiveRecordRepository,
-      %i[root_path] => '/admin',
+      %i[root_path] => "/admin",
       %i[root page] => Views::Pages::Root,
-      %i[root title] => 'TinyAdmin',
+      %i[root title] => "TinyAdmin",
       %i[sections] => []
     }.freeze
 
@@ -78,11 +78,11 @@ module TinyAdmin
       end
 
       @store ||= TinyAdmin::Store.new(self)
-      self.root_path = '/' if root_path == ''
+      self.root_path = "/" if root_path == ""
 
       if authentication[:plugin] <= Plugins::SimpleAuth
         logout_path = "#{root_path}/auth/logout"
-        authentication[:logout] ||= TinyAdmin::Section.new(name: 'logout', slug: 'logout', path: logout_path)
+        authentication[:logout] ||= TinyAdmin::Section.new(name: "logout", slug: "logout", path: logout_path)
       end
       store.prepare_sections(sections, logout: authentication[:logout])
     end

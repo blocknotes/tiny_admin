@@ -6,20 +6,20 @@ module TinyAdmin
       class SimpleAuthLogin < DefaultLayout
         def view_template
           super do
-            div(class: 'simple_auth_login') {
-              h1(class: 'title') { title }
+            div(class: "simple_auth_login") {
+              h1(class: "title") { title }
 
-              form(class: 'form_login', method: 'post') {
-                div(class: 'mt-3') {
-                  label(for: 'secret', class: 'form-label') {
-                    label_for('Password', options: ['pages.simple_auth_login.inputs.password'])
+              form(class: "form_login", method: "post") {
+                div(class: "mt-3") {
+                  label(for: "secret", class: "form-label") {
+                    label_for("Password", options: ["pages.simple_auth_login.inputs.password"])
                   }
-                  input(type: 'password', name: 'secret', class: 'form-control', id: 'secret')
+                  input(type: "password", name: "secret", class: "form-control", id: "secret")
                 }
 
-                div(class: 'mt-3') {
-                  button(type: 'submit', class: 'button_login btn btn-primary') {
-                    label_for('Login', options: ['pages.simple_auth_login.buttons.submit'])
+                div(class: "mt-3") {
+                  button(type: "submit", class: "button_login btn btn-primary") {
+                    label_for("Login", options: ["pages.simple_auth_login.buttons.submit"])
                   }
                 }
               }
@@ -28,7 +28,7 @@ module TinyAdmin
         end
 
         def title
-          'Login'
+          "Login"
         end
       end
     end

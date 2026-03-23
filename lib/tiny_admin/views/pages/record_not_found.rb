@@ -6,14 +6,14 @@ module TinyAdmin
       class RecordNotFound < DefaultLayout
         def view_template
           super do
-            div(class: 'record_not_found') {
-              h1(class: 'title') { title }
+            div(class: "record_not_found") {
+              h1(class: "title") { title }
             }
           end
         end
 
         def title
-          'Record not found'
+          "Record not found"
         end
       end
     end

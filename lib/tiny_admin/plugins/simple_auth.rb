@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'digest'
+require "digest"
 
 module TinyAdmin
   module Plugins
@@ -8,14 +8,14 @@ module TinyAdmin
       class << self
         def configure(app, opts = {})
           @@opts = opts || {} # rubocop:disable Style/ClassVars
-          @@opts[:password] ||= ENV.fetch('ADMIN_PASSWORD_HASH', nil) # NOTE: fallback value
+          @@opts[:password] ||= ENV.fetch("ADMIN_PASSWORD_HASH", nil) # NOTE: fallback value
 
           Warden::Strategies.add(:secret) do
             def authenticate!
-              secret = params['secret'] || ''
+              secret = params["secret"] || ""
               return fail(:invalid_credentials) if Digest::SHA512.hexdigest(secret) != @@opts[:password]
 
-              success!(app: 'TinyAdmin')
+              success!(app: "TinyAdmin")
             end
           end
 
@@ -29,15 +29,15 @@ module TinyAdmin
 
       module InstanceMethods
         def authenticate_user!
-          env['warden'].authenticate!
+          env["warden"].authenticate!
         end
 
         def current_user
-          env['warden'].user
+          env["warden"].user
         end
 
         def logout_user
-          env['warden'].logout
+          env["warden"].logout
         end
       end
     end

@@ -14,7 +14,7 @@ module TinyAdmin
 
         def view_template
           translated_value = field.translate_value(value)
-          value_class = field.options[:options]&.include?('value_class') ? "value-#{value}" : nil
+          value_class = field.options[:options]&.include?("value_class") ? "value-#{value}" : nil
           if field.options[:link_to]
             a(href: TinyAdmin.route_for(field.options[:link_to], reference: translated_value)) {
               span(class: value_class) {

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'phlex'
-require 'roda'
-require 'zeitwerk'
+require "phlex"
+require "roda"
+require "zeitwerk"
 
-require 'forwardable'
-require 'singleton'
-require 'yaml'
+require "forwardable"
+require "singleton"
+require "yaml"
 
 loader = Zeitwerk::Loader.for_gem
 loader.setup
@@ -25,10 +25,10 @@ module TinyAdmin
   end
 
   def route_for(section, reference: nil, action: nil, query: nil)
-    root_path = settings.root_path == '/' ? nil : settings.root_path
+    root_path = settings.root_path == "/" ? nil : settings.root_path
     route = [root_path, section, reference, action].compact.join("/")
     route << "?#{query}" if query
-    route[0] == '/' ? route : route.prepend('/')
+    route[0] == "/" ? route : route.prepend("/")
   end
 
   def settings

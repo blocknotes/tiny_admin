@@ -45,14 +45,14 @@ module TinyAdmin
         @params = context.request.params
         @repository = context.repository
         @pagination = options[:pagination] || 10
-        @current_page = (params['p'] || 1).to_i
-        @query_string = params_to_s(params.except('p'))
+        @current_page = (params["p"] || 1).to_i
+        @query_string = params_to_s(params.except("p"))
       end
 
       def prepare_filters(fields)
         filters = (options[:filters] || []).map { _1.is_a?(Hash) ? _1 : { field: _1 } }
         filters = filters.to_h { |filter| [filter[:field], filter] }
-        values = params['q'] || {}
+        values = params["q"] || {}
         fields.each_with_object({}) do |(name, field), result|
           result[field] = { value: values[name], filter: filters[name] } if filters.key?(name)
         end

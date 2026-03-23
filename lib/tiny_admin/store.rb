@@ -56,7 +56,7 @@ module TinyAdmin
         repository: to_class(section[:repository] || settings.repository)
       )
 
-      hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?('hidden'))
+      hidden = section[:options] && (section[:options].include?(:hidden) || section[:options].include?("hidden"))
       TinyAdmin::Section.new(name: section[:name], slug: slug) unless hidden
     end
 

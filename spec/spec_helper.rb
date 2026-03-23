@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'pry'
-require 'simplecov'
+require "pry"
+require "simplecov"
 
 SimpleCov.start do
   enable_coverage :branch
 
-  add_filter '/spec/'
+  add_filter "/spec/"
 end
 
 RSpec.configure do |config|

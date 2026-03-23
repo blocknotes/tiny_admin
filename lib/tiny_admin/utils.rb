@@ -11,7 +11,7 @@ module TinyAdmin
           result.push(["#{param}=#{value}"])
         end
       end
-      list.join('&')
+      list.join("&")
     end
 
     def prepare_page(page_class, slug: nil, attributes: nil, options: nil, params: nil)
@@ -40,9 +40,9 @@ module TinyAdmin
     end
 
     def humanize(string)
-      return '' unless string
+      return "" unless string
 
-      string.respond_to?(:humanize) ? string.humanize : string.tr('_', ' ').capitalize
+      string.respond_to?(:humanize) ? string.humanize : string.tr("_", " ").capitalize
     end
   end
 end
