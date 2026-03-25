@@ -25,10 +25,10 @@ module TinyAdmin
 
               prepare_record.call(record).each do |key, value|
                 field = fields[key]
+                next unless field
+
                 div(class: "field-#{field.name} row lh-lg") {
-                  if field
-                    div(class: "field-header col-2") { field.options[:header] || field.title }
-                  end
+                  div(class: "field-header col-2") { field.options[:header] || field.title }
                   div(class: "field-value col-10") {
                     render TinyAdmin.settings.components[:field_value].new(field, value, record: record)
                   }
@@ -43,16 +43,9 @@ module TinyAdmin
         private
 
         def actions_buttons
-          ul(class: "nav justify-content-end") {
-            (actions || {}).each do |action, action_class|
-              li(class: "nav-item mx-1") {
-                href = TinyAdmin.route_for(slug, reference: reference, action: action)
-                a(href: href, class: "nav-link btn btn-outline-secondary") {
-                  action_class.respond_to?(:title) ? action_class.title : action
-                }
-              }
-            end
-          }
+          buttons = TinyAdmin::Views::Components::ActionsButtons.new
+          buttons.update_attributes(actions: actions, slug: slug, reference: reference)
+          render buttons
         end
       end
     end

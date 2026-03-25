@@ -13,7 +13,7 @@ module TinyAdmin
             title {
               page_title
             }
-            style_links.each do |style_link|
+            (style_links || []).each do |style_link|
               link(**style_link)
             end
             style { extra_styles } if extra_styles
