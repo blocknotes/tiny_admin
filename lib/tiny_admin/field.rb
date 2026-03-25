@@ -30,10 +30,11 @@ module TinyAdmin
     end
 
     class << self
+      include Utils
+
       def create_field(name:, title: nil, type: nil, options: {})
         field_name = name.to_s
-        field_title = field_name.respond_to?(:humanize) ? field_name.humanize : field_name.tr("_", " ").capitalize
-        new(name: field_name, title: title || field_title, type: type || :string, options: options || {})
+        new(name: field_name, title: title || humanize(field_name), type: type || :string, options: options || {})
       end
     end
   end
