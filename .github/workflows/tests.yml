@@ -36,4 +36,4 @@ jobs:
         env:
           RUBYOPT: '-rbundler/setup -rrbs/test/setup'
           RBS_TEST_TARGET: 'TinyAdmin::*'
-        run: bin/rspec --profile
+        run: bin/rspec --format documentation --profile
