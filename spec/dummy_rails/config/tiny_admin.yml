@@ -71,9 +71,8 @@ sections:
         - field: category
           type: select
           values:
-            - news
-            - sport
-            - tech
+            - Lifestyle
+            - Software
         - published
         - dt
         - created_at

@@ -4,7 +4,7 @@
 # Post.create! title: 'A post', author: Author.first
 # Post.last.tags << Tag.last
 class Post < ApplicationRecord
-  enum state: { available: 0, unavailable: 1, arriving: 2 }
+  enum :state, available: 0, unavailable: 1, arriving: 2
 
   belongs_to :author, inverse_of: :posts, autosave: true
   # with autosave if you change an attribute using the association, calling a save on parent will propagate the changes
