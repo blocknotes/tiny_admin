@@ -8,12 +8,14 @@ RSpec.describe TinyAdmin::Settings do
 
   # Save and restore the internal options state around each test
   around do |example|
-    saved = settings.instance_variable_get(:@options)&.deep_dup
+    saved_options = settings.instance_variable_get(:@options)&.deep_dup
     saved_store = settings.instance_variable_get(:@store)
+    saved_loaded = settings.instance_variable_get(:@loaded)
     example.run
   ensure
-    settings.instance_variable_set(:@options, saved)
+    settings.instance_variable_set(:@options, saved_options)
     settings.instance_variable_set(:@store, saved_store)
+    settings.instance_variable_set(:@loaded, saved_loaded)
   end
 
   describe "#reset!" do
