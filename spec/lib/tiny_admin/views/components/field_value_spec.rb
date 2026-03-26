@@ -31,6 +31,39 @@ RSpec.describe TinyAdmin::Views::Components::FieldValue do
     end
   end
 
+  describe "with a RawHtml value" do
+    let(:field) { TinyAdmin::Field.new(name: "items", type: :string, title: "Items", options: { method: "multiline" }) }
+    let(:record) { double("record", id: 1) } # rubocop:disable RSpec/VerifiedDoubles
+
+    before do
+      allow(TinyAdmin.settings.helper_class).to receive(:multiline)
+        .and_return(TinyAdmin::RawHtml.new("1<br/>2<br/>3"))
+    end
+
+    it "renders the value as raw HTML without escaping", :aggregate_failures do
+      html = described_class.new(field, [1, 2, 3], record: record).call
+      expect(html).to include("<span>")
+      expect(html).to include("1<br/>2<br/>3")
+      expect(html).not_to include("&lt;br/&gt;")
+    end
+  end
+
+  describe "with a RawHtml value inside a link" do
+    let(:field) { TinyAdmin::Field.new(name: "items", type: :string, title: "Items", options: { method: "multiline", link_to: "posts" }) }
+    let(:record) { double("record", id: 1) } # rubocop:disable RSpec/VerifiedDoubles
+
+    before do
+      allow(TinyAdmin.settings.helper_class).to receive(:multiline)
+        .and_return(TinyAdmin::RawHtml.new("1<br/>2<br/>3"))
+    end
+
+    it "renders the value as raw HTML inside a link without escaping", :aggregate_failures do
+      html = described_class.new(field, [1, 2, 3], record: record).call
+      expect(html).to include("<a")
+      expect(html).to include("<span>1<br/>2<br/>3</span>")
+    end
+  end
+
   describe "with value_class option" do
     let(:field) { TinyAdmin::Field.new(name: "status", type: :string, title: "Status", options: { options: ["value_class"] }) }
     let(:record) { double("record", id: 1) } # rubocop:disable RSpec/VerifiedDoubles

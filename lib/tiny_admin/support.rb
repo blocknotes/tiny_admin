@@ -3,6 +3,10 @@
 module TinyAdmin
   class Support
     class << self
+      def raw_html(value)
+        TinyAdmin::RawHtml.new(value)
+      end
+
       def call(value, options: [])
         options.inject(value) { |result, message| result&.send(message) } if value && options&.any?
       end
