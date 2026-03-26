@@ -31,4 +31,12 @@ class Author < ApplicationRecord
   def to_s
     "#{name} (#{age})"
   end
+
+  def stats
+    [
+      "Posts: <b>#{posts.count}</b>",
+      "Published: <b>#{published_posts.count}</b>",
+      "Recent: <b>#{recent_posts.count}</b>"
+    ]
+  end
 end

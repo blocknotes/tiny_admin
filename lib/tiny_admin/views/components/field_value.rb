@@ -18,13 +18,23 @@ module TinyAdmin
           if field.options[:link_to]
             a(href: TinyAdmin.route_for(field.options[:link_to], reference: translated_value)) {
               span(class: value_class) {
-                field.apply_call_option(record) || translated_value
+                render_value(field.apply_call_option(record) || translated_value)
               }
             }
           else
             span(class: value_class) {
-              translated_value
+              render_value(translated_value)
             }
+          end
+        end
+
+        private
+
+        def render_value(val)
+          if val.is_a?(TinyAdmin::RawHtml)
+            unsafe_raw(val.to_s)
+          else
+            val
           end
         end
       end

@@ -42,6 +42,23 @@ sections:
         - id
         - name
         - email
+        - field: stats
+          header: Some stats
+          method: multiline
+      links:
+        - show
+        - sample_mem
+    show:
+      attributes:
+        - id
+        - name
+        - email
+        - age
+        - field: stats
+          header: Some stats
+          method: multiline
+        - created_at
+        - updated_at
       links:
         - show
         - sample_mem

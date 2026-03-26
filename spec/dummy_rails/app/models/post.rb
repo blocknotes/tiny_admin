@@ -17,7 +17,7 @@ class Post < ApplicationRecord
   validates :title, allow_blank: false, presence: true
 
   scope :published, -> { where(published: true) }
-  scope :recents, -> { where('created_at > ?', Date.current - 8.months) }
+  scope :recents, -> { where('created_at > ?', Time.current - 1.week) }
 
   # # override a field - can be dangerous
   # def title
