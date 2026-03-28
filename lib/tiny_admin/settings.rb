@@ -109,12 +109,18 @@ module TinyAdmin
         value.each_key do |key2|
           path = [key, key2]
           if (DEFAULTS[path].is_a?(Class) || DEFAULTS[path].is_a?(Module)) && self[key][key2].is_a?(String)
-            self[key][key2] = Object.const_get(self[key][key2])
+            self[key][key2] = resolve_class(self[key][key2], setting: "#{key}.#{key2}")
           end
         end
       elsif value.is_a?(String) && (DEFAULTS[[key]].is_a?(Class) || DEFAULTS[[key]].is_a?(Module))
-        self[key] = Object.const_get(self[key])
+        self[key] = resolve_class(self[key], setting: key.to_s)
       end
+    end
+
+    def resolve_class(class_name, setting:)
+      Object.const_get(class_name)
+    rescue NameError => e
+      raise NameError, "TinyAdmin: invalid class '#{class_name}' for setting '#{setting}' - #{e.message}"
     end
   end
 end

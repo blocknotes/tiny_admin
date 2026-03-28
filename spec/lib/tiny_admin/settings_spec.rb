@@ -59,6 +59,16 @@ RSpec.describe TinyAdmin::Settings do
       settings[:root_path] = "/admin"
       expect(settings[:root_path]).to eq("/admin")
     end
+
+    it "raises a descriptive error for invalid class names" do
+      expect { settings[:helper_class] = "NonExistent::Klass" }
+        .to raise_error(NameError, /TinyAdmin: invalid class 'NonExistent::Klass' for setting 'helper_class'/)
+    end
+
+    it "raises a descriptive error for invalid nested class names" do
+      expect { settings[:authentication] = { plugin: "NonExistent::Auth" } }
+        .to raise_error(NameError, /TinyAdmin: invalid class 'NonExistent::Auth' for setting 'authentication.plugin'/)
+    end
   end
 
   describe "dynamic option methods" do
