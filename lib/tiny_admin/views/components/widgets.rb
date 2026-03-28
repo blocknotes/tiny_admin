@@ -4,8 +4,9 @@ module TinyAdmin
   module Views
     module Components
       class Widgets < BasicComponent
-        def initialize(widgets)
+        def initialize(widgets, context: {})
           @widgets = widgets
+          @context = context
         end
 
         def view_template
@@ -20,7 +21,7 @@ module TinyAdmin
                   div(class: "col") {
                     div(class: "card") {
                       div(class: "card-body") {
-                        render widget.new
+                        render build_widget(widget)
                       }
                     }
                   }
@@ -28,6 +29,20 @@ module TinyAdmin
               }
             end
           }
+        end
+
+        private
+
+        def build_widget(widget)
+          key_params = [:key, :keyreq]
+          if widget.instance_method(:initialize).arity != 0 ||
+             widget.instance_method(:initialize).parameters.any? { |type, _| key_params.include?(type) }
+            widget.new(context: @context)
+          else
+            widget.new
+          end
+        rescue ArgumentError
+          widget.new
         end
       end
     end

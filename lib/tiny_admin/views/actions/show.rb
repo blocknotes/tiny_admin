@@ -35,7 +35,8 @@ module TinyAdmin
                 }
               end
 
-              render TinyAdmin::Views::Components::Widgets.new(widgets)
+              context = { slug: slug, record: record, reference: reference, params: params }
+              render TinyAdmin::Views::Components::Widgets.new(widgets, context: context)
             }
           end
         end
