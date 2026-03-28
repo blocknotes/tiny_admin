@@ -76,13 +76,13 @@ module TinyAdmin
 
     def setup_resource_routes(req, slug, options:)
       req.on slug do
-        setup_collection_routes(req, slug, options: options)
-        setup_member_routes(req, slug, options: options)
+        repository = options[:repository].new(options[:model])
+        setup_collection_routes(req, slug, options: options, repository: repository)
+        setup_member_routes(req, slug, options: options, repository: repository)
       end
     end
 
-    def setup_collection_routes(req, slug, options:)
-      repository = options[:repository].new(options[:model])
+    def setup_collection_routes(req, slug, options:, repository:)
       action_options = options[:index] || {}
 
       # Custom actions
@@ -112,8 +112,7 @@ module TinyAdmin
       end
     end
 
-    def setup_member_routes(req, slug, options:)
-      repository = options[:repository].new(options[:model])
+    def setup_member_routes(req, slug, options:, repository:)
       action_options = (options[:show] || {}).merge(record_not_found_page: TinyAdmin.settings.record_not_found)
 
       req.on String do |reference|
