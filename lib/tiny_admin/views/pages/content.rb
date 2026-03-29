@@ -11,7 +11,7 @@ module TinyAdmin
                 unsafe_raw(content)
               }
 
-              render TinyAdmin::Views::Components::Widgets.new(widgets)
+              render TinyAdmin::Views::Components::Widgets.new(widgets, context: { params: params })
             }
           end
         end

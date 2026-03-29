@@ -5,7 +5,12 @@ module TinyAdmin
     module Attributes
       def update_attributes(attributes)
         attributes.each do |key, value|
-          send("#{key}=", value)
+          setter = "#{key}="
+          unless respond_to?(setter)
+            raise ArgumentError, "#{self.class.name} does not support attribute '#{key}'"
+          end
+
+          send(setter, value)
         end
       end
     end

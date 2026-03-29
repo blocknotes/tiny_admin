@@ -64,6 +64,18 @@ RSpec.describe TinyAdmin::Views::Components::FieldValue do
     end
   end
 
+  describe "with call option (no link_to)" do
+    let(:field) { TinyAdmin::Field.new(name: "author_id", type: :integer, title: "Author", options: { call: "author, name" }) }
+    let(:author) { double("author", name: "John") } # rubocop:disable RSpec/VerifiedDoubles
+    let(:record) { double("record", id: 1, author: author) } # rubocop:disable RSpec/VerifiedDoubles
+
+    it "renders the call result instead of the raw value", :aggregate_failures do
+      html = described_class.new(field, 42, record: record).call
+      expect(html).to include("John")
+      expect(html).not_to include("42")
+    end
+  end
+
   describe "with value_class option" do
     let(:field) { TinyAdmin::Field.new(name: "status", type: :string, title: "Status", options: { options: ["value_class"] }) }
     let(:record) { double("record", id: 1) } # rubocop:disable RSpec/VerifiedDoubles

@@ -76,13 +76,13 @@ module TinyAdmin
 
     def setup_resource_routes(req, slug, options:)
       req.on slug do
-        setup_collection_routes(req, slug, options: options)
-        setup_member_routes(req, slug, options: options)
+        repository = options[:repository].new(options[:model])
+        setup_collection_routes(req, slug, options: options, repository: repository)
+        setup_member_routes(req, slug, options: options, repository: repository)
       end
     end
 
-    def setup_collection_routes(req, slug, options:)
-      repository = options[:repository].new(options[:model])
+    def setup_collection_routes(req, slug, options:, repository:)
       action_options = options[:index] || {}
 
       # Custom actions
@@ -112,8 +112,7 @@ module TinyAdmin
       end
     end
 
-    def setup_member_routes(req, slug, options:)
-      repository = options[:repository].new(options[:model])
+    def setup_member_routes(req, slug, options:, repository:)
       action_options = (options[:show] || {}).merge(record_not_found_page: TinyAdmin.settings.record_not_found)
 
       req.on String do |reference|
@@ -149,10 +148,10 @@ module TinyAdmin
 
     def setup_custom_actions(req, custom_actions = nil, options:, repository:, slug:, reference: nil)
       (custom_actions || []).each_with_object({}) do |custom_action, result|
-        action_slug, action = custom_action.first
-        action_class = to_class(action)
+        action_slug, action_config = custom_action.first
+        action_class, http_method = parse_action_config(action_config)
 
-        req.get action_slug.to_s do
+        req.public_send(http_method, action_slug.to_s) do
           authorize!(:custom_action, action_slug.to_s) do
             context = Context.new(
               actions: {},
@@ -168,6 +167,16 @@ module TinyAdmin
         end
 
         result[action_slug.to_s] = action_class
+      end
+    end
+
+    def parse_action_config(config)
+      if config.is_a?(Hash)
+        action_class = to_class(config[:action] || config["action"])
+        http_method = (config[:method] || config["method"] || "get").to_sym
+        [action_class, http_method]
+      else
+        [to_class(config), :get]
       end
     end
 

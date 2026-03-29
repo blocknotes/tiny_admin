@@ -7,7 +7,7 @@ module TinyAdmin
         def view_template
           super do
             div(class: "root") {
-              render TinyAdmin::Views::Components::Widgets.new(widgets)
+              render TinyAdmin::Views::Components::Widgets.new(widgets, context: { params: params })
             }
           end
         end

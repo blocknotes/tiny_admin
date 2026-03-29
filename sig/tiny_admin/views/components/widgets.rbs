@@ -3,10 +3,15 @@ module TinyAdmin
     module Components
       class Widgets
         @widgets: Array[untyped]?
+        @context: Hash[Symbol, untyped]
 
-        def initialize: (Array[untyped]?) -> void
+        def initialize: (Array[untyped]?, ?context: Hash[Symbol, untyped]) -> void
 
         def view_template: () ?{ (untyped) -> void } -> void
+
+        private
+
+        def build_widget: (Class) -> untyped
       end
     end
   end

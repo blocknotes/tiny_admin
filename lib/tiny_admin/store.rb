@@ -30,7 +30,7 @@ module TinyAdmin
                end
         list << item if item
       end
-      navbar << logout if logout
+      @navbar << logout if logout
     end
 
     private

@@ -14,16 +14,17 @@ module TinyAdmin
 
         def view_template
           translated_value = field.translate_value(value)
+          display_value = field.apply_call_option(record) || translated_value
           value_class = field.options[:options]&.include?("value_class") ? "value-#{value}" : nil
           if field.options[:link_to]
             a(href: TinyAdmin.route_for(field.options[:link_to], reference: translated_value)) {
               span(class: value_class) {
-                render_value(field.apply_call_option(record) || translated_value)
+                render_value(display_value)
               }
             }
           else
             span(class: value_class) {
-              render_value(translated_value)
+              render_value(display_value)
             }
           end
         end

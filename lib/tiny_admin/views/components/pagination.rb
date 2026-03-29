@@ -18,8 +18,8 @@ module TinyAdmin
                     if pages <= 10
                       pages_range(1..pages)
                     elsif current <= 4 || current >= pages - 3
-                      pages_range(1..(current <= 4 ? current + 2 : 4), with_dots: true)
-                      pages_range((current > pages - 4 ? current - 2 : pages - 2)..pages)
+                      pages_range(1..(current <= 4 ? (current + 2) : 4), with_dots: true)
+                      pages_range((current > pages - 4 ? (current - 2) : (pages - 2))..pages)
                     else
                       pages_range(1..1, with_dots: true)
                       pages_range((current - 2)..(current + 2), with_dots: true)
@@ -39,7 +39,7 @@ module TinyAdmin
           range.each do |page|
             li(class: page == current ? "page-item active" : "page-item") {
               href = query_string.empty? ? "?p=#{page}" : "?#{query_string}&p=#{page}"
-              a(class: "page-link", href: href) { page }
+              a(class: "page-link", href: href) { page.to_s }
             }
           end
           dots if with_dots
