@@ -9,6 +9,8 @@ gemfile(true) do
 
   gem 'rackup'
   gem 'roda'
+  gem 'webrick'
+
   gem 'tiny_admin', path: '../../'
 end
 

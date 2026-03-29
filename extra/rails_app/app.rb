@@ -7,7 +7,10 @@ require 'bundler/inline'
 gemfile(true) do
   source 'https://rubygems.org'
 
-  gem 'rails', '~> 7'
+  gem 'rackup'
+  gem 'rails'
+  gem 'webrick'
+
   gem 'tiny_admin', path: '../../'
 end
 
@@ -29,4 +32,4 @@ end
 
 RailsApp.initialize!
 
-Rack::Server.new(app: RailsApp, Port: 3000).start if __FILE__ == $PROGRAM_NAME
+Rackup::Server.new(app: RailsApp, Port: 3000).start if __FILE__ == $PROGRAM_NAME
