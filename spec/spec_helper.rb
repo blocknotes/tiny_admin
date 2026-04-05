@@ -2,6 +2,7 @@
 
 require "pry"
 require "simplecov"
+require "tiny_admin"
 
 SimpleCov.start do
   enable_coverage :branch
