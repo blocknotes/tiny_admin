@@ -91,7 +91,11 @@ module TinyAdmin
     end
 
     def reset!
-      @options = {}
+      saved_authorization_class = @options ? @options[:authorization_class] : nil
+      @options = {
+        sections: [],
+        authorization_class: saved_authorization_class
+      }
       @store = nil
       @loaded = false
     end
