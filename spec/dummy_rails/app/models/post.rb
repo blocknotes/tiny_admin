@@ -24,6 +24,10 @@ class Post < ApplicationRecord
   #   "<<<#{super}>>>"
   # end
 
+  def to_s
+    "#{title} - #{dt}"
+  end
+
   def short_title(**args)
     title.truncate(args[:count] || 10)
   end

@@ -6,16 +6,9 @@ require "rails_helper"
 RSpec.describe "Authorization plugin", type: :feature do
   let(:root_content) { "Latest authors\nLatest posts" }
 
-  around do |example|
-    TinyAdmin.settings.load_settings
-    prev_value = TinyAdmin.settings.authorization_class
-    TinyAdmin.settings.authorization_class = some_class
-    example.run
-  ensure
-    TinyAdmin.settings.authorization_class = prev_value
-  end
-
   before do
+    TinyAdmin.settings.load_settings
+    TinyAdmin.settings.authorization_class = some_class
     visit "/admin"
     log_in
   end
