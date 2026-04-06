@@ -7,16 +7,8 @@ RSpec.describe TinyAdmin::Utils, "#prepare_page" do
   let(:utils_instance) { Class.new { include TinyAdmin::Utils }.new }
   let(:settings) { TinyAdmin::Settings.instance }
 
-  around do |example|
-    saved = settings.instance_variable_get(:@options)&.deep_dup
-    saved_store = settings.instance_variable_get(:@store)
-    saved_loaded = settings.instance_variable_get(:@loaded)
+  before do
     settings.load_settings
-    example.run
-  ensure
-    settings.instance_variable_set(:@options, saved)
-    settings.instance_variable_set(:@store, saved_store)
-    settings.instance_variable_set(:@loaded, saved_loaded)
   end
 
   it "returns an instance of the given page class" do

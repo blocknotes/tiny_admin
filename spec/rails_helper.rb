@@ -31,7 +31,6 @@ RSpec.configure do |config|
   config.include_context "Capybara helpers"
 
   config.before(:each, type: :feature) do
-    TinyAdmin.settings.reset!
     TinyAdmin.configure_from_file(Rails.root.join("config/tiny_admin.yml"))
   end
 end
