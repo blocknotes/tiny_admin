@@ -8,6 +8,7 @@ gemfile(true) do
   source 'https://rubygems.org'
 
   gem 'rackup'
+  gem 'webrick'
 
   gem 'tiny_admin', path: '../../'
 end
