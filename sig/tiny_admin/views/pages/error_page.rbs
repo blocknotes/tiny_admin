@@ -1,8 +1,12 @@
 module TinyAdmin
   module Views
     module Pages
-      class Root < DefaultLayout
+      class ErrorPage < DefaultLayout
         def view_template: () -> void
+
+        private
+
+        def css_class: () -> String
       end
     end
   end

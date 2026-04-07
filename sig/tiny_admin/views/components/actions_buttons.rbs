@@ -1,0 +1,13 @@
+module TinyAdmin
+  module Views
+    module Components
+      class ActionsButtons < BasicComponent
+        attr_accessor actions: Hash[String, untyped]?
+        attr_accessor slug: String?
+        attr_accessor reference: untyped
+
+        def view_template: () -> void
+      end
+    end
+  end
+end

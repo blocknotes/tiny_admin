@@ -4,8 +4,9 @@ module TinyAdmin
     OPTIONS: Array[Symbol]
 
     @options: Hash[Array[Symbol], untyped]
+    @loaded: bool
 
-    attr_reader store: Store
+    attr_reader store: Store?
 
     # Dynamically defined accessors for OPTIONS
     def authentication: () -> untyped

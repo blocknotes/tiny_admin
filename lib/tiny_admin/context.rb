@@ -7,7 +7,6 @@ module TinyAdmin
     :repository,
     :request,
     :router,
-    :slug,
-    keyword_init: true
+    :slug
   )
 end

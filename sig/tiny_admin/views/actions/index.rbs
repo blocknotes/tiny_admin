@@ -11,11 +11,9 @@ module TinyAdmin
         attr_accessor records: Enumerable[untyped]
         attr_accessor slug: String
 
-        def view_template: () ?{ (untyped) -> void } -> void
+        def view_template: () ?{ () -> void } -> void
 
         private
-
-        def actions_buttons: () -> void
 
         def table_body: () -> void
 

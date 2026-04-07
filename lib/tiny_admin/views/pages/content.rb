@@ -8,7 +8,7 @@ module TinyAdmin
           super do
             div(class: "content") {
               div(class: "content-data") {
-                unsafe_raw(content)
+                raw(safe(content))
               }
 
               render TinyAdmin::Views::Components::Widgets.new(widgets, context: { params: params })

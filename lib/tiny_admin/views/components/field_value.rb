@@ -33,7 +33,7 @@ module TinyAdmin
 
         def render_value(val)
           if val.is_a?(TinyAdmin::RawHtml)
-            unsafe_raw(val.to_s)
+            raw(safe(val.to_s))
           else
             val
           end

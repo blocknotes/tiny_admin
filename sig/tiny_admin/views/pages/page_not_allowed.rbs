@@ -1,9 +1,7 @@
 module TinyAdmin
   module Views
     module Pages
-      class PageNotAllowed < DefaultLayout
-        def view_template: () ?{ () -> void } -> void
-
+      class PageNotAllowed < ErrorPage
         def title: () -> String
       end
     end

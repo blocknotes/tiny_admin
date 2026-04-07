@@ -5,17 +5,17 @@ $:.push File.expand_path("lib", __dir__)
 require "tiny_admin/version"
 
 Gem::Specification.new do |spec|
-  spec.platform    = Gem::Platform::RUBY
-  spec.name        = "tiny_admin"
-  spec.version     = TinyAdmin::VERSION
-  spec.summary     = "Tiny Admin"
+  spec.platform = Gem::Platform::RUBY
+  spec.name = "tiny_admin"
+  spec.version = TinyAdmin::VERSION
+  spec.summary = "Tiny Admin"
   spec.description = "A compact and composable dashboard component for Ruby"
-  spec.license     = "MIT"
+  spec.license = "MIT"
 
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
-  spec.author   = "Mattia Roccoberton"
-  spec.email    = "mat@blocknot.es"
+  spec.author = "Mattia Roccoberton"
+  spec.email = "mat@blocknot.es"
   spec.homepage = "https://github.com/blocknotes/tiny_admin"
 
   spec.metadata = {
@@ -25,10 +25,10 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
-  spec.files         = Dir["{app,db,lib}/**/*", "LICENSE.txt", "README.md"]
+  spec.files = Dir["{app,db,lib}/**/*", "LICENSE.txt", "README.md"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "phlex", "~> 1", ">= 1.10.0"
+  spec.add_dependency "phlex", "~> 2"
   spec.add_dependency "roda", "~> 3"
   spec.add_dependency "tilt", "~> 2"
   spec.add_dependency "zeitwerk", "~> 2"
