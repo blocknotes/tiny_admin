@@ -83,7 +83,8 @@ module TinyAdmin
     end
 
     def setup_collection_routes(req, slug, options:, repository:)
-      action_options = options[:index] || {}
+      # Merge show_link so the index view knows whether the show action is enabled
+      action_options = (options[:index] || {}).merge(show_link: options[:only].include?(:show))
 
       # Custom actions
       custom_actions = setup_custom_actions(
@@ -95,7 +96,7 @@ module TinyAdmin
       )
 
       # Index
-      if options[:only].include?(:index) || options[:only].include?("index")
+      if options[:only].include?(:index)
         req.is do
           authorize!(:resource_index, slug) do
             context = Context.new(
@@ -127,7 +128,7 @@ module TinyAdmin
         )
 
         # Show
-        if options[:only].include?(:show) || options[:only].include?("show")
+        if options[:only].include?(:show)
           req.is do
             authorize!(:resource_show, slug) do
               context = Context.new(

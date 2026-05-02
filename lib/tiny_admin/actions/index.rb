@@ -20,7 +20,8 @@ module TinyAdmin
         evaluate_options(options)
         fields = repository.fields(options: fields_options)
         filters = prepare_filters(fields)
-        records, count = repository.list(page: current_page, limit: pagination, filters: filters, sort: options[:sort])
+        sort = merge_sort(options[:sort], fields)
+        records, count = repository.list(page: current_page, limit: pagination, filters: filters, sort: sort)
         attributes = {
           actions: context.actions,
           fields: fields,
@@ -28,7 +29,9 @@ module TinyAdmin
           links: options[:links],
           prepare_record: ->(record) { repository.index_record_attrs(record, fields: fields_options) },
           records: records,
+          show_link: options.fetch(:show_link, true),
           slug: context.slug,
+          sort_params: @sort_params,
           title: repository.index_title,
           widgets: options[:widgets]
         }
@@ -46,7 +49,25 @@ module TinyAdmin
         @repository = context.repository
         @pagination = options[:pagination] || 10
         @current_page = (params["p"] || 1).to_i
-        @query_string = params_to_s(params.except("p"))
+        @query_string = params_to_s(params.except("p", "sort"))
+        @sort_params = params["sort"]
+      end
+
+      # Merge user-supplied sort params (from query string) with the configured
+      # sort defaults.  Only fields that are actually returned by the repository
+      # are accepted to prevent arbitrary column injection.
+      def merge_sort(configured_sort, fields)
+        raw = params["sort"]
+        return configured_sort unless raw.is_a?(Hash)
+
+        allowed = fields.keys.map(&:to_s)
+        dynamic = raw.each_with_object([]) do |(field, dir), list|
+          next unless allowed.include?(field.to_s)
+
+          direction = dir.to_s.downcase == "desc" ? "DESC" : "ASC"
+          list << "#{field} #{direction}"
+        end
+        dynamic.any? ? dynamic : configured_sort
       end
 
       def prepare_filters(fields)

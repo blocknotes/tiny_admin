@@ -19,6 +19,9 @@ module TinyAdmin
     plugin :render, engine: "html"
     plugin :sessions, secret: ENV.fetch("TINY_ADMIN_SECRET") { SecureRandom.hex(64) }
 
+    # NOTE: The authentication plugin is applied at class-load time.  Ensure
+    # TinyAdmin.configure / TinyAdmin.configure_from_file are called before
+    # BasicApp (or its subclass Router) is first referenced.
     plugin authentication_plugin, TinyAdmin.settings.authentication
 
     not_found { prepare_page(TinyAdmin.settings.page_not_found).call }

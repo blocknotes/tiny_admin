@@ -40,8 +40,15 @@ module TinyAdmin
       root_path
       sections
       scripts
+      strict_config
       style_links
     ].freeze
+
+    # Valid section type values (as symbols).
+    VALID_SECTION_TYPES = %i[content page resource url].freeze
+
+    # Repository interface methods that must be present on a repository class.
+    REPOSITORY_INTERFACE = %i[fields index_record_attrs show_record_attrs index_title show_title find collection list].freeze
 
     attr_reader :store
 
@@ -79,6 +86,8 @@ module TinyAdmin
         end
       end
 
+      validate_config!
+
       @store ||= TinyAdmin::Store.new(self)
       self.root_path = "/" if root_path == ""
 
@@ -87,6 +96,7 @@ module TinyAdmin
         authentication[:logout] ||= TinyAdmin::Section.new(name: "logout", slug: "logout", path: logout_path)
       end
       store.prepare_sections(sections, logout: authentication[:logout])
+
       @loaded = true
     end
 
@@ -124,6 +134,51 @@ module TinyAdmin
       Object.const_get(class_name)
     rescue NameError => e
       raise NameError, "TinyAdmin: invalid class '#{class_name}' for setting '#{setting}' - #{e.message}"
+    end
+
+    # Validate the current configuration, raising or warning about problems.
+    # When strict_config: true is set, all issues raise ArgumentError; otherwise
+    # they emit a warning via Kernel.warn.
+    def validate_config!
+      @options ||= {}
+
+      # Unknown top-level keys
+      unknown_keys = @options.keys - OPTIONS
+      unknown_keys.each do |key|
+        config_problem("unknown configuration key '#{key}' – did you mean one of #{OPTIONS.join(', ')}?")
+      end
+
+      # Section type validation
+      Array(sections).each do |section|
+        next unless section.is_a?(Hash)
+
+        type = section[:type]&.to_sym
+        next if VALID_SECTION_TYPES.include?(type)
+
+        config_problem(
+          "section '#{section[:slug]}' has invalid type '#{section[:type]}' – must be one of #{VALID_SECTION_TYPES.join(', ')}"
+        )
+      end
+
+      # Repository interface check
+      repo = repository
+      if repo && repo.is_a?(Module)
+        missing = REPOSITORY_INTERFACE.reject { |m| repo.method_defined?(m) || repo.public_instance_methods.include?(m) }
+        if missing.any?
+          config_problem(
+            "repository '#{repo}' is missing required methods: #{missing.join(', ')}"
+          )
+        end
+      end
+    end
+
+    def config_problem(message)
+      full_message = "TinyAdmin configuration: #{message}"
+      if strict_config
+        raise ArgumentError, full_message
+      else
+        warn full_message
+      end
     end
   end
 end

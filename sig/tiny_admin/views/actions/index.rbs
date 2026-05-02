@@ -9,13 +9,19 @@ module TinyAdmin
         attr_accessor pagination_component: untyped
         attr_accessor prepare_record: Proc
         attr_accessor records: Enumerable[untyped]
+        attr_accessor show_link: bool?
         attr_accessor slug: String
+        attr_accessor sort_params: untyped
 
         def view_template: () ?{ (untyped) -> void } -> void
 
         private
 
         def actions_buttons: () -> void
+
+        def render_sortable_header: (Field) -> void
+
+        def sort_query_string: (String, String) -> String
 
         def table_body: () -> void
 

@@ -1,6 +1,6 @@
 module TinyAdmin
   module Plugins
-    class ActiveRecordRepository < BaseRepository
+    class SequelRepository < BaseRepository
       def apply_filters: (untyped, Enumerable[untyped]) -> untyped
 
       def collection: () -> untyped
@@ -20,6 +20,8 @@ module TinyAdmin
       alias show_record_attrs index_record_attrs
 
       private
+
+      def sequel_type_to_sym: (untyped) -> Symbol
 
       def apply_hash_filter: (untyped, Field, Hash[untyped, untyped]) -> untyped
 

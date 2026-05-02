@@ -35,9 +35,9 @@ RSpec.describe TinyAdmin::Views::Components::Widgets do
   end
 
   describe "with non-Phlex widget" do
-    it "skips non-Phlex classes" do
-      html = described_class.new([String]).call
-      expect(html).not_to include("card-body")
+    it "raises ArgumentError for non-Phlex classes" do
+      expect { described_class.new([String]).call }
+        .to raise_error(ArgumentError, /Widget String.*must be a subclass of Phlex::HTML/)
     end
   end
 end

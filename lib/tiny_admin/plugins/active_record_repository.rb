@@ -46,8 +46,7 @@ module TinyAdmin
       def list(page: 1, limit: 10, sort: nil, filters: nil)
         query = sort ? collection.order(sort) : collection
         query = apply_filters(query, filters) if filters
-        page_offset = page.positive? ? (page - 1) * limit : 0
-        records = query.offset(page_offset).limit(limit).to_a
+        records = query.offset(page_offset(page, limit)).limit(limit).to_a
         [records, query.count]
       end
 
@@ -57,15 +56,40 @@ module TinyAdmin
           next if value.nil? || value == ""
 
           query =
-            case field.type
-            when :string
-              value = ActiveRecord::Base.sanitize_sql_like(value.strip)
-              query.where("#{field.name} LIKE ?", "%#{value}%")
+            if value.is_a?(Hash)
+              apply_hash_filter(query, field, value)
+            elsif value.is_a?(Array)
+              non_empty = value.reject { |v| v.to_s.empty? }
+              next if non_empty.empty?
+
+              query.where(field.name => non_empty)
             else
-              query.where(field.name => value)
+              apply_scalar_filter(query, field, value)
             end
         end
         query
+      end
+
+      private
+
+      # Handle range filters: { "gte" => min, "lte" => max }
+      def apply_hash_filter(query, field, value)
+        gte = value["gte"] || value[:gte]
+        lte = value["lte"] || value[:lte]
+        query = query.where("#{field.name} >= ?", gte) if gte.present?
+        query = query.where("#{field.name} <= ?", lte) if lte.present?
+        query
+      end
+
+      # Handle scalar (single-value) filters.
+      def apply_scalar_filter(query, field, value)
+        case field.type
+        when :string
+          sanitized = ActiveRecord::Base.sanitize_sql_like(value.strip)
+          query.where("#{field.name} LIKE ?", "%#{sanitized}%")
+        else
+          query.where(field.name => value)
+        end
       end
     end
   end

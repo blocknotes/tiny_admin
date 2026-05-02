@@ -47,7 +47,7 @@ module TinyAdmin
 
     def add_resource_section(slug, section)
       resource = section.slice(:resource, :only, :index, :show, :collection_actions, :member_actions)
-      resource[:only] ||= %i[index show]
+      resource[:only] = (resource[:only] || %i[index show]).map(&:to_sym)
       resources[slug] = resource.merge(
         model: to_class(section[:model]),
         repository: to_class(section[:repository] || settings.repository)
