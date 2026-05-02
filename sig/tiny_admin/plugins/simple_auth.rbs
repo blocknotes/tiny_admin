@@ -1,6 +1,8 @@
 module TinyAdmin
   module Plugins
     module SimpleAuth
+      BCRYPT_PREFIX: Regexp
+
       def self.configure: (untyped, Hash[untyped, untyped]) -> void
     end
   end

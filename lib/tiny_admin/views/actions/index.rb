@@ -11,7 +11,9 @@ module TinyAdmin
                       :pagination_component,
                       :prepare_record,
                       :records,
-                      :slug
+                      :show_link,
+                      :slug,
+                      :sort_params
 
         def view_template
           super do
@@ -61,7 +63,7 @@ module TinyAdmin
             tr {
               fields.each_value do |field|
                 td(class: "field-header-#{field.name} field-header-type-#{field.type}") {
-                  field.options[:header] || field.title
+                  render_sortable_header(field)
                 }
               end
               td { whitespace }
@@ -101,9 +103,12 @@ module TinyAdmin
                         end
                       end
                     else
-                      a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
-                        label_for("Show", options: ["actions.index.links.show"])
-                      }
+                      # Only show the default "Show" link when the show action is enabled for this resource
+                      if show_link != false
+                        a(href: TinyAdmin.route_for(slug, reference: record.id), class: link_class) {
+                          label_for("Show", options: ["actions.index.links.show"])
+                        }
+                      end
                     end
                   }
                 }
@@ -116,6 +121,30 @@ module TinyAdmin
           buttons = TinyAdmin::Views::Components::ActionsButtons.new
           buttons.update_attributes(actions: actions, slug: slug)
           render buttons
+        end
+
+        # Render a column header as a sortable link.
+        # Clicking toggles between ASC and DESC; the current sort direction is
+        # preserved in the link so the user can always toggle back.
+        def render_sortable_header(field)
+          label = field.options[:header] || field.title
+          current_dir = sort_params.is_a?(Hash) ? sort_params[field.name] : nil
+          next_dir = current_dir&.downcase == "asc" ? "desc" : "asc"
+          href = "?#{sort_query_string(field.name, next_dir)}"
+          indicator = case current_dir&.downcase
+                      when "asc"  then " ▲"
+                      when "desc" then " ▼"
+                      end
+          a(href: href, class: "sort-link text-decoration-none text-reset") {
+            plain "#{label}#{indicator}"
+          }
+        end
+
+        # Build a query string that retains existing filter/page params but sets
+        # the sort field and direction.
+        def sort_query_string(field_name, direction)
+          base = params&.except("sort", "p") || {}
+          params_to_s(base.merge("sort" => { field_name => direction }))
         end
       end
     end

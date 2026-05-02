@@ -16,8 +16,8 @@ module TinyAdmin
     block&.call(settings) || settings
   end
 
-  def configure_from_file(file)
-    settings.reset!
+  def configure_from_file(file, reset: true)
+    settings.reset! if reset
     config = YAML.load_file(file, symbolize_names: true)
     config.each do |key, value|
       settings[key] = value

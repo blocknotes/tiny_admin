@@ -6,6 +6,16 @@ module TinyAdmin
         attr_accessor section_path: String
 
         def view_template: () ?{ (untyped) -> void } -> void
+
+        private
+
+        def render_boolean_filter: (String, Hash[Symbol, untyped]) -> void
+
+        def render_range_filter: (String, Hash[Symbol, untyped]) -> void
+
+        def render_select_filter: (String, Hash[Symbol, untyped], Hash[Symbol, untyped]) -> void
+
+        def render_association_filter: (String, Hash[Symbol, untyped], Hash[Symbol, untyped]) -> void
       end
     end
   end

@@ -16,7 +16,9 @@ module TinyAdmin
             @widgets.each_slice(2).each do |row|
               div(class: "row") {
                 row.each do |widget|
-                  next unless widget < Phlex::HTML
+                  unless widget < Phlex::HTML
+                    raise ArgumentError, "Widget #{widget.inspect} must be a subclass of Phlex::HTML"
+                  end
 
                   div(class: "col") {
                     div(class: "card") {

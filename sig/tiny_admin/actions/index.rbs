@@ -11,6 +11,7 @@ module TinyAdmin
       attr_reader params: untyped
       attr_reader query_string: String
       attr_reader repository: untyped
+      attr_reader sort_params: untyped
 
       def call: (app: BasicApp, context: Context, options: Hash[Symbol, untyped]) -> untyped
 
@@ -18,7 +19,9 @@ module TinyAdmin
 
       def evaluate_options: (Hash[Symbol, untyped]) -> void
 
-      def prepare_filters: (Hash[untyped, untyped]) -> void
+      def merge_sort: (untyped?, Hash[String, Field]) -> untyped
+
+      def prepare_filters: (Hash[untyped, untyped]) -> Hash[Field, Hash[Symbol, untyped]]
 
       def setup_pagination: (untyped, untyped, total_count: Integer) -> void
     end
