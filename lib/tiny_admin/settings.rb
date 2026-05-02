@@ -91,7 +91,10 @@ module TinyAdmin
     end
 
     def reset!
-      @options = {}
+      @options = {
+        components: {},
+        sections: []
+      }
       @store = nil
       @loaded = false
     end

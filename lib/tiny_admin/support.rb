@@ -37,6 +37,12 @@ module TinyAdmin
         value&.to_s
       end
 
+      def multiline(array, options: [])
+        return unless array.is_a?(Array)
+
+        raw_html(array.join("<br/>"))
+      end
+
       def upcase(value, options: [])
         value&.upcase
       end

@@ -2,6 +2,7 @@
 
 require "pry"
 require "simplecov"
+require "tiny_admin"
 
 SimpleCov.start do
   enable_coverage :branch
@@ -21,5 +22,9 @@ RSpec.configure do |config|
 
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
+  end
+
+  config.before do
+    TinyAdmin.settings.reset!
   end
 end
