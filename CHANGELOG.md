@@ -2,6 +2,19 @@
 
 A compact and composable dashboard component for Ruby
 
+## 0.11.0
+
+- feat(auth): accept session secret from TINY_ADMIN_SECRET env var
+- feat(views): Support for raw html fields
+- feat(views): pass context to widgets
+- feat(router): support non-GET methods in custom actions
+- refactor(core): consolidate Utils usage, extract authorize! helper, harden settings
+- fix(settings): preserve auth class when calling reset!
+- fix(views): guard against nil values and fix flash CSS classes
+- fix(views): apply call option on field values without link_to
+- chore(views): extract shared Attributes, ActionsButtons, and ErrorPage
+- chore(views): internal improvements to pagination
+
 ## 0.10.1
 
 - refactor: change Phlex template references to view_template
