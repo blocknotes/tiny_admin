@@ -17,7 +17,12 @@ module TinyAdmin
     # The action respects the resource's +index.attributes+ config for the
     # columns to export.  If no attributes are configured, all repository fields
     # are exported.
+    #
+    # Use the +max_export_limit+ option to cap the number of rows returned (default: 10_000).
+    # Set it to nil to disable the cap (not recommended for large datasets).
     class CsvExport < BasicAction
+      DEFAULT_MAX_EXPORT_LIMIT = 10_000
+
       def call(app:, context:, options:)
         repository = context.repository
         fields_options = attribute_options(options[:attributes])
@@ -33,8 +38,10 @@ module TinyAdmin
       private
 
       def fetch_all_records(repository, filters, options)
-        # Fetch all matching records without pagination
-        records, = repository.list(page: 1, limit: Float::INFINITY.to_i, filters: filters, sort: options[:sort])
+        limit = options.key?(:max_export_limit) ? options[:max_export_limit] : DEFAULT_MAX_EXPORT_LIMIT
+        # When limit is nil, fetch all records (use with caution on large datasets).
+        effective_limit = limit || repository.list(page: 1, limit: 1).last
+        records, = repository.list(page: 1, limit: effective_limit, filters: filters, sort: options[:sort])
         records
       end
 
